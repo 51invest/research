@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>坐标双轴与误导图表 · 巫妖投资</title><meta name="description" content="坐标轴把数值映射成位置；改变轴范围或引入第二纵轴，能在不改动任何数据的情况下凭空造出交叉和同向走势。"><link rel="canonical" href="https://research.51invest.com/learn/axes-dual-axes-and-misleading-charts/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/axes-dual-axes-and-misleading-charts/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/axes-dual-axes-and-misleading-charts/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/axes-dual-axes-and-misleading-charts/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/axes-dual-axes-and-misleading-charts/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">坐标双轴与误导图表</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">坐标双轴与误导图表</h1> <p class="article-summary">坐标轴把数值映射成位置；改变轴范围或引入第二纵轴，能在不改动任何数据的情况下凭空造出交叉和同向走势。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M05 · 图表与表达</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>11 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <blockquote>
+<p>读完这一篇，你能看出截断纵轴和双轴图各自把“变化”或“交叉”放大了多少，并能在同一单位下重画，避免把尺度选择读成经济事实。</p>
+</blockquote>
+<h2>研究问题</h2>
+<p>同一组数据，换一张图为什么会得出相反结论？本文用两条假设序列检验：改变纵轴范围、把两条线分别放到左右两个纵轴之后，交叉位置与视觉关系是否改变，以及何时可以把交叉当作信息。范围限于图形的位置编码，不讨论原始数据本身的错误。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>单位</th>
+<th>频率</th>
+<th>期间</th>
+<th>示例值（假设）</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>收入</td>
+<td>月度营业收入</td>
+<td>亿元</td>
+<td>月</td>
+<td>1–6 月</td>
+<td>100 / 102 / 105 / 107 / 110 / 112</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>利润率</td>
+<td>净利润 ÷ 收入</td>
+<td>%</td>
+<td>月</td>
+<td>1–6 月</td>
+<td>8.0 / 7.8 / 7.5 / 7.3 / 7.1 / 7.0</td>
+<td>不适用（教学假设）</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>一条纵轴把数值映射为位置：<code>p = (v - min) ÷ (max - min)</code>，每单位数值对应的高度是 <code>H ÷ (max - min)</code>。同一数值在不同轴范围下位置不同，所以斜率和交叉都依赖轴的选择。双纵轴把两条序列分别映射到左右两个尺度，交叉点由数据与两个尺度共同决定，而不是只由数据决定；两轴刻度不同却重叠绘制时，读者无法从交点读出任何数量关系。本文假设读者按刻度读数、两轴均为线性、横轴为同一时间轴。</p>
+<h2>结果</h2>
+<p>左轴 95–115、右轴 6.5–8.5 时（收入用左轴，利润率用右轴），1 月收入位置 <code>(100 - 95) ÷ 20 = 0.25</code>，利润率 <code>(8.0 - 6.5) ÷ 2 = 0.75</code>；3 月两者都是 0.50，两线正好在 3 月交叉。</p>
+<p>把右轴改为 6.5–8.0，利润率 3 月位置升至 0.67、4 月为 0.53，而收入 4 月为 0.60，交叉移到 3 月末到 4 月初之间（按 3、4 两月观测点之间的直线段读数，约 3.7 月；这只是图形的几何位置，没有新增数据点）。数据完全未变。</p>
+<p>截断纵轴同样改变印象：收入从 100 升到 112，涨幅 12%。在 0–120 的轴上，这段变化占高度 10%；在 95–115 的轴上占 60%，同一涨幅看起来陡峭六倍。</p>
+<p>若把两条序列都以 1 月 = 100 指数化后放在单一纵轴：收入 100→112，利润率 100→87.5，一升一降，全程不交叉。指数化比较的是相对变化，不是水平。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-axis-title fig-axis-desc" viewBox="0 0 440 230" width="100%">
+    <title id="fig-axis-title">同一组收入数据在两种纵轴下的观感</title>
+    <desc id="fig-axis-desc">左右两个面板画的是完全相同的六个月数据（一百、一百零二、一百零五、一百零七、一百一十、一百一十二亿元）。左面板纵轴从零起算，线条近乎平直；右面板纵轴截断在九十五到一百一十五，同一条线看起来陡峭上升。两面板数据点完全一致。</desc>
+    <line x1="60" y1="180" x2="235" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="250" y1="180" x2="425" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <polyline points="65,80 98,78 131,75 164,73 197,70 230,68" fill="none" stroke="var(--accent)" stroke-width="2.5"></polyline>
+    <polyline points="255,150 286,138 317,120 348,108 379,90 410,78" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="7 4"></polyline>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">月度收入（亿元，同一组数据）</text>
+      <text x="65" y="200">左：纵轴 0–120（零基线）</text>
+      <text x="255" y="200">右：纵轴 95–115（截断）</text>
+      <text x="65" y="222">1 月 100 → 6 月 112，涨幅 12%</text>
+      <text x="255" y="222">同样 12%，视觉斜率约为左图六倍</text>
+      <text x="60" y="55" fill="var(--gold)">右图斜率是错觉，不是数据变化</text>
+    </g>
+  </svg>
+  <figcaption>图 1：同一个六个月收入序列（100/102/105/107/110/112 亿元，教学假设）在零基线（左）与截断纵轴 95–115（右）下的观感差别。左图每 1 亿元 1 像素、跨度 120 亿元；右图每 1 亿元 6 像素、跨度只有 20 亿元，因此斜率被放大约六倍。结论：数据没变，纵轴范围改变了"看起来的变化大小"；两图都须写明轴范围。</figcaption>
+</figure>
+
+<figure id="figure-dual-axis-cross">
+  <svg role="img" aria-labelledby="fig-dual-title fig-dual-desc" viewBox="0 0 440 255" width="100%">
+    <title id="fig-dual-title">同样两组数据，双纵轴一改，交叉点就移动</title>
+    <desc id="fig-dual-desc">左右两个面板画的是同一组收入和利润率数据。左面板收入用左轴九十五到一百一十五，利润率用右轴六点五到八点五，两条线在三月交叉。右面板把利润率右轴收紧为六点五到八点零，线条仍然来自同一组数据，交叉却移到四月前后。</desc>
+    <text x="60" y="18" font-size="10.5" fill="var(--muted)">左：收入轴 95–115；利润率轴 6.5–8.5</text>
+    <text x="250" y="18" font-size="10.5" fill="var(--muted)">右：收入轴 95–115；利润率轴 6.5–8.0</text>
+    <line x1="60" y1="180" x2="220" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="250" y1="180" x2="410" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <polyline points="60,150 92,138 124,120 156,108 188,90 220,78" fill="none" stroke="var(--accent)" stroke-width="2.2"></polyline>
+    <polyline points="60,60 92,72 124,90 156,102 188,114 220,126" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="6 4"></polyline>
+    <polyline points="250,150 282,138 314,120 346,108 378,90 410,78" fill="none" stroke="var(--accent)" stroke-width="2.2"></polyline>
+    <polyline points="250,40 282,55 314,77 346,91 378,106 410,113" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="6 4"></polyline>
+    <circle cx="124" cy="90" r="5" fill="var(--text)"></circle>
+    <circle cx="360" cy="99" r="5" fill="var(--text)"></circle>
+    <g fill="var(--muted)" font-size="9.5">
+      <text x="60" y="200">1 月</text><text x="92" y="200">2 月</text><text x="124" y="200">3 月</text><text x="156" y="200">4 月</text><text x="188" y="200">5 月</text><text x="220" y="200">6 月</text>
+      <text x="250" y="200">1 月</text><text x="282" y="200">2 月</text><text x="314" y="200">3 月</text><text x="346" y="200">4 月</text><text x="378" y="200">5 月</text><text x="410" y="200">6 月</text>
+      <text x="60" y="230">实线：收入（左轴）；虚线：利润率（右轴）</text>
+      <text x="60" y="246">同一组数值，只因右轴范围不同，视觉交叉从 3 月移到 4 月前后。</text>
+    </g>
+  </svg>
+  <figcaption>图 2：同一组收入与利润率数据，分别映射到左右两个纵轴。左图右轴为 6.5–8.5，两线在 3 月交叉；右图只把右轴收紧为 6.5–8.0，交叉就移到 4 月前后。数据没有变，变的是尺度；因此双轴图上的交点不能直接读成经济事件。</figcaption>
+</figure>
+
+<h2>图解：指数化对齐与双轴决策树</h2>
+<p>前两张图展示截断轴和双轴如何改变观感；下面两张图给出两个替代动作：把不同单位都指数化到同一基准，或在画双轴前先回答“是否真的必须共用一个图框”。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-indexed-lines-title fig-indexed-lines-desc" viewBox="0 0 440 250" width="100%">
+    <title id="fig-indexed-lines-title">收入与利润率都指数化到 100，同一纵轴看方向</title>
+    <desc id="fig-indexed-lines-desc">收入从 100 升到 112（+12%）；利润率从 8.0% 降到 7.0%，指数化后从 100 降到 87.5（−12.5%）。两条线共用 80–115 的指数轴，不再需要左右双轴，也不会产生虚假交点。数据为教学假设。</desc>
+    <text x="20" y="24" font-size="12.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">都改成“起点=100”，收入 +12%，利润率 −12.5%</text>
+    <rect x="60" y="38" width="12" height="10" fill="var(--accent)"/><text x="78" y="47" font-size="9" fill="var(--muted)" font-family="inherit">收入指数</text>
+    <rect x="150" y="38" width="12" height="10" fill="var(--gold)"/><text x="168" y="47" font-size="9" fill="var(--muted)" font-family="inherit">利润率指数</text>
+    <line x1="50" y1="200" x2="410" y2="200" stroke="var(--border)" stroke-width="1.2"/>
+    <line x1="50" y1="80" x2="50" y2="200" stroke="var(--border)" stroke-width="1.2"/>
+    <text x="42" y="84" font-size="8" text-anchor="end" fill="var(--muted)" font-family="inherit">115</text>
+    <text x="42" y="204" font-size="8" text-anchor="end" fill="var(--muted)" font-family="inherit">80</text>
+    <polyline points="50,131.4 120,124.6 190,114.3 260,107.4 330,97.1 400,90.3" fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+    <polyline points="50,131.4 120,140 190,149.6 260,158.6 330,167.1 400,174.3" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-dasharray="4 3"/>
+    <g font-family="inherit" font-size="9" fill="var(--muted)" text-anchor="middle">
+      <text x="50" y="222">1 月</text><text x="120" y="222">2 月</text><text x="190" y="222">3 月</text><text x="260" y="222">4 月</text><text x="330" y="222">5 月</text><text x="400" y="222">6 月</text>
+      <text x="400" y="84" text-anchor="end" fill="var(--accent)">112</text>
+      <text x="400" y="188" text-anchor="end" fill="var(--gold)">87.5</text>
+    </g>
+    <text x="20" y="244" font-size="8.5" fill="var(--muted)" font-family="inherit" text-anchor="start">单位：起点=100 的指数；收入 100→112、利润率 8.0%→7.0% 为教学假设。</text>
+  </svg>
+  <figcaption>图 3：收入从 100 升到 112（+12%）；利润率从 8.0% 降到 7.0%，指数化后从 100 降到 87.5（−12.5%）。两条线共用 80–115 的指数轴，不再需要左右双轴，也不会产生虚假交点。单位：起点=100 的指数；数据为教学假设。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-dual-axis-tree-title fig-dual-axis-tree-desc" viewBox="0 0 440 270" width="100%">
+    <title id="fig-dual-axis-tree-title">画双轴前的决策树</title>
+    <desc id="fig-dual-axis-tree-desc">先问两个序列是否同一单位：是则用单一轴；否则问是否必须同时看共同运动：否则并排小图或分开画；即使必须共用图框，也要标注两个轴、不用交点证明因果或时点。双轴不是默认选项。</desc>
+    <text x="20" y="24" font-size="12.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">双轴不是默认：先问单位，再问是否必须共框</text>
+    <rect x="130" y="44" width="180" height="40" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="220" y="62" font-size="9" text-anchor="middle" fill="var(--text)" font-family="inherit">两个序列是同一单位吗？</text>
+    <line x1="220" y1="84" x2="220" y2="102" stroke="var(--border)" stroke-width="1.2"/>
+    <text x="220" y="98" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="inherit">否</text>
+    <rect x="130" y="104" width="180" height="40" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="220" y="122" font-size="9" text-anchor="middle" fill="var(--text)" font-family="inherit">必须同时看共同运动吗？</text>
+    <line x1="130" y1="124" x2="70" y2="124" stroke="var(--border)" stroke-width="1.2"/>
+    <text x="100" y="118" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="inherit">是</text>
+    <rect x="20" y="140" width="150" height="54" rx="7" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="95" y="160" font-size="9" text-anchor="middle" fill="var(--text)" font-family="inherit">单一轴 / 指数化</text>
+    <text x="95" y="178" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="inherit">同一单位或起点=100</text>
+    <line x1="310" y1="124" x2="370" y2="124" stroke="var(--border)" stroke-width="1.2"/>
+    <text x="340" y="118" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="inherit">否</text>
+    <rect x="320" y="140" width="110" height="54" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="375" y="160" font-size="8.5" text-anchor="middle" fill="var(--text)" font-family="inherit">并排小图</text>
+    <text x="375" y="178" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="inherit">或分开画</text>
+    <rect x="80" y="212" width="280" height="42" rx="7" fill="var(--surface)" stroke="var(--border)"/>
+    <text x="220" y="230" font-size="8.8" text-anchor="middle" fill="var(--text)" font-family="inherit">仍要共框：标注两个轴、写明单位与范围</text>
+    <text x="220" y="246" font-size="8.2" text-anchor="middle" fill="var(--gold)" font-family="inherit">不把交点读成因果、拐点或买卖信号</text>
+    <text x="20" y="266" font-size="8" fill="var(--muted)" font-family="inherit" text-anchor="start">图为判断流程，不是唯一规则；若行业规范要求双轴，仍须给出轴范围与文字摘要。</text>
+  </svg>
+  <figcaption>图 4：先问两个序列是否同一单位，是则用单一轴；否则问是否必须同时看共同运动，否则并排小图或分开画；即使必须共框，也要标注两个轴、写明单位与范围，不把交点读成因果、拐点或买卖信号。图为判断流程，不是唯一规则。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>改用对数轴时，相同百分比变化对应相同高度，可避免高基数看起来变化更大，但对数轴和基期 = 100 都要求全部取值为正；把基期换成 6 月 = 100，方向不变；更稳妥的替代是拆成上下两个共享横轴的面板，各自保留单一纵轴；用增长率代替水平，收入增速为 +2.0%、+2.9%、+1.9%、+2.8%、+1.8%。利润率本身已经是百分比，它的“增速” -2.5%、-3.8%、-2.7%、-2.7%、-1.4% 是这个百分比自身的相对变化，不是百分点差值，读者容易误读，实务上更常用百分点变化。两组方向相反但幅度不同。若结论随轴范围改变，改变的就是图形，不是数据。站内变换约束与此一致：docs/03-data-and-technology.md 规定“价格和正值指数可以按区间起点设为一百；起点为零或负值时不允许该变换”，且利率类序列使用原始百分点、基点变化或明确标准化，不对零负利率直接做基期一百或同比增长。因此上文把利润率重基为 100 并算它的“增速”，只是误导手法的演示，不是本站推荐的画法。</p>
+<p>组数与组宽本身是一种选择：OpenStax 说明直方图横轴标注数据本身、纵轴标注频数或相对频数，条形或组数需要挑选，常见做法是 5 到 15 组[3]。</p>
+<h2>局限</h2>
+<p>图形解读受读者习惯与配色影响，本文只讨论位置与尺度。双轴并非总是错误：单位不同且确实需要同时展示时可以保留，但必须标明两个单位、说明范围依据，并避免把交叉读成事件。截断纵轴对折线图有时可接受，对柱状图会破坏以长度表示数值的编码。本文数字为假设，也不能据此推断制图者的意图。本站的既定裁定优先于一般做法：验证图不采用双轴，不同量纲一律拆成上下两个共享横轴的面板，同量纲才允许共用纵轴或按起点指数化（见 HANDOFF 的预览图画法约定）。本文对双轴的几何分析只说明它如何制造被误读的交点，不构成在站内图表中使用双轴的许可。</p>
+<p>分组（class）可由使用者任意设定或按规则设定，纵轴为频数、横轴为被测量变量，因此直方图能显示中心、离散度、偏度、异常值与多峰——这是 NIST/SEMATECH 手册给出的口径[2]。</p>
+<h2>复现</h2>
+<p>记录数据表、每个轴的 min 与 max、是否指数化或取对数、绘图代码与版本；用 <code>p</code> 公式重算关键点位置；报告交叉发生在哪个区间，而不是只说“两线交叉”。</p>
+<h2>结论强度</h2>
+<p>以上是描述性结论：轴的选择改变图形，交叉位置同时取决于数据与尺度，不能据此判断谁领先、是否存在因果或相关。可以说某图在特定轴范围下出现交叉；不能说该交叉代表经济事件。</p>
+<p>散点图把 Y 放在纵轴、X 放在横轴以显示两个变量之间的关系，但没有任何统计程序能据此证明因果；NIST/SEMATECH 手册的这条界限同样适用于本文的双轴图[1]。范围声明：本文关于轴映射、截断轴、对数轴与双轴的判断，是教学几何推导；三条来源只支撑散点图坐标约定和直方图的定义与分箱，不替这些制图判断背书。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>坐标</h3>
+<p><strong>定义</strong>：坐标是图表中把数值映射到位置和刻度的系统，常见笛卡尔坐标、时间轴和分类轴。</p>
+<p><strong>机制</strong>：坐标轴范围、起点和刻度间隔决定视觉斜率；截断坐标会放大或压缩变化，零点和负值处理也影响解读。</p>
+<p><strong>例子</strong>：例如同一价格序列用不同坐标范围显示，视觉波动可能截然不同。</p>
+<p><strong>边界</strong>：坐标不是中性背景；截断、非零起点和不等刻度会误导，时间轴不规则和数据点密度也会影响感知，需标注单位和范围。</p>
+<h3>双轴</h3>
+<p><strong>定义</strong>：双轴是在同一图上用左右两个不同刻度的纵轴表示两组量，常用于比较不同单位或规模。</p>
+<p><strong>机制</strong>：双轴可显示相关性但刻度选择可制造或掩盖关系；轴对齐、颜色和标签决定可读性。</p>
+<p><strong>例子</strong>：例如GDP 与失业率单位不同，可用双轴展示趋势，但刻度可让两者看起来同步或背离。</p>
+<p><strong>边界</strong>：双轴不是默认选择；刻度操纵会误导，读者易误读交叉点，关系比较应用同一标准化或分面，双轴需明确标注和谨慎使用。</p>
+<h3>指数化</h3>
+<p><strong>定义</strong>：指数化是把序列重新以某个基期为 100 或 1，便于比较不同规模序列的相对变化。</p>
+<p><strong>机制</strong>：指数化保留增长率但丢失绝对水平；基期选择、链式和同比会影响结果，不同序列需同基期。</p>
+<p><strong>例子</strong>：例如把两只股票都设为起点 100，可比较累计涨幅而非价格高低。</p>
+<p><strong>边界</strong>：指数化不是原始数据；基期操纵可夸大差异，绝对规模和波动被隐藏，分红、汇率和成分变化也可能使指数不可比。</p>
+<h3>对数</h3>
+<p><strong>定义</strong>：对数坐标按比例而非绝对差显示数值，等距离代表相同百分比变化。</p>
+<p><strong>机制</strong>：对数轴适合长期增长、跨数量级和厚尾数据；零和负值无法显示，读者可能误读绝对差距。</p>
+<p><strong>例子</strong>：例如股票从 10 到 20 与 100 到 200 在对数轴上距离相同。</p>
+<p><strong>边界</strong>：对数不是默认；它压缩大值、改变视觉斜率，普通读者可能低估绝对变化，零值和极端值处理也受限，需明确标注。</p>
+<h3>分面</h3>
+<p><strong>定义</strong>：分面是把数据按类别拆成多个同尺度小图，便于比较组间模式而不受双轴干扰。</p>
+<p><strong>机制</strong>：分面共享坐标或独立坐标影响可比性；小多图适合类别多、趋势比较和避免过度叠加。</p>
+<p><strong>例子</strong>：例如按国家分面展示通胀，能看出共同趋势和局部差异。</p>
+<p><strong>边界</strong>：分面不是简单切图；类别过多会碎片化，独立坐标会掩盖绝对差异，样本少的组噪声大，分面选择也可能隐藏总体模式。</p>
+<h3>散点</h3>
+<p><strong>定义</strong>：散点图用两个坐标轴展示观测点的联合分布，可揭示相关性、聚类、异常和非线性。</p>
+<p><strong>机制</strong>：点的大小、透明度和拟合线可增加信息；过度绘制会遮挡，相关系数不能替代视觉模式。</p>
+<p><strong>例子</strong>：例如收入与消费的散点可显示非线性饱和和离群点。</p>
+<p><strong>边界</strong>：散点不是因果图；相关可能由第三变量造成，坐标轴截断和点密度会误导，拟合线也可能过度解读噪声。</p>
+<h3>热力</h3>
+<p><strong>定义</strong>：热力图用颜色表示矩阵中数值大小，常用于相关性、地理、时间和分组比较。</p>
+<p><strong>机制</strong>：颜色刻度、分组顺序和缺失值处理决定解读；顺序聚类可揭示模式，但也会制造视觉分组。</p>
+<p><strong>例子</strong>：例如相关系数矩阵热力图显示资产联动，颜色深浅代表相关强弱。</p>
+<p><strong>边界</strong>：热力不是精确读数；色盲、打印和刻度选择会造成误读，聚类顺序可操纵，颜色也不适合精确比较，需附数值和清晰图例。</p>
+<h3>分布</h3>
+<p><strong>定义</strong>：分布图展示数值的频率、密度、分位数或尾部，常见直方图、箱线图、密度图和 Q-Q 图。</p>
+<p><strong>机制</strong>：箱线图显示中位数和四分位，直方图显示频率，密度图平滑分布；尾部和多峰需专门检查。</p>
+<p><strong>例子</strong>：例如收益分布直方图可显示厚尾和偏度，箱线图可比较组间中位数和离散度。</p>
+<p><strong>边界</strong>：分布图不是只看平均；分箱、平滑和坐标会改变形状，箱线图隐藏多峰，平均值可能掩盖尾部和子群差异。</p>
+<h3>误导图表与无障碍</h3>
+<p><strong>定义</strong>：误导图表通过截断坐标、 cherry-picking、错误比例、双轴和缺失基线扭曲结论；无障碍是让色盲、低视力和不同设备用户可读。</p>
+<p><strong>机制</strong>：误导常来自坐标操纵、图形面积与数值不符、选择性时间范围和因果暗示；无障碍需高对比、颜色冗余、文本替代和可缩放。</p>
+<p><strong>例子</strong>：例如截断纵轴让微小差异看起来巨大，红绿对比对色盲不友好。</p>
+<p><strong>边界</strong>：图表不是装饰；误导可能是有意或无意，无障碍也不是附加项，颜色 alone、动态图和低对比会排除用户，需从设计阶段处理。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：数据单位与统计口径（RES-001）。</li>
+<li>相关与推荐阅读：存量与流量（RES-002）、协方差与相关性（RES-010）。</li>
+</ul>
+<h2>练习</h2>
+<ol>
+<li>纵轴为 95–115，数值 107 的位置是多少？</li>
+<li>左轴 95–115、右轴 6.5–8.5 时，两线在几月交叉？</li>
+<li>为什么指数化之后两线不再交叉？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li><code>(107 - 95) ÷ 20 = 0.60</code>。</li>
+<li>3 月：收入 <code>(105 - 95) ÷ 20 = 0.50</code>，利润率 <code>(7.5 - 6.5) ÷ 2 = 0.50</code>。</li>
+<li>因为两条序列使用同一单位（1 月 = 100），位置可以直接比较；一升一降不会相交。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>National Institute of Standards and Technology; SEMATECH. “Scatter Plot.” <em>NIST/SEMATECH e-Handbook of Statistical Methods</em>, 1.3.3.26. <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda33q.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda33q.htm</a>（访问日期：2026-10-30）</li>
+<li>National Institute of Standards and Technology; SEMATECH. “Histogram.” <em>NIST/SEMATECH e-Handbook of Statistical Methods</em>, 1.3.3.14. <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda33e.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda33e.htm</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, B. and Dean, S. “Histograms, Frequency Polygons, and Time Series Graphs.” <em>Introductory Statistics 2e</em>, OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/2-2-histograms-frequency-polygons-and-time-series-graphs">https://openstax.org/books/introductory-statistics-2e/pages/2-2-histograms-frequency-polygons-and-time-series-graphs</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能用同一组数据构造零基线与截断轴两种图，并量化视觉斜率的差别</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能说明双轴图在什么条件下正当使用、什么条件下会制造不存在的共同走势</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能用同一组数据构造零基线与截断轴两种图，并量化视觉斜率的差别</li><li>能说明双轴图在什么条件下正当使用、什么条件下会制造不存在的共同走势</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/data-units-and-definitions/">RES-001 · 数据单位与统计口径</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/stocks-and-flows/">RES-002 · 存量与流量</a> </li><li> <a href="/learn/covariance-and-correlation/">RES-010 · 协方差与相关性</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda33q.htm" rel="noopener noreferrer" target="_blank">NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.26 Scatter Plot</a> <p>National Institute of Standards and Technology; SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：散点图把变量 Y 放在纵轴、变量 X 放在横轴，用于显示两个变量之间的关系；散点图能揭示关联，但没有任何统计程序能证明因果。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda33e.htm" rel="noopener noreferrer" target="_blank">NIST/SEMATECH e-Handbook of Statistical Methods, 1.3.3.14 Histogram</a> <p>National Institute of Standards and Technology; SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：直方图把数据范围分成等宽的组（class），组的划分可由使用者任意设定或按规则设定；纵轴为频数、横轴为被测量变量，显示中心、离散度、偏度、异常值和多峰。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/2-2-histograms-frequency-polygons-and-time-series-graphs" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 2.2 Histograms, Frequency Polygons, and Time Series Graphs</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：直方图的横轴标注数据本身、纵轴标注频数或相对频数；条形或组数需要选择，常见为 5 到 15 组。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/axes-dual-axes-and-misleading-charts/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

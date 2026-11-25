@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Event-Study Basics · 51Invest</title><meta name="description" content="After removing normal returns with a market model, 40 hypothetical firms show a three-day average cumulative abnormal return of 1.9% with a t value of 4.8; a control window with no injected effect still reads 0.1% in this sample, which is the sampling noise such estimates carry before clustering and model choice are considered."><link rel="canonical" href="https://research.51invest.com/en/learn/event-study-basics/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/event-study-basics/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/event-study-basics/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/event-study-basics/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/event-study-basics/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Event-Study Basics</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Event-Study Basics</h1> <p class="article-summary">After removing normal returns with a market model, 40 hypothetical firms show a three-day average cumulative abnormal return of 1.9% with a t value of 4.8; a control window with no injected effect still reads 0.1% in this sample, which is the sampling noise such estimates carry before clustering and model choice are considered.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M10 · 金融数据方法</strong></div> <div class="meta-item"><span>Level</span><strong>Systematic</strong></div> <div class="meta-item"><span>Read</span><strong>10 min · 14 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>Forty hypothetical firms make an announcement on the same event day. Does the event produce abnormal returns? A market model supplies normal returns, the three-day cumulative abnormal return CAR[-1,+1] measures the reaction, and a second three-day window that carries no injected effect by construction (t = −60 to −58) serves as a control. The return series is generated by an in-repo script over 131 trading days (t = −125 to +5) and is not real data.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Firms</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>Frequency and unit</td>
+<td align="right">daily (trading days); returns, AR and CAR in percent; t values unitless</td>
+</tr>
+<tr>
+<td>Simulated series</td>
+<td align="right">t = −125 to +5, 131 trading days</td>
+</tr>
+<tr>
+<td>Estimation window</td>
+<td align="right">100 trading days before the event (t = -120 to -21)</td>
+</tr>
+<tr>
+<td>Event window</td>
+<td align="right">-1 to +1, 3 trading days</td>
+</tr>
+<tr>
+<td>Control window</td>
+<td align="right">t = −60 to −58, 3 trading days (inside the estimation window, no injected effect by construction)</td>
+</tr>
+<tr>
+<td>Injected effect</td>
+<td align="right">+1.5% on the event day only</td>
+</tr>
+<tr>
+<td>Mean CAR</td>
+<td align="right">1.9%</td>
+</tr>
+<tr>
+<td>Cross-sectional SD</td>
+<td align="right">2.5%</td>
+</tr>
+<tr>
+<td>Cross-sectional t</td>
+<td align="right">4.8</td>
+</tr>
+<tr>
+<td>Share of firms with negative CAR</td>
+<td align="right">25% (10/40)</td>
+</tr>
+<tr>
+<td>Control window mean CAR</td>
+<td align="right">0.1% (t = 0.5)</td>
+</tr>
+<tr>
+<td>Theoretical CAR SD</td>
+<td align="right">2.1% (sqrt(3) × 1.2% residual volatility)</td>
+</tr>
+<tr>
+<td>Realized standard error</td>
+<td align="right">0.40% (2.5% divided by sqrt(40))</td>
+</tr>
+<tr>
+<td>License</td>
+<td align="right">simulated data, no external license</td>
+</tr>
+</tbody></table>
+<h2>Method and assumptions</h2>
+<p>The market model r_i,t = α_i + β_i r_m,t + ε_i,t is fitted firm by firm with least squares on the 100 trading days of the estimation window; abnormal returns AR are the event-window actual returns minus those fitted predictions, and CAR accumulates them across the window. The normal returns are predictions from a fitted line, and because data do not fall exactly on that line, the predictions are only approximate (OpenStax, 12.3). The estimation window ends at t = -21, leaving t = -20 to -2 as a gap that lowers the chance of anticipation leakage entering the parameter estimates. Both windows should be chosen by a pre-specified rule before the event outcome is seen; adjusting them afterwards amounts to repeated trials and inflates significance. Assumptions: the estimation window is uncontaminated by the event, residuals are independent and identically distributed, and event days are not clustered. The MacKinlay (1997) abstract states the purpose verbatim as &quot;The goal of an event study is to measure the effects of an economic event on the value of firms.&quot; and the premise as &quot;Event study methods exploit the fact that, given rationality in the marketplace, the effects of an event will be reflected immediately in security prices.&quot;; the same abstract says the paper describes &quot;event study methods ... including some of the potential complications&quot; [1]. Only the abstract on the RePEc/IDEAS index record was retrieved here, and that record notes that full-text access is restricted to AEA members, so these three attributions stop at the abstract and are not extended to the article&#39;s own argument.</p>
+<h2>Results</h2>
+<p>Mean CAR is 1.9% with a cross-sectional SD of 2.5% and t = 4.8; 25% of firms (10 of 40) have a negative CAR. All 40 firms share one event day, so cross-sectional independence does not hold, and this t value is only an upper bound for the reason given under Robustness. The injected effect is 1.5%, so the estimate sits about 0.4 percentage points above it, roughly 1.0 realized standard error (0.40 percentage points) - within sampling error. The theoretical three-day CAR SD is sqrt(3) × 1.2% = 2.1%, while the realized SD is 2.5%, because each firm&#39;s α and β are estimated from 100 days and that estimation error also enters the CAR. The control window (t = −60 to −58) reads 0.1% with t = 0.5 in this sample: it is indistinguishable from zero but not exactly zero, which is the sampling noise of 40 firms rather than an event effect.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-win-title fig-win-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-win-title">Window layout of an event study</title>
+    <desc id="fig-win-desc">A trading-day scale from minus 125 to plus 5, one hundred and thirty one trading days mapped onto three hundred and twenty pixels, two point four six one five pixels per day. Above the axis the dark band is the estimation window (minus 120 to minus 21, one hundred days, two hundred forty six point one five pixels wide), the light band to its right is the gap (minus 20 to minus 2, nineteen days, forty six point seven seven pixels) and the narrow gold band is the event window (minus 1 to plus 1, three days, seven point three eight pixels). Below the axis a pale gold band marks the control window (minus 60 to minus 58), also three days, positioned horizontally inside the estimation window. No cumulative abnormal return curve is drawn because the day-by-day path is not given in the text.</desc>
+    <line x1="60" y1="122" x2="380" y2="122" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="71.08" y="96" width="246.15" height="24" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="317.23" y="96" width="46.77" height="24" fill="var(--accent)" opacity="0.22"></rect>
+    <rect x="364" y="96" width="7.38" height="24" fill="var(--gold)"></rect>
+    <rect x="218.77" y="142" width="7.38" height="16" fill="var(--gold)" opacity="0.45"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="18">Trading days (2.4615 px per day)</text>
+      <text x="150" y="112">estimation: 100 days</text>
+      <text x="322" y="112">gap</text>
+      <text x="286" y="88" font-size="10">event −1 to +1</text>
+      <text x="230" y="155" font-size="10">control −60 to −58</text>
+      <text x="66" y="136" font-size="10">−120</text>
+      <text x="310" y="136" font-size="10">−21</text>
+      <text x="364" y="136" font-size="10">0</text>
+      <text x="374" y="136" font-size="10">+5</text>
+      <text x="60" y="180" font-size="10">event-day shock +1.5% → mean CAR 1.9%, SD 2.5%, t = 4.8</text>
+      <text x="60" y="197" font-size="10">control window reads +0.1% (t = 0.5); 10/40 firms negative</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: the window layout of the teaching example, drawn on the stated scale - 131 trading days over 320 pixels, 2.4615 pixels per trading day. Estimation runs over t = −120 to −21 (100 days, 246.15 pixels), the gap from −20 to −2 (19 days, 46.77 pixels), and the event window from −1 to +1 (3 days, the 7.38 pixel gold band). The pale band below the axis is the control window, t = −60 to −58, also three days and positioned inside the estimation window. The run gives a mean CAR of 1.9%, a cross-sectional SD of 2.5%, t = 4.8, and a control window of 0.1% (t = 0.5). No CAR line appears because the daily cumulative path is not given - inventing it would be fabrication.; sample: the article’s own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Diagram: the error bar on 1.9%</h2>
+<figure id="figure-event-ci">
+  <svg role="img" aria-labelledby="fig-event-ci-title-en fig-event-ci-desc-en" viewBox="0 0 380 300" width="100%">
+    <title id="fig-event-ci-title-en">The 95% interval around mean CAR 1.9% and the position of the 1.5% injection</title>
+    <desc id="fig-event-ci-desc-en">A scale from minus one to three: the 1.5% injection sits at 225 pixels, the 1.9% estimate at 253 pixels, and the error bar runs from 1.12 to 2.68. The injection sits inside the interval and zero sits outside it.</desc>
+    <text x="20" y="22" font-size="11" font-weight="650" fill="var(--text)" font-family="inherit">How wide is the error bar on 1.9%</text>
+    <text x="20" y="42" font-size="9.5" fill="var(--muted)" font-family="inherit">40 hypothetical firms | three-day CAR | market model</text>
+    <text x="225" y="76" font-size="9.5" font-weight="600" fill="var(--gold)" text-anchor="middle" font-family="inherit">Injected 1.5%</text>
+    <text x="263" y="108" font-size="10" font-weight="650" fill="var(--text)" text-anchor="start" font-family="inherit">Estimate 1.9%</text>
+    <line x1="225" y1="84" x2="225" y2="190" stroke="var(--gold)" stroke-width="1.5"/>
+    <rect x="198" y="125" width="110" height="20" fill="var(--accent)" opacity="0.12"/>
+    <line x1="198" y1="135" x2="308" y2="135" stroke="var(--accent)" stroke-width="1.5"/>
+    <line x1="198" y1="129" x2="198" y2="141" stroke="var(--accent)" stroke-width="1.5"/>
+    <line x1="308" y1="129" x2="308" y2="141" stroke="var(--accent)" stroke-width="1.5"/>
+    <circle cx="253" cy="135" r="4" fill="var(--accent)"/>
+    <text x="236" y="160" font-size="8.6" fill="var(--secondary)" text-anchor="start" font-family="inherit">95% interval ≈ 1.12–2.68</text>
+    <line x1="50" y1="190" x2="330" y2="190" stroke="var(--border)" stroke-width="1.5"/>
+    <line x1="120" y1="84" x2="120" y2="190" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4"/>
+    <g fill="var(--muted)" font-size="9" text-anchor="middle" font-family="inherit">
+      <text x="50" y="208">−1%</text>
+      <text x="120" y="208">0</text>
+      <text x="190" y="208">1%</text>
+      <text x="260" y="208">2%</text>
+      <text x="330" y="208">3%</text>
+    </g>
+    <text x="40" y="230" font-size="9.5" fill="var(--accent)" font-family="inherit">vs 0: t = 4.8, interval excludes 0</text>
+    <text x="40" y="248" font-size="9.2" fill="var(--muted)" font-family="inherit">vs 1.5: 0.4 points ≈ 1 standard error, inside the interval</text>
+    <text x="40" y="270" font-size="9" fill="var(--muted)" font-family="inherit">Error bar: ±1.96×0.40 normal approximation; 40 firms share one event day,</text>
+    <text x="40" y="286" font-size="9" fill="var(--muted)" font-family="inherit">so treat t = 4.8 as an upper bound, not exact independence.</text>
+  </svg>
+  <figcaption>Figure 2: mean CAR is 1.9% with a realized standard error of 0.40 percentage points; a ±1.96×0.40 normal approximation gives a 95% interval of about 1.12–2.68. The 1.5% injection sits inside the interval, so the 0.4-point gap between 1.9 and 1.5 is within sampling error; zero lies outside, and t = 4.8 is only a rough upper bound against zero. All 40 firms share one event day, so cross-sectional independence does not hold.; sample: the article’s own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<ul>
+<li>A market-adjusted model, or added size and value factors, would change the point estimate; report both the baseline and an alternative benchmark.</li>
+<li>When events cluster on one day, the cross-sectional t overstates significance and the remedy is to aggregate by day and use clustered standard errors; here all 40 firms share a single event day, so cross-sectional independence fails by construction and that day offers no degrees of freedom for the aggregation.</li>
+<li>The control window sits inside the estimation window, so its &quot;no injection&quot; is a property of the construction: it demonstrates only that the test does not manufacture significance out of nothing, and it is not an independent empirical placebo. A placebo of the latter kind needs a span that enters neither the fit nor the event count.</li>
+<li>Judging whether the market model is adequate takes residual analysis, since a single fit statistic is not validation (NIST/SEMATECH, 4.4.4); a wrong functional form, heteroskedasticity and correlated residuals all change the standard errors.</li>
+<li>Inspect the CAR distribution and outliers so the mean is not driven by a few firms, and check whether information leaked before the event.</li>
+</ul>
+<h2>Limitations</h2>
+<p>The simulation has one clean event day; real events involve uncertain dates, leakage, contemporaneous news and trading costs. The market model may omit risk factors, and with only 40 firms the t value relies on approximate normality. The result describes an average abnormal return; it does not explain a mechanism or establish causation.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Generate 131 trading days of market returns and 40 firm return series with the fixed seed.</li>
+<li>Fit α and β firm by firm on the 100-day estimation window with least squares.</li>
+<li>Compute AR and CAR over the event window t = −1 to +1.</li>
+<li>Compute the cross-sectional mean, SD, standard error and t value.</li>
+<li>Repeat steps 3 and 4 over t = −60 to −58 as the control.</li>
+</ol>
+<p>Every figure in this article comes from one run of <code>scripts/simulate-event-study.mjs</code>: with no arguments it prints the parameters and the results, <code>--selftest</code> asserts the structure and a 200-replication calibration, and <code>--check</code> compares the table in this article against the run.</p>
+<pre><code class="language-text">seed = 20261032; firms = 40; days t = -125..+5 (131)
+beta = 1.0 + N(0,0.2); alpha = N(0,0.001)
+r[i,t] = alpha + beta*rm[t] + N(0,0.012)
+rm[t] = N(0.006,0.04)
+event day 0: +0.015
+estimation: t = -120..-21 (OLS per firm)
+event CAR: t = -1..+1; control CAR: t = -60..-58
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>In the simulation the event window carries a significantly positive abnormal return, while the control window reads 0.1% (t = 0.5) in this draw - indistinguishable from zero but not exactly zero. That supports the claim that the procedure does not manufacture significance, not the claim that a window without an event must equal zero. One event, 40 firms and a three-day window cannot identify how real announcements are priced, and the average CAR is not a causal mechanism.</p>
+<!-- kp-supplement:start -->
+<h2>Knowledge-point review</h2>
+<h3>returns</h3>
+<p><strong>Definition</strong>: Return is the rate of change in price or value: simple return is end minus start over start, log return is the difference in logs.</p>
+<p><strong>Mechanism</strong>: Simple returns aggregate across assets, log returns add over time; dividends, splits and fees must be included, and frequency affects annualisation.</p>
+<p><strong>Example</strong>: For example, 100 to 110 is a 10 percent simple return and about 9.53 percent log return.</p>
+<p><strong>Boundary</strong>: Return is not price; frequencies cannot be averaged directly, simple and log returns diverge in large moves, and bad adjustment or cash-flow handling creates fake returns.</p>
+<h3>price adjustment</h3>
+<p><strong>Definition</strong>: Price adjustment restates historical prices for splits, dividends and rights issues so return series are continuous and comparable.</p>
+<p><strong>Mechanism</strong>: Forward adjustment rebases history to the current basis, backward keeps the historical basis; dividend adjustment adds payouts or adjusts prices.</p>
+<p><strong>Example</strong>: For example, after a 2-for-1 split the price halves, and adjusted history halves too, avoiding a fake fall.</p>
+<p><strong>Boundary</strong>: Adjusted prices are not actual trades; forward and backward values differ, dividend tax and rights rules affect adjustment, and inconsistent methods break backtests and comparisons.</p>
+<h3>total return</h3>
+<p><strong>Definition</strong>: Total return includes price change plus reinvested dividends, interest and coupons, reflecting the actual holding return.</p>
+<p><strong>Mechanism</strong>: Total-return indexes assume reinvestment; price return ignores income, net return deducts taxes, and currency and fees matter.</p>
+<p><strong>Example</strong>: For example, a 2 percent dividend plus 5 percent price gain gives about 7 percent total return, slightly more with reinvestment.</p>
+<p><strong>Boundary</strong>: Total return is not price return; reinvestment assumptions, taxes and FX change it, dividend timing and withholding matter, and income assets must be compared on total return.</p>
+<h3>benchmarks in data</h3>
+<p><strong>Definition</strong>: A benchmark is the reference for a strategy, such as a market index, peer group, liability or cash, matching scope and risk.</p>
+<p><strong>Mechanism</strong>: Benchmarks affect excess return, attribution and incentives; currency, fees and rebalancing must align.</p>
+<p><strong>Example</strong>: For example, a China equity strategy uses the CSI 300 total-return index, not the price index.</p>
+<p><strong>Boundary</strong>: A benchmark is not better when lower; mismatch creates fake alpha, constituent and weight changes affect comparison, and survivorship and fees are often ignored.</p>
+<h3>futures rolls</h3>
+<p><strong>Definition</strong>: A roll closes an expiring futures contract and moves to a later one, and continuous series must handle the roll jump.</p>
+<p><strong>Mechanism</strong>: Roll return depends on the curve; continuous contracts use splicing, ratio or Panama methods, producing different histories.</p>
+<p><strong>Example</strong>: For example, crude futures roll monthly and a contango curve costs long positions at each roll.</p>
+<p><strong>Boundary</strong>: Rolling is not costless; curve, liquidity and delivery rules create roll P&amp;L, continuous methods can exaggerate or hide returns, and backtests must state roll rules.</p>
+<h3>trading calendars</h3>
+<p><strong>Definition</strong>: A trading calendar defines market open, close, half days and holidays, affecting alignment, returns and backtests.</p>
+<p><strong>Mechanism</strong>: Different calendars, time zones and settlement cycles create gaps; cross-market strategies need timestamp alignment to avoid misalignment and fake returns.</p>
+<p><strong>Example</strong>: For example, China and US holidays differ, so a cross-market portfolio may have prices for only one side on a date.</p>
+<p><strong>Boundary</strong>: The calendar is not background; missing days, half days and time-zone errors create fake volatility and look-ahead, vendor calendars can be stale, and explicit handling is required.</p>
+<h3>event and portfolio data</h3>
+<p><strong>Definition</strong>: Event data record corporate actions, earnings, mergers, dividends, splits and delistings, and portfolio data record holdings, weights and trades.</p>
+<p><strong>Mechanism</strong>: Event data support adjustment, factors and backtests; portfolio data support attribution, risk and capacity, and timing and versions determine correctness.</p>
+<p><strong>Example</strong>: For example, a merger completion changes shares and index membership, and delisting creates survivorship bias.</p>
+<p><strong>Boundary</strong>: An event is not effective on the announcement date; effective, ex-date and pay date differ, portfolio data can lag or overlap, and wrong handling causes look-ahead and fake returns.</p>
+<!-- kp-supplement:end -->
+
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Introduction to Linear Regression (RES-013).</li>
+<li>Related reading: Covariance and Correlation (RES-010), Introduction to Linear Regression (RES-013), A Reproducible Research Workflow (RES-008).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Event-Study Basics: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Event-Study Basics — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Event-Study Basics: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">After removing</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">normal returns…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">After removing</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">normal returns</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">with a market</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">model, 40</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">hypothetical…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Firms | 40</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Frequency</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">and unit |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 3: Event-Study Basics — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Event-Study Basics: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Event-Study Basics: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulation has one</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">clean event day; real</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">events involve uncertain</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">dates, leakage, contemporane…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Forty hypothetical firms</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">make an announcement on the</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">same event day.</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Event-Study Basics — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Event-Study Basics: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Event-Study Basics: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">After removing</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">normal returns with…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulation has</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">one clean event day…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Forty hypothetical firms make</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">an announcement on the same…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 5: Event-Study Basics — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>Why must the estimation window exclude the event window?</li>
+<li>Does a significant CAR prove that the event caused the return change?</li>
+<li>Why does event-day clustering overstate the t value?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>The event would contaminate the α and β estimates, absorbing part of the abnormal return into normal returns.</li>
+<li>No. Contemporaneous news, selection or model misspecification may explain it; control windows, alternative benchmarks and robust standard errors are needed.</li>
+<li>Firms trading on the same day have correlated returns, so the cross-sectional independence assumption fails, standard errors are understated and t values are too large.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>MacKinlay, A. Craig. “Event Studies in Economics and Finance.” <em>Journal of Economic Literature</em> 35, no. 1 (1997): 13–39. License unknown; what was retrieved here is the abstract carried by the RePEc/IDEAS index record, which notes that full-text access is restricted to AEA members, so the attribution reaches the abstract only. <a href="https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html">https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html</a> (accessed 2026-11-03)</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “12.3 The Regression Equation.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation">https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation</a> (accessed 2026-10-30)</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “4.4.4 How can I tell if a model fits my data?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Distinguish estimation, gap and event windows and explain why a three-day event window still needs 100 estimation days</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Recompute the cross-sectional t from the mean CAR of 1.9% and the cross-sectional SD of 2.5% (1.9 divided by 2.5/sqrt(40) is about 4.8), and note the sensitivity to clustering and model choice</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Distinguish estimation, gap and event windows and explain why a three-day event window still needs 100 estimation days</li><li>Recompute the cross-sectional t from the mean CAR of 1.9% and the cross-sectional SD of 2.5% (1.9 divided by 2.5/sqrt(40) is about 4.8), and note the sensitivity to clustering and model choice</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/covariance-and-correlation/">RES-010 · Covariance and Correlation</a> </li><li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li><li> <a href="/en/learn/reproducible-research-workflow/">RES-008 · A Reproducible Research Workflow</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html" rel="noopener noreferrer" target="_blank">Event Studies in Economics and Finance</a> <p>A. Craig MacKinlay · Journal of Economic Literature, 35(1), 13-39</p> <p>Accessed: 2026-11-03 · License: RePEc index record; cite the indexed item and link, no reproduction</p> <p>Supports: The three claims about purpose, premise and scope are carried verbatim by the abstract on that page: &quot;The goal of an event study is to measure the effects of an economic event on the value of firms.&quot;; &quot;Event study methods exploit the fact that, given rationality in the marketplace, the effects of an event will be reflected immediately in security prices.&quot;; &quot;In this paper event study methods are described including some of the potential complications. An example is included to illustrate the approach.&quot;. Evidence path: curl returned 200 for the IDEAS record, and the tag-stripped abstract text agreed with two independently worded WebFetch passes. The same page states verbatim &quot;Download Restriction: Access to full text is restricted to AEA members.&quot;, so the full article was not retrieved in this environment and the three attributions stop at the abstract rather than the article&#39;s own argument. The control-window dates, the simulated span and the injected effect are not this source&#39;s claims; they are the article&#39;s own teaching-model specification, produced by the in-repo generator.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.3 The Regression Equation</a> <p>OpenStax · OpenStax, Rice University</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: A least-squares line is used to predict y from x; data rarely fit exactly, so predictions are approximate.</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 4.4.4 How can I tell if a model fits my data?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: A high R² does not guarantee a good fit; residual analysis is the primary validation tool and can check functional form, heteroskedasticity and correlated errors.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/event-study-basics/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

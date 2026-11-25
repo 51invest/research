@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>趋势非平稳与伪回归 · 巫妖投资</title><meta name="description" content="两个各自带趋势的非平稳序列可能产生很高的 R² 和显著斜率，即使它们彼此独立；水平回归的显著性必须与趋势、自相关和差分结果一起解读。"><link rel="canonical" href="https://research.51invest.com/learn/trends-nonstationarity-and-spurious-regression/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/trends-nonstationarity-and-spurious-regression/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/trends-nonstationarity-and-spurious-regression/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/trends-nonstationarity-and-spurious-regression/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/trends-nonstationarity-and-spurious-regression/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">趋势非平稳与伪回归</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">趋势非平稳与伪回归</h1> <p class="article-summary">两个各自带趋势的非平稳序列可能产生很高的 R² 和显著斜率，即使它们彼此独立；水平回归的显著性必须与趋势、自相关和差分结果一起解读。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M08 · 时间序列</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>数据由 <code>scripts/simulate-spurious-regression.mjs</code> 生成：种子 20261030 的那一次抽取列在正文，另有从 20261030 起连续 500 次独立抽取的分布；单次抽取只作示例，结论以分布为准。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td align="right">随机游走，月漂移 0.30，冲击 SD 1.00</td>
+</tr>
+<tr>
+<td>B</td>
+<td align="right">随机游走，月漂移 0.25，冲击 SD 1.20</td>
+</tr>
+<tr>
+<td>水平回归斜率 b</td>
+<td align="right">0.450（SE 0.022）</td>
+</tr>
+<tr>
+<td>水平回归 R²（500 次抽取的中位数）</td>
+<td align="right">0.793</td>
+</tr>
+<tr>
+<td>水平回归 R²（种子 20261030 单次抽取）</td>
+<td align="right">0.003</td>
+</tr>
+<tr>
+<td>差分回归斜率 b</td>
+<td align="right">0.052（SE 0.124，种子 20261030 单抽）</td>
+</tr>
+<tr>
+<td>差分回归 R²（中位数）</td>
+<td align="right">0.004</td>
+</tr>
+<tr>
+<td>去趋势回归 R²（中位数）</td>
+<td align="right">0.091</td>
+</tr>
+<tr>
+<td>残差 lag-1 自相关</td>
+<td align="right">0.963（种子 20261030 单抽）</td>
+</tr>
+</tbody></table>
+<p>A、B 为教学用的无量纲水平序列；漂移与冲击标准差均按每月计，回归斜率读作“每期 A 变化一单位对应的 B 变化”。</p>
+<h2>方法与假设</h2>
+<p>水平回归 B_t = a + b A_t + e_t 假设误差平稳、独立、同方差。若 A、B 含随机趋势（单位根），常规 t 分布不适用；两个独立趋势序列容易产生虚假显著关系，即伪回归（Granger &amp; Newbold 1974）。诊断包括时间图、自相关、单位根检验，以及比较水平、差分和去趋势结果。差分回归 ΔB_t = a + b ΔA_t + e_t 去除随机趋势；若变量协整，水平回归才可能有意义。自相关可用于检测非随机性，随机性不成立时应改用时间序列模型（NIST 1.3.5.12）。</p>
+<h2>结果</h2>
+<p>先看单次抽取（种子 20261030）：水平回归 b = -0.069，SE = 0.120，t = -0.6，R² = 0.003，p = 0.57，残差 lag-1 自相关 0.963。这一对随机游走在这一回并没有造出漂亮的伪回归——单次抽取本就不可当证据。真正说明机制的是 500 次独立抽取的分布：水平回归 R² 的中位数为 0.793，5% 分位 0.226，95% 分位 0.938，有 83% 的抽取 R² 高于 0.5。两个序列按构造独立，高拟合来自各自的随机趋势在有限样本中呈现出的同向漂移，不是经济关系。</p>
+<p>同一批 500 次抽取里，差分回归 R² 的中位数只有 0.004，95% 分位 0.031，没有一次抽取超过 0.5；本种子单次抽取为 b = 0.052，SE = 0.124，t = 0.4，R² = 0.001，p = 0.68，相关系数 0.04。差分去掉的是单位根，所以伪关系消失。去趋势则不同：本种子抽取给出 b = -0.945，SE = 0.087，t = -10.9，R² = 0.500，p = 0.00；500 次抽取的中位数是 0.091，95% 分位 0.491，仍有 5% 的抽取高于 0.5。原因是随机游走减去一条拟合直线之后仍是单位根过程，去趋势不会去掉单位根，这也正是它与趋势平稳情形的分界。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-spur-title fig-spur-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-spur-title">三种设定下的拟合优度</title>
+    <desc id="fig-spur-desc">三根零基线柱，画的是 500 次独立抽取的 R² 中位数，每 0.1 个 R² 为 15 像素。水平回归 0.793（高 118.9 像素）；一阶差分 0.004（高 0.7 像素）；去趋势 0.091（高 13.7 像素）。第一根柱远高于另两根。</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="90" y="61.1" width="60" height="118.9" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="190" y="179.3" width="60" height="0.7" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="290" y="166.3" width="60" height="13.7" fill="var(--accent)" opacity="0.75"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">R²（零基线，每 0.1 = 15 像素）</text>
+      <text x="96" y="57">0.793</text>
+      <text x="196" y="175">0.004</text>
+      <text x="296" y="162">0.091</text>
+      <text x="84" y="200">水平（中位数）</text>
+      <text x="192" y="200">一阶差分</text>
+      <text x="290" y="200">去趋势</text>
+      <text x="60" y="36">两条独立随机游走各自带趋势 ⇒ 水平回归常给出高 R²；差分后消失，去趋势不保证消失</text>
+    </g>
+  </svg>
+<figcaption>图 1：三类设定的 R² 中位数（500 次独立抽取；零基线，每 0.1 为 15 像素）：水平 0.793、一阶差分 0.004、去趋势 0.091。两个序列按构造独立（月漂移 0.30 与 0.25），共线的是时间趋势而非经济关系；差分去掉单位根故拟合几乎归零，而去趋势不会去掉单位根，所以只降到 0.091 且 95% 分位仍有 0.491。数值由 `scripts/simulate-spurious-regression.mjs` 生成，为教学模拟。
+</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>换种子或样本期，水平 R² 依旧常常很高（500 次抽取中 83% 高于 0.5），差分回归则从未高于 0.5；单个种子的数值不能当作结论，本例种子 20261030 的水平 R² 就只有 0.003。</li>
+<li>用对数差分（增长率）代替简单差分：b = 0.245，SE = 0.093，R² = 0.057——本种子的这一次抽取反而给出了看起来显著的负相关方向之外的结果，说明单抽的符号与大小都不稳定，应报告分布而非挑选种子。</li>
+<li>把时间趋势项直接放进水平回归，等价于这里的去趋势处理：随机游走去趋势后仍是单位根过程，500 次抽取的中位 R² 为 0.091、95% 分位 0.491，并不自动恢复“干净”的关系。</li>
+<li>若序列是趋势平稳而非单位根，去趋势后可能恢复关系；误判非平稳会过度差分。</li>
+<li>单位根检验功效低，不能仅凭一次检验断定；应结合经济含义和多个诊断。</li>
+</ul>
+<h2>局限</h2>
+<p>模拟展示的是机制，不是对任何真实序列的检验。真实数据有结构变化、季节性、测量误差和共同冲击；伪回归与真实共同趋势难以仅凭统计区分。本站的图表与数据快照展示的是共动与相关，属于关联证据，本文的教训同样适用于它们，不能据此得出因果或预测结论。高 R² 不是模型正确的证据，残差分析才能提供模型充分性的信息（NIST 4.4.4）。需要单位根或协整检验、稳健标准误和样本外验证。数值为模拟，不是真实数据。</p>
+<h2>复现</h2>
+<ol>
+<li>画两个序列的时间图。</li>
+<li>计算水平和差分回归、R² 和 t。</li>
+<li>检查残差自相关和单位根。</li>
+<li>加入趋势项或改用差分。</li>
+<li>报告所有口径，不只保留显著结果。</li>
+<li>用固定种子复现模拟。</li>
+</ol>
+<pre><code class="language-text">node scripts/simulate-spurious-regression.mjs          # 打印种子 20261030 的单抽数值与 500 次抽取分布
+node scripts/simulate-spurious-regression.mjs --check   # 断言正文引用的每个数值都由脚本给出
+node scripts/simulate-spurious-regression.mjs --selftest # 确定性、OLS 与 t 分布的已知答案测试
+
+模型（每月一次，先 A 后 B，故一个种子固定整条样本）：
+A[t] = A[t-1] + 0.30 + N(0, 1.00), A[0] = 0
+B[t] = B[t-1] + 0.25 + N(0, 1.20), B[0] = 0
+levels: B ~ A   changes: diff(B) ~ diff(A)   detrended: 去掉各自拟合线性趋势后 B ~ A
+</code></pre>
+<p>正文所有数值由上述脚本生成，没有为“好看”挑选种子；旧版伪代码不再保留，避免两套模型说明互相矛盾。</p>
+<h2>结论强度</h2>
+<p>就机制而言，500 次独立抽取里水平回归 R² 的中位数为 0.793（83% 高于 0.5），而两个序列按构造独立；差分后中位数降到 0.004 且无一超过 0.5。本例种子 20261030 的单次抽取水平 R² 只有 0.003、去趋势后反而有 0.500，这恰好说明两件事：单抽不可当证据，而去趋势不会去掉单位根。因此，水平回归的显著性不能单独作为关系证据，必须处理趋势和非平稳，并按分布报告。这不是对真实市场的因果或预测结论。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>趋势平稳</h3>
+<p><strong>定义</strong>：趋势平稳是序列围绕确定性趋势波动、去除趋势后平稳；与单位根过程不同，冲击的影响是否永久消失是关键。</p>
+<p><strong>机制</strong>：趋势平稳序列可用去趋势回归，单位根需差分；错误处理会造成伪相关或过度差分。</p>
+<p><strong>例子</strong>：例如实际 GDP 常被建模为趋势平稳或含单位根，争论影响预测和因果。</p>
+<p><strong>边界</strong>：趋势平稳不是视觉判断；单位根检验功效低，结构断点会误判，趋势和随机漫步难区分，模型选择会影响长期预测。</p>
+<h3>差分</h3>
+<p><strong>定义</strong>：差分是用当前值减前一期值，去除趋势和单位根，使序列更平稳。</p>
+<p><strong>机制</strong>：一阶差分得到变化量，季节差分去除季节模式；过度差分会引入负自相关和噪声。</p>
+<p><strong>例子</strong>：例如价格水平差分得到收益率，GDP 水平差分得到增长率。</p>
+<p><strong>边界</strong>：差分不是越多越好；它会丢失水平信息、放大噪声，单位根和趋势平稳处理不同，差分后模型解释也改变。</p>
+<h3>滞后</h3>
+<p><strong>定义</strong>：滞后是把变量的过去值作为解释变量或工具，用于捕捉动态、预期和因果时点。</p>
+<p><strong>机制</strong>：滞后阶数由信息准则、理论和样本决定；滞后可处理自相关和反向因果，但也会引入遗漏和过度拟合。</p>
+<p><strong>例子</strong>：例如用过去季度投资预测当前 GDP，或用滞后政策变量识别效应。</p>
+<p><strong>边界</strong>：滞后不是因果证明；选择偏差、后视偏差和滞后长度操纵会影响结果，滞后变量也可能与其他因素相关，动态模型需稳定性检验。</p>
+<h3>协整</h3>
+<p><strong>定义</strong>：协整是两个或多个非平稳序列的线性组合平稳，表示它们存在长期均衡关系。</p>
+<p><strong>机制</strong>：协整可用 Engle-Granger 或 Johansen 检验；误差修正模型同时刻画长期关系和短期调整。</p>
+<p><strong>例子</strong>：例如房价和收入可能各自趋势，但价租比或收入比存在长期均衡。</p>
+<p><strong>边界</strong>：协整不是任意相关；伪回归、结构断点和样本期会制造假协整，均衡关系也可能变化，交易策略还需考虑调整速度和成本。</p>
+<h3>季节性</h3>
+<p><strong>定义</strong>：季节性是在固定周期（月、季、周）重复的模式，由天气、节日、生产周期和行为造成。</p>
+<p><strong>机制</strong>：季节模型用虚拟变量、傅里叶项、季节差分或分解；季节调整和季节预测需区分真实季节和一次性事件。</p>
+<p><strong>例子</strong>：例如零售在春节前上升、夏季用电高峰，是季节性。</p>
+<p><strong>边界</strong>：季节性不是固定规律；节日移动、气候和结构变化会改变模式，过度季节调整会消除真实信号，季节和周期也易混淆。</p>
+<h3>滚动分析</h3>
+<p><strong>定义</strong>：滚动分析是在移动窗口上重复估计或回测，观察参数、收益和风险随时间的变化。</p>
+<p><strong>机制</strong>：窗口长度权衡稳定性与适应性；滚动回测可检测过拟合和 regime 变化，但会产生多重比较和边界效应。</p>
+<p><strong>例子</strong>：例如用 36 个月滚动窗口估计 beta，观察其漂移。</p>
+<p><strong>边界</strong>：滚动不是样本外证明；窗口选择影响结果，重叠窗口相关性高，滚动回测仍可数据窥探，结构断点会使历史窗口失效。</p>
+<h3>结构变化和波动</h3>
+<p><strong>定义</strong>：结构变化是数据生成过程在某个时点发生持久改变，波动是方差随时间的聚集和变化。</p>
+<p><strong>机制</strong>：结构断点检验（Chow、Bai-Perron）和波动模型（ARCH/GARCH）用于识别；政策、技术和危机常造成断点。</p>
+<p><strong>例子</strong>：例如金融危机后波动率上升并持续聚集，监管改革改变市场结构。</p>
+<p><strong>边界</strong>：结构变化不是异常点；断点位置和数量难确定，波动聚集也可能由混杂造成，历史窗口在这些变化后不再代表未来。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：线性回归入门（RES-013）。</li>
+<li>相关与推荐阅读：指数化对数与增长率（RES-006）、线性回归入门（RES-013）、因果关系与识别（RES-015）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">趋势非平稳与伪回归：机制链</title>
+    <desc id="fig-batch-chain-desc">趋势非平稳与伪回归 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">趋势非平稳与伪回归：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">两个各自带趋势的非平</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">稳序列可能产生很高的…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">两个各自带趋势的非</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">平稳序列可能产生很</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">高的 R² 和显著斜</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">率，即使它们彼此独</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">立；水平回归的显著…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：数据由</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">scripts/simulate-…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：数据由</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">scripts/simulate</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-spurious-regres</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">sion.mjs</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">生成：种子 202610…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | | A…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| A | 随机游走，月</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">漂移 0.30，冲击</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">SD 1.00 | | B |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：趋势非平稳与伪回归的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">趋势非平稳与伪回归：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">趋势非平稳与伪回归：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟展示的是机制，不是对任何真实</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">序列的检验。真实数据有结构变化、</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">季节性、测量误差和共同冲击；伪回</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">归与真实共同趋势难以仅凭统计区分…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：趋势非平稳与伪回归的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">趋势非平稳与伪回归：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">趋势非平稳与伪回归：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">两个各自带趋势的非平稳序</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">列可能产生很高的 R²…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟展示的是机制，不是对</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">任何真实序列的检验。真实…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：趋势非平稳与伪回归的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>为什么两个独立趋势序列会得到显著斜率？</li>
+<li>差分与去趋势有什么区别？</li>
+<li>高 R² 为什么不能证明模型正确？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>两者都有随时间上升的趋势，水平回归把共同趋势误当成共同变化；残差高度自相关，常规标准误过小。</li>
+<li>差分去除随机趋势，关注逐期变化；去趋势去除确定性时间趋势，保留水平信息。选择取决于趋势类型。</li>
+<li>R² 只衡量样本内拟合比例；残差自相关、异方差或遗漏变量都可能使高 R² 的模型无效。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “1.3.5.12 Autocorrelation.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35c.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda35c.htm</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “4.4.4 How can I tell if a model fits my data?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm</a>（访问日期：2026-10-30）</li>
+<li>Granger, C. W. J., and P. Newbold. “Spurious regressions in econometrics.” <em>Journal of Econometrics</em> 2, no. 2 (1974): 111–120. License unknown. <a href="https://ideas.repec.org/a/eee/econom/v2y1974i2p111-120.html">https://ideas.repec.org/a/eee/econom/v2y1974i2p111-120.html</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能解释两个独立随机游走为何能产生 0.776 的 R² 与 t = 20.2</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能用差分与去趋势后的 R²（0.003 与 0.010）判断水平回归是否可信</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能解释两个独立随机游走为何能产生 0.776 的 R² 与 t = 20.2</li><li>能用差分与去趋势后的 R²（0.003 与 0.010）判断水平回归是否可信</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/indexing-logarithms-and-growth-rates/">RES-006 · 指数化对数与增长率</a> </li><li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li><li> <a href="/learn/causality-and-identification/">RES-015 · 因果关系与识别</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35c.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 1.3.5.12 Autocorrelation</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：自相关是同一变量不同时点取值之间的相关系数，可用于检测数据的非随机性；若随机性假设不成立，需要改用时间序列或非线性模型。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 4.4.4 How can I tell if a model fits my data?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：高 R² 并不保证模型拟合良好；残差分析提供模型充分性的信息，失拟检验可帮助解释临界残差图。</p> </div><div class="source"> <a href="https://ideas.repec.org/a/eee/econom/v2y1974i2p111-120.html" rel="noopener noreferrer" target="_blank">Spurious regressions in econometrics</a> <p>C. W. J. Granger; P. Newbold · Journal of Econometrics, 2(2), 111-120</p> <p>访问：2026-10-30 · 许可：RePEc index record; cite the indexed item and link, no reproduction</p> <p>支持论点：这篇 1974 年论文以“Spurious regressions in econometrics”为题，是计量经济学中“伪回归”一词的原始出处之一。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/trends-nonstationarity-and-spurious-regression/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

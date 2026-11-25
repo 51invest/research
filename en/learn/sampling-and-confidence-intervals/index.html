@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Sampling and Confidence Intervals · 51Invest</title><meta name="description" content="A confidence interval combines a sample mean with sampling error to give a range for the population mean; 95% means about 95% of intervals from repeated samples would cover the mean, not that this interval has a 95% probability of containing it."><link rel="canonical" href="https://research.51invest.com/en/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/sampling-and-confidence-intervals/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/sampling-and-confidence-intervals/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Sampling and Confidence Intervals</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Sampling and Confidence Intervals</h1> <p class="article-summary">A confidence interval combines a sample mean with sampling error to give a range for the population mean; 95% means about 95% of intervals from repeated samples would cover the mean, not that this interval has a 95% probability of containing it.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M03 · 统计推断</strong></div> <div class="meta-item"><span>Level</span><strong>Foundation</strong></div> <div class="meta-item"><span>Read</span><strong>8 min · 14 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>A hypothetical strategy has 36 monthly returns, a mean of 1.20% and a standard deviation of 2.40%. Can 1.20% be used to infer the population mean, and how variable is another sample? This article builds a confidence interval, explains standard errors, the t distribution and coverage, and notes that intervals cannot repair bias. All numbers are hypothetical.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sample size n</td>
+<td align="right">36</td>
+<td>Months</td>
+</tr>
+<tr>
+<td>Sample mean x̄</td>
+<td align="right">1.20</td>
+<td>% per month</td>
+</tr>
+<tr>
+<td>Sample SD s</td>
+<td align="right">2.40</td>
+<td>Percentage points</td>
+</tr>
+<tr>
+<td>Standard error s/√n</td>
+<td align="right">0.40</td>
+<td>Percentage points</td>
+</tr>
+<tr>
+<td>95% confidence interval</td>
+<td align="right">0.39 to 2.01</td>
+<td>% per month</td>
+</tr>
+</tbody></table>
+<p>This is a hypothetical simple random sample; raw observations, sampling frame and missing-data rules are not shown.</p>
+<h2>Method and assumptions</h2>
+<p>The sample mean is centred on the population mean with standard error σ/√n; with independent observations and a large enough n, it is approximately normal (OpenStax 7.1). When σ is unknown, use s and a t distribution with n-1 degrees of freedom:</p>
+<div class="formula" role="math" aria-label="Standard error formula">SE = s / √n</div>
+
+<div class="formula" role="math" aria-label="Confidence interval formula">CI = x̄ ± t(α/2, n-1) × SE</div>
+
+<p>The 95% interval uses t(0.975, 35) = 2.030 (OpenStax 8.2; NIST notes that width depends on the standard deviation and sample size).</p>
+<p>Assumptions: simple random sampling, independent observations, approximate normality, and an s that represents population variability. Bias shifts the centre; dependence understates uncertainty.</p>
+<h2>Results</h2>
+<p>SE = 2.40/√36 = 0.40 points.</p>
+<p>Margin = 2.030×0.40 = 0.812.</p>
+<p>95% interval = 1.20 ± 0.812, or 0.39% to 2.01%.</p>
+<p>Repeated samples would produce intervals that cover the population mean about 95% of the time; a single interval either covers it or not, so [0.39, 2.01] is not a 95% probability statement about the mean. The 1.62-point width comes mainly from monthly volatility. With n = 100, SE falls to 0.24 and the interval becomes 0.72% to 1.68% (same mean and s); at n = 36, a 99% interval is wider, 0.11% to 2.29%.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-ci-title fig-ci-desc" viewBox="0 0 420 175" width="100%">
+    <title id="fig-ci-title">Sample mean with its 95 percent confidence interval</title>
+    <desc id="fig-ci-desc">A horizontal scale from 0 to 2.5 percent per month. The sample mean 1.20 is marked with a dot and the 95 percent interval from 0.39 to 2.01 with a bar and end caps; a dashed vertical line marks zero and the interval lies wholly to its right.</desc>
+    <line x1="60" y1="140" x2="380" y2="140" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="60" y1="55" x2="60" y2="145" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <g stroke="var(--accent)" stroke-width="2">
+      <line x1="108" y1="95" x2="308" y2="95"></line>
+      <line x1="108" y1="87" x2="108" y2="103"></line>
+      <line x1="308" y1="87" x2="308" y2="103"></line>
+    </g>
+    <circle cx="208" cy="95" r="6" fill="var(--gold)"></circle>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="70" y="80">95% interval 0.39 to 2.01 (t, df = 35)</text>
+      <text x="200" y="120">mean = 1.20</text>
+      <text x="56" y="158">0</text>
+      <text x="122" y="158">0.5</text>
+      <text x="183" y="158">1.0</text>
+      <text x="245" y="158">1.5</text>
+      <text x="306" y="158">2.0</text>
+      <text x="368" y="158">2.5</text>
+      <text x="60" y="50">Monthly excess return (% per month); dashed line marks zero</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: a 36-month sample with a mean of 1.20% per month, a standard error of 0.40 percentage points and a 95% interval of 0.39% to 2.01% from the critical value 2.030 at df = 35 (1.20 ± 2.030 × 0.40). Excluding zero only means this sample rejects a zero mean; it says nothing about the size of the effect and does not guarantee that repeated sampling covers the true value. The numbers are teaching assumptions.</figcaption>
+</figure>
+
+<h2>Diagram: center, width, coverage</h2>
+<figure id="figure-ci-three-layers">
+  <svg role="img" aria-labelledby="fig-ci-layers-title-en fig-ci-layers-desc-en" viewBox="0 0 380 420" width="100%">
+    <title id="fig-ci-layers-title-en">A confidence interval in three layers: standard error, interval width and coverage limits</title>
+    <desc id="fig-ci-layers-desc-en">Layer one turns a standard deviation of 2.40 and n of 36 into a standard error of 0.40, then uses a t critical value of 2.030 for a margin of 0.812; layer two compares the 95 percent interval at n 36 with the 95 percent interval at n 100 and the 99 percent interval at n 36; layer three covers coverage, sampling bias, dependence and economic importance.</desc>
+    <text x="20" y="22" font-size="11" font-weight="650" fill="var(--text)" font-family="inherit">Confidence interval: center, width, coverage</text>
+    <text x="20" y="43" font-size="9" fill="var(--muted)" font-family="inherit">36 months, mean 1.20% / month, sample standard deviation 2.40%</text>
+    <rect x="16" y="54" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="70" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">① From sample to standard error</text>
+    <text x="28" y="91" font-size="9" fill="var(--secondary)" font-family="inherit">SE = s / √n = 2.40 / √36 = 0.40</text>
+    <text x="28" y="110" font-size="9" fill="var(--secondary)" font-family="inherit">t(0.975, df = 35) = 2.030</text>
+    <text x="28" y="129" font-size="9" fill="var(--secondary)" font-family="inherit">Margin = 2.030 × 0.40 = 0.812</text>
+    <rect x="16" y="164" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="180" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">② Three intervals, three widths</text>
+    <text x="28" y="201" font-size="8.8" fill="var(--secondary)" font-family="inherit">95%, n = 36: 0.39 – 2.01 (width 1.62)</text>
+    <text x="28" y="220" font-size="8.8" fill="var(--secondary)" font-family="inherit">95%, n = 100: 0.72 – 1.68 (width 0.96)</text>
+    <text x="28" y="239" font-size="8.8" fill="var(--secondary)" font-family="inherit">99%, n = 36: 0.11 – 2.29 (width 2.18)</text>
+    <text x="28" y="259" font-size="8.2" fill="var(--muted)" font-family="inherit">More observations narrow it; a higher confidence level widens it.</text>
+    <rect x="16" y="274" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="290" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">③ Four limits</text>
+    <text x="28" y="311" font-size="8.4" fill="var(--secondary)" font-family="inherit">95% is repeated-sample coverage, not this interval's probability</text>
+    <text x="28" y="329" font-size="8.4" fill="var(--secondary)" font-family="inherit">It covers sampling error only; not selection or survivorship bias</text>
+    <text x="28" y="347" font-size="8.4" fill="var(--secondary)" font-family="inherit">Serial correlation and overlapping samples shrink ordinary SEs</text>
+    <text x="28" y="365" font-size="8.4" fill="var(--secondary)" font-family="inherit">Not containing zero ≠ economically important; read the size</text>
+    <text x="20" y="400" font-size="8.6" fill="var(--muted)" font-family="inherit">Teaching assumptions; n = 100 and the 99% interval reuse the same mean and SD.</text>
+  </svg>
+  <figcaption>Figure 2: three layers. First the standard error: 2.40/√36 = 0.40, t critical value 2.030, margin 0.812. Then the widths: 95%/n=36 gives 0.39–2.01, n=100 narrows it to 0.72–1.68, and 99%/n=36 widens it to 0.11–2.29. Finally the limits: 95% is coverage, the interval does not fix bias, dependence makes ordinary standard errors too small, and statistical significance is not economic importance. Teaching figures.; sample: the article’s own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<p>Using z = 1.96 gives 0.42% to 1.98%, close to the t result; the gap grows in small samples. Raising the confidence level or cutting the sample widens the interval. If dropping the best month lowers the mean sharply, the result depends on few observations. Bootstrap resampling can check non-normal intervals but not selection bias. Serial correlation, overlapping periods or fund clustering make conventional errors too small; use robust or clustered errors. Failure conditions: convenience samples, survivorship bias, non-random missingness and small, heavy-tailed samples.</p>
+<h2>Limitations</h2>
+<p>The interval covers sampling error, not bias. Coverage depends on the design and model; financial samples are rarely simple random samples, and fund histories carry survivorship and backfill bias. The interval says nothing about economic meaning or causation. Extreme values and small, non-normal samples can distort it. Numbers are hypothetical.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Fix the sampling frame, period, frequency and missing rules.</li>
+<li>Compute n, x̄ and s.</li>
+<li>Compute SE = s/√n.</li>
+<li>Choose the confidence level and t quantile with n-1 df.</li>
+<li>Compute the interval; report units, period and assumptions.</li>
+<li>Check outliers, sub-periods and dependence.</li>
+</ol>
+<pre><code class="language-text">se = s / sqrt(n)
+margin = qt(0.975, df=n-1) * se
+ci = (mean - margin, mean + margin)
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>For the hypothetical sample, the 95% interval for mean monthly return is 0.39% to 2.01%. This describes sampling uncertainty, not a forecast or proof of skill. Bias or dependence would make it too narrow.</p>
+<!-- kp-supplement:start -->
+<h2>Knowledge-point review</h2>
+<h3>confidence intervals</h3>
+<p><strong>Definition</strong>: A confidence interval surrounds an estimate and covers the true parameter at a stated rate over repeated samples.</p>
+<p><strong>Mechanism</strong>: It uses the estimate, standard error and critical value; a 95 percent interval does not mean the parameter has a 95 percent probability of lying inside.</p>
+<p><strong>Example</strong>: For example, a mean of 10 with standard error 2 gives an approximate 95 percent interval of 6.1 to 13.9.</p>
+<p><strong>Boundary</strong>: A confidence interval is not a probability statement; the frequentist meaning is repeated coverage, model error, bias and multiple comparisons reduce coverage, and a narrow interval is not importance.</p>
+<h3>hypothesis testing</h3>
+<p><strong>Definition</strong>: Hypothesis testing sets a null and alternative and uses sample data to decide whether to reject the null.</p>
+<p><strong>Mechanism</strong>: Test statistics, significance levels and p-values measure evidence; a p-value is the probability of a result at least as extreme under the null, not the probability the null is true.</p>
+<p><strong>Example</strong>: For example, comparing two means, a p-value below 0.05 is called significant but does not imply a large or causal effect.</p>
+<p><strong>Boundary</strong>: Testing is not proof; significance depends on sample size, multiple comparisons and specification, p-values omit effect size and practical importance, and rejecting the null does not prove the alternative.</p>
+<h3>effect size</h3>
+<p><strong>Definition</strong>: Effect size is the practical magnitude of a result, such as a mean difference, standardised difference, correlation or risk difference, independent of sample size.</p>
+<p><strong>Mechanism</strong>: It helps judge practical importance; standardised effects aid cross-study comparison but need units and context.</p>
+<p><strong>Example</strong>: For example, a drug lowers blood pressure by 5 mmHg, statistically significant but clinically limited.</p>
+<p><strong>Boundary</strong>: Effect size is not a p-value; large samples make tiny effects significant, standardisation hides units and distributions, and effect estimates still suffer measurement and design bias.</p>
+<h3>statistical power</h3>
+<p><strong>Definition</strong>: Statistical power is the probability of correctly rejecting the null when the alternative is true, usually one minus the type II error rate.</p>
+<p><strong>Mechanism</strong>: Power rises with sample size, effect size, significance level and falls with variance; low power misses real effects, while very high power makes tiny differences significant.</p>
+<p><strong>Example</strong>: For example, a small sample detecting a small effect may have 30 percent power and often miss it.</p>
+<p><strong>Boundary</strong>: Power is not a post hoc excuse; low-power studies are unreliable, post-hoc power is contested, high power does not remove design bias, and measurement and multiple testing still matter.</p>
+<h3>Bayesian updating and multiple testing</h3>
+<p><strong>Definition</strong>: Bayesian updating combines a prior and likelihood into a posterior, and multiple testing controls error rates when testing many hypotheses at once.</p>
+<p><strong>Mechanism</strong>: The posterior is proportional to prior times likelihood and updates with data; Bonferroni and FDR methods control false positives.</p>
+<p><strong>Example</strong>: For example, a prior that a strategy is unlikely to work keeps the posterior conservative after limited evidence, and testing 100 factors needs a corrected threshold.</p>
+<p><strong>Boundary</strong>: Bayes is not arbitrary subjectivity; priors affect results and posteriors depend on models; correction reduces power, and uncorrected significance is often data snooping.</p>
+<!-- kp-supplement:end -->
+
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Probability Distributions, Expectation and Variance (RES-009).</li>
+<li>Related reading: Probability Distributions, Expectation and Variance (RES-009), Hypothesis Testing and Practical Significance (RES-012), Introduction to Linear Regression (RES-013).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Sampling and Confidence Intervals: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Sampling and Confidence Intervals — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Sampling and Confidence Intervals: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">A confidence</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">interval combines…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A confidence</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">interval combine</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">s a sample mean</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">with sampling</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">error to give a…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Unit | | --- |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Unit | | ---</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| ---: | --- |</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Sample size n</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 36 | Months |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 3: Sampling and Confidence Intervals — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Sampling and Confidence Intervals: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Sampling and Confidence Intervals: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The interval covers</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">sampling error, not bias.</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical strategy has</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">36 monthly returns, a mean</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">of 1.20% and a standard</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">deviation of 2.40%.…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Sampling and Confidence Intervals — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Sampling and Confidence Intervals: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Sampling and Confidence Intervals: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A confidence</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">interval combines a…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The interval covers</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">sampling error, not…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical strategy has 36</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">monthly returns, a mean of…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 5: Sampling and Confidence Intervals — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>Explain the correct and a common incorrect reading of a 95% confidence interval.</li>
+<li>With n = 100, mean 1.20% and s = 2.40%, find the 95% interval (t = 1.984).</li>
+<li>What happens if only surviving funds are surveyed?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>Correct: about 95% of intervals from repeated sampling cover the mean. Incorrect: this interval has a 95% probability of containing the mean.</li>
+<li>SE = 0.24; margin = 1.984×0.24 ≈ 0.476; the interval is 0.72% to 1.68%.</li>
+<li>The centre is too high because closed funds are excluded; the interval cannot repair survivorship bias.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “7.1 The Central Limit Theorem for Sample Means (Averages).” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages">https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages</a> (accessed 2026-10-30)</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “8.2 A Single Population Mean using the Student t Distribution.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution">https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution</a> (accessed 2026-10-30)</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “1.3.5.2 Confidence Limits for the Mean.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Build a t interval from a mean and standard error, reproducing 1.20 ± 2.030 × 0.40 = 0.39 to 2.01</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Explain what the 95% means and avoid the claim that this interval has a 95% chance of covering the truth</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Build a t interval from a mean and standard error, reproducing 1.20 ± 2.030 × 0.40 = 0.39 to 2.01</li><li>Explain what the 95% means and avoid the claim that this interval has a 95% chance of covering the truth</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/probability-distributions-expectation-and-variance/">RES-009 · Probability Distributions, Expectation and Variance</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/probability-distributions-expectation-and-variance/">RES-009 · Probability Distributions, Expectation and Variance</a> </li><li> <a href="/en/learn/hypothesis-testing-and-practical-significance/">RES-012 · Hypothesis Testing and Practical Significance</a> </li><li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 7.1 The Central Limit Theorem for Sample Means (Averages)</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: The sampling distribution of the sample mean approaches normality as n grows, is centred on the population mean, and has standard error σ/√n.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 8.2 A Single Population Mean using the Student t Distribution</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: When the population standard deviation is unknown, use s and the t distribution; the error bound is t(α/2)(s/√n) with n−1 degrees of freedom, the interval is the sample mean plus or minus the error bound, and random sampling plus an approximately normal population are assumed.</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 1.3.5.2 Confidence Limits for the Mean</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: A confidence interval is an interval estimate for the mean; a 95% interval means about 95% of intervals from repeated sampling would contain the true mean; width is driven by the standard deviation and sample size, and precision improves as N increases.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/sampling-and-confidence-intervals/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Data Versioning, Pipelines and Reproducible Experiments · 51Invest</title><meta name="description" content="Reproduction is not rerunning a notebook; it means fixing data, code, environment and random seeds so every step is auditable."><link rel="canonical" href="https://research.51invest.com/en/learn/data-versioning-pipelines-and-reproducible-experiments/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/data-versioning-pipelines-and-reproducible-experiments/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/data-versioning-pipelines-and-reproducible-experiments/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/data-versioning-pipelines-and-reproducible-experiments/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/data-versioning-pipelines-and-reproducible-experiments/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Data Versioning, Pipelines and Reproducible Experiments</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Data Versioning, Pipelines and Reproducible Experiments</h1> <p class="article-summary">Reproduction is not rerunning a notebook; it means fixing data, code, environment and random seeds so every step is auditable.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M12 · 数据工程与复现</strong></div> <div class="meta-item"><span>Level</span><strong>Foundation</strong></div> <div class="meta-item"><span>Read</span><strong>7 min · 21 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Definition</h2>
+<p>A <strong>data version</strong> is an immutable identifier for the content and structure of data at a point in time, often a hash, snapshot or repository tag. A <strong>pipeline</strong> is an executable flow linking ingestion, validation, transformation, modelling and output. A <strong>reproducible experiment</strong> uses the same inputs, code, environment and random seed to obtain the same or explainable result. Raw data should be read-only, cleaned and derived data should be rebuildable, and outputs should carry a run record.</p>
+<h2>Intuition</h2>
+<p>Reproducing an experiment is cooking the same dish from a recipe: ingredient lots, heat, pans and order must be recorded, or you cannot explain why the taste changed. Data version is the ingredient lot, the code commit is the heat and steps, the runtime environment is the pan, and the random seed is the order of operations. Saving only the final report, without ingredients and steps, leaves no way to tell whether the recipe worked or the run happened to succeed. Reproducibility is not &#39;it runs again&#39;; it is &#39;another person on another machine can reach the same conclusion from the record&#39;.</p>
+<h2>Mechanism</h2>
+<p>A minimal pipeline has five stages: ingestion records source, time and checksum; validation checks schema, missingness, duplicates, ranges and units; transformation writes each step as a function and saves intermediate tables; modelling fixes random seeds and hyperparameters; output saves results, logs and an environment lock file. CI can rerun tests and a small sample on every commit, and data-drift monitoring compares distributions and key statistics. The audit record must answer which data, code version and environment produced the result [1][2].</p>
+<h2>Worked example</h2>
+<p>Suppose a monthly sales table has one million rows and the raw file hash is A; cleaning removes 2% duplicates and fills 0.5% missing values, producing derived hash B; the model output is C. If the supplier reissues the same month&#39;s file, the hash becomes A&#39; even though only three rows differ, and the checksum flags the change. If the environment moves from Python 3.11 to 3.12, a floating-point library change can alter the last decimals; a lock file locates the difference. If the random seed is unfixed, cross-validation scores can move 0.3 percentage points, so a model &#39;improvement&#39; cannot be judged. These are teaching examples.</p>
+<h2>Second worked example: data version and metric drift</h2>
+<p>Suppose a study trains on the September 2026 data version with 1,000 observations and gets AUC 0.80; the October version adds 100 observations, mostly new customers, and AUC falls to 0.78. Looking only at the final report suggests model decay; rerunning with the data version pinned shows AUC 0.80 on the old version, so the difference comes from sample composition, not code. If the default rate in the new sample rises from 5% to 8% while the threshold is unchanged, recall rises and precision falls; the model did not become better or worse, the distribution changed. The record must include the data hash, sample period, preprocessing version, random seed and metric definition; without any one, the 0.80-versus-0.78 gap cannot be explained. These are teaching assumptions.</p>
+<h2>Boundary and common mistakes</h2>
+<p>First, running once is not reproducibility: without fixed data and environment, another machine can differ. Second, hidden notebook state makes &#39;run all&#39; disagree with current output; execute in order or use scripts. Third, when version control stores code but not large data, record snapshots and checksums separately. Fourth, licences and privacy may block sharing raw data; provide synthetic samples or access controls. Fifth, reproduction proves the result can be recomputed, not that the data are correct or the method valid.</p>
+<h2>Failure modes</h2>
+<p>The first failure is reproducing an old result with the latest data: once data updates, samples, features and labels change, so the result naturally differs. The second is relying on hidden notebook state: cells run in a different order, variables are overwritten, and a restart changes the answer; write the pipeline as a script that runs from scratch. The third is leaving seeds and environment unpinned: the same code can produce different results under different library versions or parallelism. The fourth is data leakage: using future information in preprocessing, or overlapping train and test sets, inflates metrics and cannot be reproduced. The fifth is recording only successes: deleted outliers, temporary parameter changes and abandoned models are part of understanding the result.</p>
+<h2>Three checks</h2>
+<p>First, is the data version uniquely identified by a hash or snapshot, with sample period and preprocessing fixed? Second, can the code rerun from an empty environment in one command, with seeds, dependency versions and parallelism recorded? Third, are metric definitions, test set and benchmark written down, and has leakage been checked? Only after all three can you speak of &#39;reproduction&#39;; otherwise it is just &#39;it ran this time&#39;.</p>
+<h2>Adjacent concepts and a counterexample</h2>
+<p>Reproducibility is easily confused with repeatability and replicability. Reproducible means the same team with the same data and code gets the same result; repeatable means another team with new data or a new experiment reaches a consistent conclusion; replicable means an independent study with the same design gets the same result. The evidence strength differs and they are not substitutes. A counterexample is &#39;the code runs, so it is reproducible&#39;: if the data version is unpinned, seeds unrecorded and dependencies drift, another machine gives a different result; running once is not reproducibility. Another is &#39;the same result means replication succeeded&#39;: if two studies share the same biased data, the same result only proves data alignment, not robustness. Distinguish data reproduction, code reproduction and conclusion replication, and record failures and deviations.</p>
+<h2>Scope and limits</h2>
+<p>This data-versioning and reproducibility framework applies to research with snapshotable data, lockable dependencies, recordable seeds and containerisable environments. If data cannot be shared under licence, experiments need specialised hardware, or results depend on live market state, full reproduction may be infeasible. It does not apply to treating a code repository as a data version, nor to proving robustness with one successful run. Pin the data snapshot and dependencies, record seeds and environment, and rerun in an independent directory; reproducibility is not replicability.</p>
+<p>Finally, licence-restricted data should at least keep a synthetic sample and checksums so external researchers can reproduce the code path.</p>
+<p>Also label the data licence and version.</p>
+<h2>Related</h2>
+<ul>
+<li>RES-008 A Reproducible Research Workflow: adjacent main article; read it before this supplement.</li>
+<li>RES-003 Frequency and Time Alignment: adjacent main article; read it before this supplement.</li>
+<li>RES-004 Seasonal Adjustment and Revisions: adjacent main article; read it before this supplement.</li>
+</ul>
+<h2>Source note</h2>
+<p>This article uses Office for National Statistics (Best Practice and Impact), National Institute of Standards and Technology, NIST Physical Measurement Laboratory to check definitions, institutions or measurement conventions; the exact terms, numbers and dates follow the sources [1][2][3].</p>
+<h2>Research question</h2>
+<p>Data versions, pipelines and reproducible experiments ask “can the same research question produce the same result on another machine or another day?” If not, the conclusion is not stable evidence.</p>
+<h2>Data</h2>
+<p>Record raw data, retrieval time, version, cleaning rules, missing-value handling, sample filters and licence. Source revisions or definition changes must leave a difference record; do not overwrite the old version.</p>
+<h2>Method</h2>
+<p>Split retrieval, cleaning, features, modelling and evaluation into steps with inputs; record parameters, random seeds, dependency versions and output digests at each step. Identify versions by content hash, not filename.</p>
+<h2>Results</h2>
+<p>Report point estimates, intervals, sample sizes and failed runs together; reporting only successful runs hides selection bias. A reproducible experiment should rerun from raw data in a clean environment.</p>
+<h2>Robustness and limitations</h2>
+<p>Change time windows, samples, parameters and random seeds; check whether direction and magnitude hold. If results are sensitive to reasonable changes, state a conditional conclusion.</p>
+<h2>Reproduction checklist</h2>
+<p>Keep the environment lockfile, data version, scripts, parameters, random seeds and output hashes; have another person or machine rerun the checklist at least once.</p>
+<h2>Figures in plain language</h2>
+<p>The four figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Data Versioning, Pipelines and Reproducible Experiments: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Data Versioning, Pipelines and Reproducible Experiments — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Versioning, Pipelines and Reproducible Experiments: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction is</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">not rerunning a…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction is</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">not rerunning a</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">notebook; it</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">means fixing</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">data, code…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Definition</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Definition: A</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">data version is…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Definition: A</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">data version is</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">an immutable</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">identifier for</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">the content and…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Worked example</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Suppose a monthly</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> sales table has…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Suppose a</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">monthly sales</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">table has one</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">million rows</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">and the raw…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 1: Data Versioning, Pipelines and Reproducible Experiments — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Data Versioning, Pipelines and Reproducible Experiments: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Versioning, Pipelines and Reproducible Experiments: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">First, running once is not</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">reproducibility: without</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">fixed data and environment,</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">another machine can differ.…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">First, running once is not</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">reproducibility: without</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">fixed data and environment,</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">another machine can differ.…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 2: Data Versioning, Pipelines and Reproducible Experiments — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Data Versioning, Pipelines and Reproducible Experiments: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Versioning, Pipelines and Reproducible Experiments: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction is not</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">rerunning a notebook…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">First, running once</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">is not reproducibilit…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">First, running once is not</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">reproducibility: without fixed…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Data Versioning, Pipelines and Reproducible Experiments — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-029-data-versioning-pipelines-and-reproducible-experiments-example-title fig-029-data-versioning-pipelines-and-reproducible-experiments-example-desc" viewBox="0 0 460 290" width="100%">
+    <title id="fig-029-data-versioning-pipelines-and-reproducible-experiments-example-title">Three-row worked example: Data version change: AUC and sample mix</title>
+    <desc id="fig-029-data-versioning-pipelines-and-reproducible-experiments-example-desc">Reading path: three rows give the key number, unit and worked-example condition; not market data.</desc>
+    <text x="16" y="24" font-size="12.2" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Three-row worked example</text>
+    <text x="16" y="40" font-size="9.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Units as labelled; sample is the article’s teaching assumption</text>
+    <line x1="12" y1="48" x2="448" y2="48" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="12" y="58" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="76" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Old-version AUC</text>
+      <text x="448" y="80" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">0.80</text>
+      <text x="24" y="96" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">2026-09 version, 1,000 rows</text>
+    </g>
+    <g>
+      <rect x="12" y="128" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="146" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">New-version AUC</text>
+      <text x="448" y="150" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">0.78</text>
+      <text x="24" y="166" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">2026-10 version, 1,100 rows</text>
+    </g>
+    <g>
+      <rect x="12" y="198" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="216" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Sample default rate</text>
+      <text x="448" y="220" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">5% → 8%</text>
+      <text x="24" y="236" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">New customers changed the distribution</text>
+    </g>
+    <line x1="12" y1="266" x2="448" y2="266" stroke="var(--border)" stroke-width="1"/>
+    <text x="16" y="280" font-size="8.8" fill="var(--muted)" font-family="inherit" text-anchor="start">A relationship illustration only; not a forecast or investment advice</text>
+  </svg>
+  <figcaption>Figure 4：A lower AUC is not automatically model decay; check data version and sample mix。Units as labelled; sample is the article’s teaching assumption, not market or statistical data; it only illustrates the quantitative relationship.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li><strong>Concept check:</strong> Concept check: why does a runnable notebook not prove reproducibility?</li>
+<li><strong>Calculation:</strong> Calculation: one million raw rows, remove 2% duplicates and fill 0.5% missing values. About how many rows remain?</li>
+<li><strong>Boundary:</strong> Boundary: when licensing limits data sharing, how can reproduction and privacy both be preserved?</li>
+</ol>
+<details>
+<summary>Answer key</summary>
+
+<ol>
+<li>Because data version, dependencies and random seeds are not fixed; hidden state, library versions and machine differences change results.</li>
+<li>Removing 20,000 leaves 980,000; filling missing values does not change row count, so about 980,000 remain if missing rows are kept.</li>
+<li>Provide synthetic samples, access controls, checksums and a remote execution environment; allow code and results to be checked without exposing raw data.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Office for National Statistics. <em>Quality assurance of code for analysis and research</em>. Office for National Statistics (Best Practice and Impact). Open Government Licence v3.0. <a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html">https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html</a> (accessed 2026-10-30)</li>
+<li>National Institute of Standards and Technology. <em>NIST Research Data Framework (RDaF), NIST SP 1500-18r2</em>. National Institute of Standards and Technology. U.S. Government work (public domain), 17 U.S.C. §105. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html</a> (accessed 2026-10-30)</li>
+<li>National Institute of Standards and Technology. <em>SI Units</em>. NIST Physical Measurement Laboratory. U.S. Government work (public domain), 17 U.S.C. §105. <a href="https://www.nist.gov/pml/owm/metric-si/si-units">https://www.nist.gov/pml/owm/metric-si/si-units</a> (accessed 2026-11-21)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Separate raw, cleaned, derived and output data, with versioning and checks for each layer.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Design a minimal reproducible pipeline from ingestion and validation to transformation and tests.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Separate raw, cleaned, derived and output data, with versioning and checks for each layer.</li><li>Design a minimal reproducible pipeline from ingestion and validation to transformation and tests.</li><li>Identify the effects of data drift, environment differences and randomness, and keep an audit trail.</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/reproducible-research-workflow/">RES-008 · A Reproducible Research Workflow</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/frequency-and-time-alignment/">RES-003 · Frequency and Time Alignment</a> </li><li> <a href="/en/learn/seasonal-adjustment-and-revisions/">RES-004 · Seasonal Adjustment and Revisions</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html" rel="noopener noreferrer" target="_blank">Quality assurance of code for analysis and research</a> <p>Office for National Statistics · Office for National Statistics (Best Practice and Impact)</p> <p>Accessed: 2026-10-30 · License: Open Government Licence v3.0</p> <p>Supports: Used to check the definitions, institutions, measurement conventions or product terms relevant to &quot;Data Versioning, Pipelines and Reproducible Experiments&quot;; the article does not treat material absent from the source as fact, and exact numbers and dates follow the source.</p> </div><div class="source"> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html" rel="noopener noreferrer" target="_blank">NIST Research Data Framework (RDaF), NIST SP 1500-18r2</a> <p>National Institute of Standards and Technology · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: Used to check the definitions, institutions, measurement conventions or product terms relevant to &quot;Data Versioning, Pipelines and Reproducible Experiments&quot;; the article does not treat material absent from the source as fact, and exact numbers and dates follow the source.</p> </div><div class="source"> <a href="https://www.nist.gov/pml/owm/metric-si/si-units" rel="noopener noreferrer" target="_blank">SI Units</a> <p>National Institute of Standards and Technology · NIST Physical Measurement Laboratory</p> <p>Accessed: 2026-11-21 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: Used to check the definitions, institutions, measurement conventions or product terms relevant to &quot;Data Versioning, Pipelines and Reproducible Experiments&quot;; the article does not treat material absent from the source as fact, and exact numbers and dates follow the source.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/data-versioning-pipelines-and-reproducible-experiments/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

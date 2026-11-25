@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>另类数据与复杂系统 · 巫妖投资</title><meta name="description" content="另类数据与复杂系统扩展了可观察范围，也放大了代表性、许可与识别问题；方法的价值在于把限制写清楚。"><link rel="canonical" href="https://research.51invest.com/learn/alternative-data-and-complex-systems/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/alternative-data-and-complex-systems/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/alternative-data-and-complex-systems/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/alternative-data-and-complex-systems/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/alternative-data-and-complex-systems/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">另类数据与复杂系统</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">另类数据与复杂系统</h1> <p class="article-summary">另类数据与复杂系统扩展了可观察范围，也放大了代表性、许可与识别问题；方法的价值在于把限制写清楚。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M13 · 另类数据与复杂系统</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>7 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>问题</h2>
+<p><strong>另类数据与复杂系统</strong>（alternative data and complex systems）要解决的是：当数据来自卫星、文本、交易记录、传感器或网络时，怎样判断它能否代表目标总体、是否合法可用，以及复杂系统中的网络、反馈与模拟能否支持因果或预测结论。方法的价值在于把限制写清楚，而不是把数据量当成真理[1][3][5][6]。</p>
+<h2>输入</h2>
+<p><strong>输入</strong>（inputs）包括：数据来源与采集机制、覆盖人群与时间、缺失机制、许可与隐私约束、空间与网络结构、模拟参数。另类数据常是<strong>非概率样本</strong>（non-probability sample）：样本由平台、设备或行为选择产生，并非随机抽取[3]。</p>
+<h2>假设</h2>
+<p><strong>假设</strong>（assumptions）包括：样本对目标总体具有代表性；缺失不是系统性的；采集机制不改变被观察行为；许可允许用于当前目的；网络或模拟的参数可识别。<strong>选择偏差</strong>（selection bias）会在样本进入机制与目标变量相关时出现，简单加权不一定能修复。</p>
+<p><strong>隐私与许可</strong>（privacy and licensing）属于数据可用性的一部分，不是合规附件：没有合法授权，再好的分析也不能使用；没有隐私保护，数据可能伤害被观察者[2][4]。</p>
+<h2>步骤</h2>
+<p><strong>步骤</strong>（steps）可以归为四组动作：定问题（目标总体与分析问题）；查覆盖（采集机制、许可与隐私）；处理缺失与结构（缺失机制、选择偏差、网络结构）；外部验证（换时间、地区与来源，并报告不确定性）[3][5][6]。</p>
+<p>示例：一份来自某城市共享单车的骑行数据，覆盖该市 60% 的运营区域，但缺少郊区与老年用户；若用它推断全市出行需求，必须先说明覆盖偏差，并用交通调查或人口数据交叉校验。</p>
+<h2>图表</h2>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-027-chain-title fig-res-027-chain-desc" viewBox="0 0 560 310" width="100%">
+    <title id="fig-res-027-chain-title">另类数据与复杂系统：三段判断链</title>
+    <desc id="fig-res-027-chain-desc">定问题：数据要回答什么；处理缺失：非概率样本与网络结构；外部验证：换时间、地区与来源</desc>
+    <rect x="0.5" y="0.5" width="559" height="309" rx="12" fill="var(--surface)" stroke="var(--border)"/>
+    <rect x="24" y="16" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="16" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="35" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">起点</text>
+    <text x="44" y="56" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">定问题</text>
+    <text x="44" y="76" font-size="10.5" fill="var(--secondary)" font-family="inherit">数据要回答什么</text>
+    <line x1="280" y1="102" x2="280" y2="108" stroke="var(--border)" stroke-width="1.5"/>
+    <path d="M276 106 L280 110 L284 106" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    <rect x="24" y="112" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="112" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="131" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">机制</text>
+    <text x="44" y="152" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">处理缺失</text>
+    <text x="44" y="172" font-size="10.5" fill="var(--secondary)" font-family="inherit">非概率样本与网络结构</text>
+    <line x1="280" y1="198" x2="280" y2="204" stroke="var(--border)" stroke-width="1.5"/>
+    <path d="M276 202 L280 206 L284 202" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    <rect x="24" y="208" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="208" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="227" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">判断</text>
+    <text x="44" y="248" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">外部验证</text>
+    <text x="44" y="268" font-size="10.5" fill="var(--secondary)" font-family="inherit">换时间、地区与来源</text>
+  </svg>
+  <figcaption>图 1：另类数据与复杂系统的三段判断链——定问题 → 处理缺失 → 外部验证。三段是判断链，不是唯一路径；图中文字取自本文正文，不含统计数据。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure id="figure-coverage-gap">
+  <svg role="img" aria-labelledby="fig-coverage-title fig-coverage-desc" viewBox="0 0 420 200" width="100%">
+    <title id="fig-coverage-title">覆盖 60% 不等于随机抽样 60%</title>
+    <desc id="fig-coverage-desc">一条百分比横条：左侧百分之六十标为已覆盖的运营区域，右侧百分之四十标为未覆盖的郊区与老年用户等；未覆盖部分不是随机缺失。</desc>
+    <line x1="60" y1="110" x2="380" y2="110" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="60" y="80" width="192" height="30" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="252" y="80" width="128" height="30" fill="var(--muted)" opacity="0.35"></rect>
+    <g fill="var(--text)" font-size="11" font-family="inherit">
+      <text x="72" y="100">已覆盖 60%</text>
+      <text x="260" y="100">未覆盖 40%</text>
+      <text x="60" y="64">运营区域按覆盖状态拆分</text>
+      <text x="60" y="140">未覆盖部分包含郊区、老年用户等，行为可能与覆盖区不同；</text>
+      <text x="60" y="158">不能把 12 万 / 0.6 当成全市真值，只能作为一个情景。</text>
+    </g>
+  </svg>
+  <figcaption>图 2：覆盖区占 60%、未覆盖区占 40% 的示意。未覆盖部分不是随机缺失；若其出行行为不同，按 100/60 简单放大会系统性高估或低估，需用外部数据校验并报告区间。</figcaption>
+</figure>
+
+<p>一个覆盖算例：某城市共享单车数据在覆盖区内记录 12 万次骑行，覆盖区占运营区域 60%。若直接按 12 万/0.6 推算全市，会得到 20 万次；但未覆盖的郊区与老年用户可能骑行更少，真实总量也许只有 18 万次。20 万与 18 万的差不是小数，而是把“未覆盖部分与覆盖部分相同”这个未经检验的假设硬塞进了结果。更稳妥的做法是用交通调查、公交刷卡或手机信令做外部校验，并报告区间。</p>
+<h2>结果解读</h2>
+<p><strong>结果解读</strong>（interpreting results）要区分描述、相关与因果：网络中心性高不等于因果影响大；模拟结果依赖参数与边界；多源测量不一致时，要报告差异而不是取平均掩盖。<strong>复杂系统</strong>（complex systems）中的反馈与非线性会让线性外推失效，解读要给出条件与时间尺度[5][6]。</p>
+<h2>失败条件</h2>
+<p><strong>失败条件</strong>（failure conditions）包括：样本不代表目标总体；缺失非随机；采集机制改变行为；许可不允许当前用途；网络边的定义错误；模拟参数不可识别或校准数据不足；多源测量口径冲突。失败往往在数据进入模型之前就已发生[4][5][6]。</p>
+<h2>复现与验证</h2>
+<p><strong>复现与验证</strong>（reproduction）要求保存数据许可、采集时间、清洗规则、网络构建代码与模拟参数；用独立数据源做外部验证；报告隐私处理与访问控制。没有许可与隐私记录的“复现”不完整[1][2][4][6]。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>代表性</h3>
+<p><strong>定义</strong>：代表性是样本在关键特征上反映总体，使样本结论可推广。</p>
+<p><strong>机制</strong>：代表性取决于抽样框、覆盖、响应和特征分布；加权和分层可改善，但不能修复缺失总体。</p>
+<p><strong>例子</strong>：例如用全国分层样本研究收入，需覆盖城乡、行业和年龄。</p>
+<p><strong>边界</strong>：代表性不是样本大；大样本若有覆盖偏差仍不代表性，网络样本和自愿响应会偏，特征选择也影响可比性。</p>
+<h3>选择偏差</h3>
+<p><strong>定义</strong>：选择偏差是进入样本的机制与总体不同，导致估计偏离，如幸存者、自选择、非响应和覆盖不足。</p>
+<p><strong>机制</strong>：选择偏差来自样本定义、参与激励和数据可得性；可通过设计、加权、heckman 或边界分析缓解。</p>
+<p><strong>例子</strong>：例如只调查主动回应者，或只用存活基金，样本系统性偏乐观。</p>
+<p><strong>边界</strong>：选择偏差不是随机误差；它不会随样本增大消失，加权依赖正确模型，未观测选择难以修正，结论外推需谨慎。</p>
+<h3>隐私许可</h3>
+<p><strong>定义</strong>：隐私许可是收集、使用和共享个人数据时尊重个人权利、知情同意和法律许可。</p>
+<p><strong>机制</strong>：隐私通过最小化、匿名化、聚合、访问控制和合规审查保护；许可涉及数据授权、二次使用和跨境传输。</p>
+<p><strong>例子</strong>：例如研究使用去标识化数据并取得同意，遵守个人信息保护法。</p>
+<p><strong>边界</strong>：隐私不是删除姓名；准标识符可重识别，聚合也可能泄露，同意范围和二次使用常被忽略，合规不等于伦理充分。</p>
+<h3>空间网络</h3>
+<p><strong>定义</strong>：空间数据带地理位置和邻接关系，网络数据带节点和边，二者都有依赖结构，普通独立抽样假设常不成立。</p>
+<p><strong>机制</strong>：空间自相关、网络同质性和聚类使有效样本量下降；需空间模型、聚类标准误或网络抽样。</p>
+<p><strong>例子</strong>：例如邻近地区房价相关，社交网络中的行为会传染，个体并非独立。</p>
+<p><strong>边界</strong>：空间网络不是普通表格；边界、距离和网络定义影响结果，隐私和覆盖也复杂，忽略依赖会低估标准误和因果偏差。</p>
+<h3>模拟和多源测量</h3>
+<p><strong>定义</strong>：模拟是用模型生成数据检验方法，多源测量是用不同来源测量同一概念以交叉验证。</p>
+<p><strong>机制</strong>：模拟可控制机制和极端情景，但需说明假设；多源测量可评估一致性、偏差和测量误差。</p>
+<p><strong>例子</strong>：例如用模拟数据测试策略在厚尾下的表现，用调查和行政数据交叉验证收入。</p>
+<p><strong>边界</strong>：模拟不是现实；模型假设决定结果，合成数据可能复制偏差；多源也不等于真实，来源相关和口径差异会造成虚假一致。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<table>
+<thead>
+<tr>
+<th>知识 ID</th>
+<th>标题</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RES-007</td>
+<td>缺失异常与样本选择</td>
+<td>先修</td>
+</tr>
+<tr>
+<td>RES-014</td>
+<td>控制变量与混杂</td>
+<td>建议阅读</td>
+</tr>
+<tr>
+<td>RES-019</td>
+<td>事件研究基础</td>
+<td>建议阅读</td>
+</tr>
+<tr>
+<td>RES-024</td>
+<td>证据等级与研究报告</td>
+<td>建议阅读</td>
+</tr>
+</tbody></table>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">另类数据与复杂系统：机制链</title>
+    <desc id="fig-batch-chain-desc">另类数据与复杂系统 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统扩</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">展了可观察范围，也放…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">扩展了可观察范围，</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">也放大了代表性、许</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可与识别问题；方法</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">的价值在于把限制写…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">问题：另类数据与复杂</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">系统（alternative…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">问题：另类数据与复</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">杂系统（alternati</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ve data and</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">complex systems）</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">要解决的是：当数据…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">结果解读</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">结果解读（interpret</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">ing results）要区分…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">结果解读（interpr</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">eting results）要</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">区分描述、相关与因</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">果：网络中心性高不</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">等于因果影响大；模…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 3：另类数据与复杂系统的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">另类数据与复杂系统：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">失败条件（failure conditions）</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">包括：样本不代表目标总体；缺失非</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">随机；采集机制改变行为；许可不允</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">许当前用途；网络边的定义错误；模…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 知识 ID | 标题 | 关系 | |</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">--- | --- | --- | | RES-007</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 缺失异常与样本选择 | 先修 |</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| RES-014 |…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：另类数据与复杂系统的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">另类数据与复杂系统：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">另类数据与复杂系统扩展了</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可观察范围，也放大了代表…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">失败前提（risk prerequi</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">site）包括：样本不代表目…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 知识 ID | 标题 | 关系 | | ---</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | --- | | RES-007 |…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 5：另类数据与复杂系统的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>概念辨别：说明非概率样本与随机样本的差别，以及它对推断的影响。</li>
+<li>计算或推理：在上例中，若共享单车数据覆盖 60% 区域，剩余 40% 的缺失可能如何影响需求估计？</li>
+<li>适用条件：举一个网络中心性高但不具因果影响的例子。</li>
+</ol>
+<details>
+<summary>参考答案要点</summary>
+
+<ol>
+<li>随机样本有已知的入样概率，能计算设计标准误；非概率样本的入样概率未知，样本由平台、设备或行为选择产生，不能直接套用随机抽样公式，简单加权也未必能修复选择偏差。</li>
+<li>若未覆盖的 40% 出行更少，按 12 万/0.6 会高估；若更多，会低估。应先说明覆盖偏差，再用交通调查、公交刷卡或手机信令做外部校验，报告区间而不是单点。</li>
+<li>例如机场在航空网络中连接度很高，但这是地理位置与航线安排的结果，不是机场导致当地 GDP 增长；网络位置是结果或中介，不自动构成因果。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>National Institute of Standards and Technology. <em>NIST Research Data Framework (RDaF), NIST SP 1500-18r2</em>. National Institute of Standards and Technology. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-10-30%EF%BC%89">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html（访问日期：2026-10-30）</a></li>
+<li>International Monetary Fund. <em>Fifth Review of the Fund&#39;s Data Standards Initiatives</em>. International Monetary Fund. <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-03%EF%BC%89">https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm（访问日期：2026-11-03）</a></li>
+<li>OECD. <em>Data-Driven Innovation: Big Data for Growth and Well-Being</em>. OECD Publishing, 2015. <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf（访问日期：2026-11-21）</a></li>
+<li>National Institute of Standards and Technology. <em>NIST Privacy Framework: A Tool for Improving Privacy through Enterprise Risk Management, Version 1.0</em>. NIST, 2020. <a href="https://www.nist.gov/privacy-framework%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://www.nist.gov/privacy-framework（访问日期：2026-11-21）</a></li>
+<li>Albert-László Barabási. <em>Network Science</em>. Cambridge University Press, 2016. <a href="https://networksciencebook.com/%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://networksciencebook.com/（访问日期：2026-11-21）</a></li>
+<li>James Ladyman, James Lambert and Karoline Wiesner. <em>What is a Complex System?</em> European Journal for Philosophy of Science 3, 2013, pp. 33–67. <a href="https://doi.org/10.1007/s13194-012-0056-8%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://doi.org/10.1007/s13194-012-0056-8（访问日期：2026-11-21）</a></li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能对一份另类数据写出覆盖人群、采集机制与缺失机制，并判断它能否代表目标总体</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能说明网络或模拟模型中的参数、边界与校准来源，并指出一项不可识别之处</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能对一份另类数据写出覆盖人群、采集机制与缺失机制，并判断它能否代表目标总体</li><li>能说明网络或模拟模型中的参数、边界与校准来源，并指出一项不可识别之处</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/missing-data-outliers-and-sample-selection/">RES-007 · 缺失异常与样本选择</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/control-variables-and-confounding/">RES-014 · 控制变量与混杂</a> </li><li> <a href="/learn/event-study-basics/">RES-019 · 事件研究基础</a> </li><li> <a href="/learn/evidence-hierarchies-and-research-reports/">RES-024 · 证据等级与研究报告</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html" rel="noopener noreferrer" target="_blank">NIST Research Data Framework (RDaF), NIST SP 1500-18r2</a> <p>National Institute of Standards and Technology · National Institute of Standards and Technology</p> <p>访问：2026-11-21 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：NIST RDaF 给出研究数据全生命周期的框架，覆盖数据治理、质量、访问、共享、隐私、安全、保存与复用；不同阶段有不同角色与责任。本文用其支持数据许可、保存与复现记录。</p> </div><div class="source"> <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm" rel="noopener noreferrer" target="_blank">Fifth Review of the Fund&#39;s Data Standards Initiatives</a> <p>International Monetary Fund · International Monetary Fund</p> <p>访问：2026-11-21 · 许可：© IMF; linked summary only</p> <p>支持论点：IMF 数据质量评估框架从完整性、方法、准确性、及时性、可获取性等维度评估数据；元数据应说明口径、来源与修订。本文用其支持数据质量与口径核验。</p> </div><div class="source"> <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf" rel="noopener noreferrer" target="_blank">Data-Driven Innovation: Big Data for Growth and Well-Being</a> <p>OECD · OECD Publishing, 2015</p> <p>访问：2026-11-21 · 许可：© OECD; linked summary only</p> <p>支持论点：报告讨论大数据的经济潜力与风险，包括隐私侵犯与歧视、数据获取与共享壁垒、数据质量的多维性；把数据视为可复用的基础设施/非竞争性资本品，价值依赖上下文与复用；治理需平衡开放与隐私、知识产权。本文用其支持许可、隐私与数据治理。</p> </div><div class="source"> <a href="https://www.nist.gov/privacy-framework" rel="noopener noreferrer" target="_blank">NIST Privacy Framework: A Tool for Improving Privacy through Enterprise Risk Management, Version 1.0</a> <p>National Institute of Standards and Technology · NIST, 2020</p> <p>访问：2026-11-21 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：隐私框架以 Identify-P、Govern-P、Control-P、Communicate-P、Protect-P 五功能管理数据处理带来的隐私风险；强调盘点数据流、访问控制、个人参与与保护措施；是自愿工具，不是法律。本文用其支持隐私风险与访问控制。</p> </div><div class="source"> <a href="https://networksciencebook.com/" rel="noopener noreferrer" target="_blank">Network Science</a> <p>Albert-László Barabási · Cambridge University Press, 2016</p> <p>访问：2026-11-21 · 许可：CC BY-NC-SA 2.0 (Network Science online edition)</p> <p>支持论点：该书覆盖图论、随机网络、无标度网络、度分布、网络鲁棒性、社区与传播；中心性/度等指标描述网络位置，但指标含义依赖网络定义与应用。本文用其支持网络结构、中心性与边定义。</p> </div><div class="source"> <a href="https://doi.org/10.1007/s13194-012-0056-8" rel="noopener noreferrer" target="_blank">What is a Complex System?</a> <p>James Ladyman, James Lambert and Karoline Wiesner · European Journal for Philosophy of Science 3, 2013</p> <p>访问：2026-11-21 · 许可：© Springer; linked summary only</p> <p>支持论点：论文把复杂系统概括为大量元素以无序方式互动、产生稳健组织与记忆；讨论反馈、非线性、涌现、多尺度与历史依赖；非线性并非所有复杂系统的必要条件，因果识别在反馈系统中更困难。本文用其支持复杂系统定义与线性外推限制。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/alternative-data-and-complex-systems/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

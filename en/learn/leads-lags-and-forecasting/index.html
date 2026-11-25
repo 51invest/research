@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Leads, Lags and Forecasting · 51Invest</title><meta name="description" content="Cross-correlation and lagged regression can describe which series moves first, but transformations, windows and multiple tests all manufacture “leads”; forecasting skill must be judged by out-of-sample error."><link rel="canonical" href="https://research.51invest.com/en/learn/leads-lags-and-forecasting/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/leads-lags-and-forecasting/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/leads-lags-and-forecasting/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/leads-lags-and-forecasting/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/leads-lags-and-forecasting/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Leads, Lags and Forecasting</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Leads, Lags and Forecasting</h1> <p class="article-summary">Cross-correlation and lagged regression can describe which series moves first, but transformations, windows and multiple tests all manufacture “leads”; forecasting skill must be judged by out-of-sample error.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M08 · 时间序列</strong></div> <div class="meta-item"><span>Level</span><strong>Systematic</strong></div> <div class="meta-item"><span>Read</span><strong>4 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>Does a hypothetical leading indicator lead output by three months, and can that relationship be used to forecast? This article uses 144 simulated months to demonstrate cross-correlation, lagged regression and an out-of-sample test. The data are generated with seed 20261030 and are not real data.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sample</td>
+<td align="right">144 months</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td align="right">monthly</td>
+</tr>
+<tr>
+<td>Generating process</td>
+<td align="right">c_t = 0.7c_{t-1} + N(0,1); x_t = c_{t+3} + N(0,0.8); y_t = c_t + N(0,0.8). In the notation N(μ, σ) the second parameter is the standard deviation (1 and 0.8 here), not the variance</td>
+</tr>
+<tr>
+<td>r(x_t, y_{t+k}), k = 0…6</td>
+<td align="right">0.27, 0.40, 0.55, 0.76, 0.55, 0.42, 0.24</td>
+</tr>
+<tr>
+<td>Lagged regression y_{t+3} = a + b x_t</td>
+<td align="right">b = 0.76 (SE 0.055), t = 13.8, R² = 0.58, n = 141</td>
+</tr>
+<tr>
+<td>Fit on 105 pairs, test on 36</td>
+<td align="right">out-of-sample R² = 0.54, RMSE 1.05; benchmark RMSE 1.55</td>
+</tr>
+<tr>
+<td>r(x_t, y_{t+3}) in the two halves</td>
+<td align="right">0.77 and 0.76</td>
+</tr>
+<tr>
+<td>License</td>
+<td align="right">simulated data, no external license</td>
+</tr>
+</tbody></table>
+<p>x and y are monthly teaching series in arbitrary simulated units (dimensionless). The number of usable pairs falls as the lag grows, leaving 138 pairs at the longest lag, k = 6.</p>
+<h2>Method and assumptions</h2>
+<p>A lag plot scatters a series against itself at a fixed time displacement to check randomness and serial correlation (NIST 1.3.3.15). A cross-correlation is the correlation between x_t and y_{t+k}, where k &gt; 0 means x moves first. Cross-correlations are computed on growth rates to avoid the common trend of level series; seven lags are compared, and the 5% significance threshold is about 0.165 with n = 141 and about 0.167 with 138 pairs. Next, y_{t+3} is regressed on x_t. A forecast claim requires stable coefficients and out-of-sample performance better than a benchmark; lead-lag tests ask whether past values improve prediction, not whether one series causes another.</p>
+<h2>Results</h2>
+<p>The correlation peaks at 0.76 at three months and then falls, matching the constructed three-month lead. The regression gives a slope of 0.76, t = 13.8 and R² = 0.58; the slope means y is 0.76 units higher three months later for each one-unit higher x, in simulated units. Estimating on the first 105 pairs and testing on the last 36 yields an out-of-sample R² of 0.54 and RMSE of 1.05, below the benchmark RMSE of 1.55 (the training-period mean). The two half-sample correlations are 0.77 and 0.76, so both halves read the same; note that they come from one simulated path and are not evidence of stability across samples. Every figure above comes from a single run of <code>npm run sim:leads-lags</code> with seed 20261030, and <code>npm run check:sim</code> compares the body against the script output. Re-running the same model over the 400 seeds starting at 20261030 gives a three-month correlation averaging 0.742 (95% range 0.631–0.829) and an out-of-sample R² averaging 0.540 (range 0.194–0.769). The 0.76 and 0.54 reported here fall inside those ranges, so they are typical outcomes of the design rather than a hand-picked draw.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-lag-title fig-lag-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-lag-title">Correlation against the forecast horizon k</title>
+    <desc id="fig-lag-desc">The horizontal axis is the horizon k from zero to six and the vertical axis is the correlation on a zero baseline, eighteen pixels per 0.1. The seven values are 0.27, 0.40, 0.55, 0.76, 0.55, 0.42 and 0.24, peaking at k equals three before falling again.</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <polyline points="70,131.4 118,108 166,81 214,43.2 262,81 310,104.4 358,136.8" fill="none" stroke="var(--accent)" stroke-width="2.5"></polyline>
+    <g fill="var(--gold)">
+      <circle cx="70" cy="131.4" r="4.5"></circle>
+      <circle cx="118" cy="108" r="4.5"></circle>
+      <circle cx="166" cy="81" r="4.5"></circle>
+      <circle cx="214" cy="43.2" r="5.5"></circle>
+      <circle cx="262" cy="81" r="4.5"></circle>
+      <circle cx="310" cy="104.4" r="4.5"></circle>
+      <circle cx="358" cy="136.8" r="4.5"></circle>
+    </g>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="13">r(x_t, y_{t+k}) (zero baseline, 18 px per 0.1)</text>
+      <text x="232" y="28">peak at k = 3: 0.76</text>
+      <text x="66" y="198">0</text>
+      <text x="114" y="198">1</text>
+      <text x="162" y="198">2</text>
+      <text x="210" y="198">3</text>
+      <text x="258" y="198">4</text>
+      <text x="306" y="198">5</text>
+      <text x="354" y="198">6</text>
+      <text x="60" y="212" font-size="10">lagged regression y_{t+3} = a + b·x_t: b 0.76 (SE 0.055), t 13.8, R² 0.58</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: the correlation profile across forecast horizons k = 0 to 6 months (zero baseline, 18 pixels per 0.1), peaking at 0.76 for k = 3 and then declining - consistent with the generating process x_t = c_{t+3} + noise, so x leads y by about three months. The peak marks the aligned lead, not a stronger relationship; the series are simulated for teaching.; sample: the article’s own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<ul>
+<li>Seven lags are compared: even with no relationship at all, the chance that at least one looks significant at the 5% level is about 1 - 0.95^7 ≈ 30%. That figure treats the seven tests as independent, and neighbouring lag correlations move together, so the true probability is smaller; either way “a significant lag” is not evidence by itself.</li>
+<li>Using first differences or lags of two to four months keeps the peak near three months but changes the coefficient and R².</li>
+<li>One 36-month out-of-sample split cannot establish stability; the model should be re-estimated on a rolling basis with all results reported. Fixing the lag range and the number of tests in advance is more credible than choosing the peak afterwards.</li>
+</ul>
+<p>The methodological anchor for the lead-lag test is the 1969 Econometrica paper, which studies causal relations with econometric models and cross-spectral methods and originates this line of testing [3].</p>
+<h2>Limitations</h2>
+<p>The simulation imposes the lead, while real lead times vary with the cycle, data revisions and institutions. In-sample R² is not forecast skill, and a leading indicator may only proxy a common shock. Extrapolating beyond the observed range is unreliable (OpenStax 12.5). Real-time forecasting can only use the data as published at the time; a revised history overstates what was knowable then. Nothing here forecasts real asset returns.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Generate the cyclical component and both growth series with the fixed seed.</li>
+<li>Compute scatter plots and correlations for k = 0…6.</li>
+<li>Estimate y_{t+3} on x_t.</li>
+<li>Fit on the first 105 pairs and compute out-of-sample R² and RMSE on the last 36.</li>
+<li>Report every lag, subsample and benchmark.</li>
+</ol>
+<pre><code class="language-text">seed = 20261030
+c[t] = 0.7*c[t-1] + N(0,1)
+x[t] = c[t+3] + N(0,0.8)
+y[t] = c[t] + N(0,0.8)
+corr(x[t], y[t+k]) for k = 0..6
+y[t+3] ~ x[t]; fit 1..105, test 106..141
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>In the simulation x leads y by three months and the out-of-sample R² is positive, so the result is a predictive association. Without randomisation or an exogenous shock it is not causal; a real forecast would also need release timing, revisions and trading costs.</p>
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Introduction to Linear Regression (RES-013).</li>
+<li>Related reading: Indexing, Logarithms and Growth Rates (RES-006), Covariance and Correlation (RES-010), Trends, Nonstationarity and Spurious Regression (RES-016).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Leads, Lags and Forecasting: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Leads, Lags and Forecasting — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Leads, Lags and Forecasting: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Cross-correlation</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> and lagged…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Cross-correlatio</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">n and lagged</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">regression can</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">describe which</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">series moves…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Sample |</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">144 months | |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Frequency |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Leads, Lags and Forecasting — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Leads, Lags and Forecasting: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Leads, Lags and Forecasting: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulation imposes the</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">lead, while real lead times</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">vary with the cycle, data</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">revisions and institutions.…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Does a hypothetical leading</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">indicator lead output by</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">three months, and can that</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">relationship be used to…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Leads, Lags and Forecasting — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Leads, Lags and Forecasting: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Leads, Lags and Forecasting: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Cross-correlation</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">and lagged regression…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulation</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">imposes the lead…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Does a hypothetical leading</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">indicator lead output by three…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Leads, Lags and Forecasting — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>Why compute cross-correlations on growth rates rather than levels?</li>
+<li>Does a correlation of 0.76 prove that x causes y?</li>
+<li>What problem arises from testing seven lags at once?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>Level series often share a trend, which can be mistaken for a lead; differencing or growth rates reduce spurious correlation.</li>
+<li>No. It shows a lagged association that may come from a common shock or a third variable.</li>
+<li>Multiple comparisons: even with no relationship, one lag may look significant; correct for it, pre-specify the lag, or test out of sample.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “1.3.3.15 Lag Plot.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/lagplot.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/lagplot.htm</a> (accessed 2026-10-30)</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “12.5 Prediction.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction">https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction</a> (accessed 2026-10-30)</li>
+<li>Granger, C. W. J. “Investigating Causal Relations by Econometric Models and Cross-Spectral Methods.” <em>Econometrica</em> 37, no. 3 (1969): 424–438. License unknown. <a href="https://ideas.repec.org/a/ecm/emetrp/v37y1969i3p424-38.html">https://ideas.repec.org/a/ecm/emetrp/v37y1969i3p424-38.html</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Locate the lead using the cross-correlation profile (peak 0.76 at k = 3) and show how transforms and windows fake a lead</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Compare out-of-sample R² and RMSE with a benchmark to decide whether a forecast really works</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Locate the lead using the cross-correlation profile (peak 0.76 at k = 3) and show how transforms and windows fake a lead</li><li>Compare out-of-sample R² and RMSE with a benchmark to decide whether a forecast really works</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/indexing-logarithms-and-growth-rates/">RES-006 · Indexing, Logarithms and Growth Rates</a> </li><li> <a href="/en/learn/covariance-and-correlation/">RES-010 · Covariance and Correlation</a> </li><li> <a href="/en/learn/trends-nonstationarity-and-spurious-regression/">RES-016 · Trends, Nonstationarity and Spurious Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/lagplot.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 1.3.3.15 Lag Plot</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: A lag plot compares a series with itself at a fixed time displacement to check randomness and serial correlation; strong autocorrelation suggests an autoregressive model.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.5 Prediction</a> <p>OpenStax · OpenStax, Rice University</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Prediction inside the observed range of x is interpolation; outside it is extrapolation, and the computed value is unreliable even if the equation accepts the input.</p> </div><div class="source"> <a href="https://ideas.repec.org/a/ecm/emetrp/v37y1969i3p424-38.html" rel="noopener noreferrer" target="_blank">Investigating Causal Relations by Econometric Models and Cross-Spectral Methods</a> <p>C. W. J. Granger · Econometrica, 37(3), 424-438</p> <p>Accessed: 2026-10-30 · License: RePEc index record; cite the indexed item and link, no reproduction</p> <p>Supports: This 1969 paper studies causal relations with econometric models and cross-spectral methods and is an early reference for lead-lag testing.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/leads-lags-and-forecasting/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

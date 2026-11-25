@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>回测与前视偏差 · 巫妖投资</title><meta name="description" content="含当月收益的信号年化 20.8%，只用上月信息为 11.4%；前视抬高的是构造收益而非策略能力，随机策略的最佳样本内结果也无法在样本外延续。"><link rel="canonical" href="https://research.51invest.com/learn/backtesting-and-look-ahead-bias/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/backtesting-and-look-ahead-bias/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/backtesting-and-look-ahead-bias/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/backtesting-and-look-ahead-bias/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/backtesting-and-look-ahead-bias/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">回测与前视偏差</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">回测与前视偏差</h1> <p class="article-summary">含当月收益的信号年化 20.8%，只用上月信息为 11.4%；前视抬高的是构造收益而非策略能力，随机策略的最佳样本内结果也无法在样本外延续。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M11 · 回测与验证</strong></div> <div class="meta-item"><span>层级</span><strong>进阶</strong></div> <div class="meta-item"><span>阅读</span><strong>8 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>用 240 个月、3 个假设资产的收益，比较两种 12 个月动量信号：截至当月 t（含当月，前视）与截至 t-1（可实施）。前视会把年化收益抬高多少？再从 1000 个随机策略中选最佳，样本外还剩多少？收益由种子 20261033 生成，随机策略由种子 20261034 生成，均不是真实数据。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>样本</td>
+<td align="right">240 个月；组合收益 228 个月</td>
+</tr>
+<tr>
+<td>频率与单位</td>
+<td align="right">月度收益；年化百分比；Sharpe 无量纲</td>
+</tr>
+<tr>
+<td>资产</td>
+<td align="right">3 个假设资产，月度再平衡</td>
+</tr>
+<tr>
+<td>前视动量</td>
+<td align="right">年化 20.8%（简单口径 23.1%），Sharpe 1.32</td>
+</tr>
+<tr>
+<td>滞后动量</td>
+<td align="right">年化 11.4%（简单口径 12.0%），Sharpe 0.72</td>
+</tr>
+<tr>
+<td>等权组合</td>
+<td align="right">年化 9.2%（简单口径 9.6%），Sharpe 0.72</td>
+</tr>
+<tr>
+<td>随机策略</td>
+<td align="right">1000 个；样本内 120 个月，样本外 108 个月</td>
+</tr>
+<tr>
+<td>最佳样本内 Sharpe</td>
+<td align="right">0.87；其样本外 -0.10</td>
+</tr>
+<tr>
+<td>样本内前 10 名平均样本外 Sharpe</td>
+<td align="right">-0.26</td>
+</tr>
+<tr>
+<td>样本内与样本外 Sharpe 相关</td>
+<td align="right">-0.23（1000 个策略全体平均样本外 0.01）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td align="right">模拟数据，无外部许可</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>回测每月初按信号建仓并持有到月末；信号只能使用当时可得的数据。前视偏差指使用未来或同期尚未公布的信息，例如用当月收益构造当月持仓。本文的随机策略族是<strong>纯噪声</strong>组合（μ=0），不存在任何真实技巧，因此其样本内最佳值只衡量运气；期望最大值的量级可用 1000 次抽样的极值近似核对，本例实测最佳样本内 0.87，与正态极值量级 0.84 同阶。多重检验问题是只报告挑出的最佳策略、不报告尝试次数（定义与校正方法见《多重检验与数据窥探》）；Bailey 等（2014）证明，尝试的配置越多，回测过拟合的概率越高，而研究者很少报告尝试次数[1]。两个实验使用不同的资产宇宙与各自的种子，模型由仓内脚本 <code>scripts/simulate-backtesting.mjs</code> 一次实跑产生（mulberry32 伪随机＋Marsaglia 极坐标正态，同种子两次运行逐字节一致）。前视对照宇宙：3 个假设资产、240 个月，月度均值 μ 分别为 1.0%、0.4%、-0.2%，月度标准差 σ 均为 5.0%，两两相关 ρ=30.0%（种子 20261033）。多重检验宇宙：10 个<strong>纯噪声</strong>资产，μ=0、σ=5.0%、ρ=0（种子 20261036），1000 个策略是各资产 ±1/10 权重的随机多空组合（权重种子 20261034）。年化按月度对数收益均值×12（对数口径），括号内给出等价的简单收益；Sharpe 为月度均值/标准差×√12。 前文提到的隐含月波动为前视 4.5%、滞后 4.6%、等权 3.7%。两项指标都未扣无风险利率和交易成本。</p>
+<h2>结果</h2>
+<p>前视动量年化 20.8%、Sharpe 1.32；可实施版本年化 11.4%、Sharpe 0.72；等权组合 9.2%、Sharpe 0.72。前视比可实施高 9.4 个百分点，差异主要来自信号含被预测月份的收益。1000 个随机多空策略（纯噪声资产）中，最佳样本内 Sharpe 为 0.87，其样本外为 -0.10；样本内前 10 名平均样本外 -0.26；样本内与样本外 Sharpe 的相关为 -0.23，全体策略的样本外平均为 0.01。挑选出的最佳值没有任何延续性，排名前十的样本外均值甚至已落到零以下。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-la-title fig-la-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-la-title">前视动量、滞后动量与等权基准</title>
+    <desc id="fig-la-desc">三根零基线柱，每百分点五像素。前视动量年化 20.8%（高 104 像素，Sharpe 1.32）；滞后动量 11.4%（57 像素，Sharpe 0.72）；等权组合 9.2%（46 像素，Sharpe 0.72）。第一根明显高于其余两根。</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="90" y="76" width="60" height="104" fill="var(--gold)" opacity="0.9"></rect>
+    <rect x="190" y="123" width="60" height="57" fill="var(--accent)" opacity="0.85"></rect>
+    <rect x="290" y="134" width="60" height="46" fill="var(--accent)" opacity="0.55"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">年化收益（%，零基线，每 1 个百分点 = 5 像素）</text>
+      <text x="96" y="72">20.8</text>
+      <text x="196" y="119">11.4</text>
+      <text x="296" y="130">9.2</text>
+      <text x="72" y="200">前视动量 S 1.32</text>
+      <text x="176" y="200">滞后动量 S 0.72</text>
+      <text x="278" y="200">等权组合 S 0.72</text>
+      <text x="60" y="36">前视与滞后的差 9.4 个百分点主要来自“用当天信息交易当天”</text>
+    </g>
+  </svg>
+  <figcaption>图 1：三种设定的年化收益（零基线，每百分点 5 像素，对数口径）与 Sharpe：前视动量 20.8%/1.32、按规则滞后一个月的动量 11.4%/0.72、等权组合 9.2%/0.72。差值 9.4 个百分点来自取用了当时还不可得的信息，不是策略 alpha。滞后动量的年化高于等权基准，但两者的 Sharpe 几乎相同（0.716 对 0.723），说明&quot;更复杂&quot;与&quot;更高收益&quot;都不等于风险调整后更好；本例两者的差异小于这套教学样本能分辨的精度。数值为本文定义模型的实跑结果。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>改用 6 或 9 个月动量、季度再平衡，前视信号仍会包含被预测月份的信息，数值会变但方向不变。</li>
+<li>比较时应扣除交易成本、换手和借券费；两个版本都会被成本压低，而前视与可实施的差距来自信息的时点，不是成本假设。</li>
+<li>换用不同的样本外切分，最佳策略的样本外结果会变，但样本内排名不稳定这一点不变。</li>
+</ul>
+<h2>局限</h2>
+<p>模拟资产和随机策略是教学设定，不代表真实市场；未计交易成本、借券费用、流动性和容量。多重检验只覆盖一种策略族；真实研究还有数据窥探、幸存者偏差和参数搜索，其中幸存者偏差与费用处理见《幸存者偏差与交易成本》。样本内的高 Sharpe 只是一个拟合统计量，单靠它不能证明模型拟合充分（NIST/SEMATECH，4.4.4）。样本外也不是最终检验，策略发布后仍可能失效。前视回测的高收益不能作为业绩证据。</p>
+<h2>复现</h2>
+<ol>
+<li>运行 <code>scripts/simulate-backtesting.mjs</code>：用种子 20261033 生成 3 个趋势资产 240 个月的收益（μ 1.0%、0.4%、-0.2%、σ 5.0%、ρ=30.0%）。</li>
+<li>分别用含当月和滞后一月的 12 个月收益选资产。</li>
+<li>计算 228 个月的年化收益与 Sharpe。</li>
+<li>在种子 20261036 生成的 10 个纯噪声资产上，用权重种子 20261034 生成 1000 个随机多空策略，前 120 个月选最佳，后 108 个月评估。</li>
+<li>报告尝试次数、全部结果和成本假设；改动参数请用 <code>node scripts/simulate-backtesting.mjs --selftest</code> 与 <code>node scripts/simulate-backtesting.mjs --check</code> 复跑，不要手填数字。</li>
+</ol>
+<pre><code class="language-text">universe_A (look-ahead): assets = 3; mu_month = 1.0%、0.4%、-0.2%; sigma_month = 5.0%; rho = 30.0%; seed = 20261033
+universe_B (multiple testing): assets = 10; mu = 0; sigma = 5.0%; rho = 0; seed = 20261036
+months = 240; portfolio months = 228
+signal_ahead = sum(log(1+r[a,t-11..t]))
+signal_lagged = sum(log(1+r[a,t-12..t-1]))
+Sharpe = mean/sd*sqrt(12); annualised = mean(log)*12
+1000 random long/short strategies (weight seed 20261034); IS 120, OOS 108
+best_IS = 0.87; its_OOS = -0.10; top10_mean_OOS = -0.26; corr(IS,OOS) = -0.23
+</code></pre>
+<h2>结论强度</h2>
+<p>前视版本的高收益是构造产物，不是策略能力；随机策略的最佳样本内结果不能外推，OpenStax 指出，超出观测范围的预测即使方程能算出数值也不可靠。结论支持“回测必须使用当时可得信息并报告尝试次数”，不支持真实策略的收益预测。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>前视</h3>
+<p><strong>定义</strong>：前视偏差是回测使用了当时不可得的信息，如未来财报、修订后数据或收盘后价格。</p>
+<p><strong>机制</strong>：前视来自数据时点错配、公告延迟和复权；会让策略看起来过度优秀，实盘无法复制。</p>
+<p><strong>例子</strong>：例如用当天收盘价决定当天开盘买入，或用最终修订 GDP 回测实时策略。</p>
+<p><strong>边界</strong>：前视不是只有明显错误；发布时间、时区、数据供应商覆盖和 point-in-time 缺失都会造成，修复需按信息可得时点重建数据。</p>
+<h3>幸存者</h3>
+<p><strong>定义</strong>：幸存者偏差是只使用存活到今天的公司、基金或资产，忽略已退市、破产或关闭者。</p>
+<p><strong>机制</strong>：幸存者使历史收益被高估、风险被低估；基金数据库和指数成分尤其常见。</p>
+<p><strong>例子</strong>：例如只用当前上市公司回测，破产和退市公司被排除，组合收益虚高。</p>
+<p><strong>边界</strong>：幸存者不是小问题；退市、并购和清盘会改变样本，指数历史成分和基金数据库也有 backfill，需使用 point-in-time universe。</p>
+<h3>数据窥探</h3>
+<p><strong>定义</strong>：数据窥探是反复查看同一数据、尝试许多模型或参数，直到找到显著结果。</p>
+<p><strong>机制</strong>：数据窥探利用偶然模式，产生假发现；多重检验、样本外和预注册可缓解。</p>
+<p><strong>例子</strong>：例如测试上百个因子，总有几个看起来显著，但样本外失效。</p>
+<p><strong>边界</strong>：数据窥探不是故意作弊；研究者可能无意识选择，发表偏差和 HARKing 放大问题，校正会降低功效但必要。</p>
+<h3>过拟合</h3>
+<p><strong>定义</strong>：过拟合是模型过度贴合训练样本的噪声，导致样本外泛化差。</p>
+<p><strong>机制</strong>：过拟合来自参数过多、特征过多、样本少和反复调参；正则化、简化、交叉验证和更多数据可缓解。</p>
+<p><strong>例子</strong>：例如复杂模型在训练集准确率 99%，测试集只有 55%。</p>
+<p><strong>边界</strong>：过拟合不是模型越复杂越差；简单模型也会欠拟合，正则化和验证也有偏差，经济意义和稳定性比训练精度更重要。</p>
+<h3>样本外</h3>
+<p><strong>定义</strong>：样本外检验是在未参与训练和调参的数据上评估模型，检验泛化能力。</p>
+<p><strong>机制</strong>：严格样本外需时间切分、锁定模型和一次性测试；滚动样本外可模拟实时更新。</p>
+<p><strong>例子</strong>：例如用 2010—2018 训练，2019—2022 完全不接触地测试。</p>
+<p><strong>边界</strong>：样本外不是绝对保证；多次样本外测试会变成样本内，分布漂移使历史失效，样本外通过也可能因成本、容量和执行不可行。</p>
+<h3>交易成本</h3>
+<p><strong>定义</strong>：交易成本是买卖产生的费用和摩擦，包括佣金、价差、冲击、滑点、融资和税。</p>
+<p><strong>机制</strong>：成本随规模、流动性、波动和频率上升；回测应扣除现实成本，净收益和容量才可信。</p>
+<p><strong>例子</strong>：例如高换手策略毛收益 10%，扣除价差和冲击后净收益可能只有 3%。</p>
+<p><strong>边界</strong>：成本不是固定假设；市场状态、订单规模和执行方式会改变，回测常用过低成本，容量估计也会过于乐观。</p>
+<h3>稳健性与敏感性</h3>
+<p><strong>定义</strong>：稳健性是结果对合理变化不敏感，敏感性是结果随参数、样本、时期和成本变化的程度。</p>
+<p><strong>机制</strong>：稳健性检验包括不同样本、子期、参数、基准和成本；敏感性分析展示关键假设的影响。</p>
+<p><strong>例子</strong>：例如策略在多数子期和成本假设下仍有效，才算稳健。</p>
+<p><strong>边界</strong>：稳健不是重复得到同一结果；过多次检验会数据窥探，稳健也可能只是共同偏差，敏感性范围选择可操纵，需预先设定。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：滚动分析与结构变化（RES-018）。</li>
+<li>相关与推荐阅读：领先滞后与预测（RES-017）、滚动分析与结构变化（RES-018）、可复现研究流程（RES-008）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">回测与前视偏差：机制链</title>
+    <desc id="fig-batch-chain-desc">回测与前视偏差 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">回测与前视偏差：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">含当月收益的信号年化</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> 20.8%，只用上月信息…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">含当月收益的信号年</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">化 20.8%，只用上月</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">信息为 11.4%；前视</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">抬高的是构造收益而</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">非策略能力，随机策…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：用 240</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">个月、3 个假设资产…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：用 240</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个月、3 个假设资</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">产的收益，区分两种</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> 12 个月动量信号：</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">截至当月 t（含当月…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 样本 | 240</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个月；组合收益</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">228 个月 | |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：回测与前视偏差的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">回测与前视偏差：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">回测与前视偏差：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟资产和随机策略是教学设定，不</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">代表真实市场；未计交易成本、借券</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">费用、流动性和容量。多重检验只覆</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">盖一种策略族；真实研究还有数据窥…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：滚动分析与结构变化（RES</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-018）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：回测与前视偏差的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">回测与前视偏差：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">回测与前视偏差：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">含当月收益的信号年化</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">20.8%，只用上月信息为…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟资产和随机策略是教学</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">设定，不代表真实市场；未…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：滚动分析与结构变化（RES-01</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">8）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：回测与前视偏差的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>什么情况下用当月收益构造信号属于前视偏差？</li>
+<li>为什么最佳样本内 Sharpe 在样本外接近零？</li>
+<li>报告尝试次数为什么重要？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>当月收益在月末才知道；若在月初建仓时使用，就用了当时不可得的信息。</li>
+<li>从大量随机策略中取最大值，选中的多半是运气；样本外没有同样的运气。</li>
+<li>尝试越多，最大值越容易被偶然的高值占据；不报告次数，读者无法判断过拟合程度。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>Bailey, David H., Jonathan M. Borwein, Marcos López de Prado, and Qiji Jim Zhu. “Pseudo-mathematics and financial charlatanism: The effects of backtest overfitting on out-of-sample performance.” <em>Notices of the American Mathematical Society</em> 61, no. 5 (2014): 458–471. 作者保留版权；仅引用（cite-only）。<a href="https://www.davidhbailey.com/dhbpapers/backtest-pseudo.pdf">https://www.davidhbailey.com/dhbpapers/backtest-pseudo.pdf</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “4.4.4 How can I tell if a model fits my data?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm</a>（访问日期：2026-10-30）</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “12.5 Prediction.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction">https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能用 25.3% 与 6.0% 的对比说明前视偏差抬高的是构造收益而非策略能力</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能用随机策略的样本内最佳与样本外表现解释挑选效应</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能用 25.3% 与 6.0% 的对比说明前视偏差抬高的是构造收益而非策略能力</li><li>能用随机策略的样本内最佳与样本外表现解释挑选效应</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/rolling-analysis-and-structural-change/">RES-018 · 滚动分析与结构变化</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/leads-lags-and-forecasting/">RES-017 · 领先滞后与预测</a> </li><li> <a href="/learn/rolling-analysis-and-structural-change/">RES-018 · 滚动分析与结构变化</a> </li><li> <a href="/learn/reproducible-research-workflow/">RES-008 · 可复现研究流程</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.davidhbailey.com/dhbpapers/backtest-pseudo.pdf" rel="noopener noreferrer" target="_blank">Pseudo-mathematics and financial charlatanism: The effects of backtest overfitting on out-of-sample performance</a> <p>David H. Bailey; Jonathan M. Borwein; Marcos López de Prado; Qiji Jim Zhu · Notices of the American Mathematical Society, 61(5), 458-471 (author manuscript)</p> <p>访问：2026-10-30 · 许可：Copyrighted by author; research use, no stated republication licence (cite-only)</p> <p>支持论点：尝试的策略配置越多，回测过拟合的概率越高；分析师很少报告尝试次数，投资者难以评估过拟合程度。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 4.4.4 How can I tell if a model fits my data?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：高 R² 不保证模型拟合良好；模型验证不能只引用拟合统计量，残差分析能提供拟合充分性的信息。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.5 Prediction</a> <p>OpenStax · OpenStax, Rice University</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：在观测范围内预测属于内插；超出范围为外推，即使方程能算出数值也不可靠。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/backtesting-and-look-ahead-bias/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

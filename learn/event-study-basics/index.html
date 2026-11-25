@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>事件研究基础 · 巫妖投资</title><meta name="description" content="用市场模型扣除正常收益后，40 家假设公司的三日平均累计异常收益为 1.9%，t 值为 4.8；构造上无事件的对照窗口在这份样本里也读出 0.1%，说明这类估计自带抽样噪声，事件日聚集与模型选择还会进一步改变结论。"><link rel="canonical" href="https://research.51invest.com/learn/event-study-basics/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/event-study-basics/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/event-study-basics/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/event-study-basics/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/event-study-basics/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">事件研究基础</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">事件研究基础</h1> <p class="article-summary">用市场模型扣除正常收益后，40 家假设公司的三日平均累计异常收益为 1.9%，t 值为 4.8；构造上无事件的对照窗口在这份样本里也读出 0.1%，说明这类估计自带抽样噪声，事件日聚集与模型选择还会进一步改变结论。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M10 · 金融数据方法</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 14 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>40 家假设公司在同一事件日发布消息，事件是否带来异常收益？本文用市场模型估计正常收益，计算三日累计异常收益 CAR[-1,+1]，并用另一个构造上不含注入效应的三日窗口（t = −60 至 −58）作对照。收益序列由仓内脚本生成，共 131 个交易日（t = −125 至 +5），不是真实数据。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公司数</td>
+<td align="right">40</td>
+</tr>
+<tr>
+<td>频率与单位</td>
+<td align="right">日频（交易日）；收益与 AR、CAR 为百分比；t 值无量纲</td>
+</tr>
+<tr>
+<td>模拟序列</td>
+<td align="right">t = −125 至 +5，共 131 个交易日</td>
+</tr>
+<tr>
+<td>估计窗口</td>
+<td align="right">100 个交易日（事件前，t = -120 至 -21）</td>
+</tr>
+<tr>
+<td>事件窗口</td>
+<td align="right">-1 至 +1，共 3 个交易日</td>
+</tr>
+<tr>
+<td>对照窗口</td>
+<td align="right">t = −60 至 −58，共 3 个交易日（落在估计窗口内，构造上无注入）</td>
+</tr>
+<tr>
+<td>注入效应</td>
+<td align="right">仅事件日 +1.5%</td>
+</tr>
+<tr>
+<td>平均 CAR</td>
+<td align="right">1.9%</td>
+</tr>
+<tr>
+<td>横截面标准差</td>
+<td align="right">2.5%</td>
+</tr>
+<tr>
+<td>横截面 t 值</td>
+<td align="right">4.8</td>
+</tr>
+<tr>
+<td>CAR 为负的公司占比</td>
+<td align="right">25%（10/40）</td>
+</tr>
+<tr>
+<td>对照窗口平均 CAR</td>
+<td align="right">0.1%（t = 0.5）</td>
+</tr>
+<tr>
+<td>理论 CAR 标准差</td>
+<td align="right">2.1%（√3 × 1.2% 残差波动）</td>
+</tr>
+<tr>
+<td>实测标准误</td>
+<td align="right">0.40%（2.5% ÷ √40）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td align="right">模拟数据，无外部许可</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>市场模型 r_i,t = α_i + β_i r_m,t + ε_i,t 对每家公司用最小二乘在估计窗口的 100 个交易日上拟合，事件窗口的实际收益减去拟合预测值得到异常收益 AR，累加得到 CAR。这里的正常收益来自一条拟合直线的预测，而数据不会完全落在直线上，预测只是近似（OpenStax，12.3）。估计窗口止于 t = -21，与事件窗口之间留出 t = -20 至 -2 的空档，以降低预期泄漏进入参数估计的可能。估计窗口和事件窗口都应在看到事件结果之前按事先设定的规则选取；事后调整窗口等于多次尝试，会抬高显著性。假设估计窗口不受事件影响、残差独立同分布、事件日不聚集。MacKinlay（1997）的摘要逐字写道：&quot;The goal of an event study is to measure the effects of an economic event on the value of firms.&quot;，又把方法的前提写成&quot;Event study methods exploit the fact that, given rationality in the marketplace, the effects of an event will be reflected immediately in security prices.&quot;，并自称描述了事件研究方法&quot;including some of the potential complications&quot;[1]。本站只取回 RePEc/IDEAS 索引页所载摘要，该页标注全文访问限于 AEA 会员，所以这三处归属止于摘要表述，不扩展到刊内论证。</p>
+<h2>结果</h2>
+<p>平均 CAR 为 1.9%，横截面标准差 2.5%，t = 4.8；25%（10/40）的公司 CAR 为负。40 家公司共享同一事件日，横截面独立性并不成立，所以这个 t 值按稳健性一节只作上界理解。注入效应为 1.5%，实测均值高出 0.4 个百分点，约合 1.0 个实测标准误（0.40 个百分点），落在抽样误差之内。理论上的三日 CAR 标准差是 √3 × 1.2% = 2.1%，实测 2.5% 更大，因为每家公司的 α̂、β̂ 由 100 个交易日估出，参数估计误差本身也进了 CAR。对照窗口（t = −60 至 −58）在这份样本里读出 0.1%、t = 0.5：它与零无法区分，但并不恰好为零，这就是 40 家公司这一小样本的抽样噪声，而不是事件效应。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-win-title fig-win-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-win-title">事件研究的时间窗安排</title>
+    <desc id="fig-win-desc">一条交易日数轴从负一百二十五到正五，共一百三十一个交易日，映射到三百二十像素，每交易日二点四六一五行。数轴上方第一条深色带是估计窗，负一百二十至负二十一，一百个交易日，宽二百四十六点一五像素；紧接其右的浅色带是空窗，负二十至负二，十九个交易日，宽四十六点七七像素；再右边的金色窄带是事件窗，负一至正一，三个交易日，宽七点三八像素。数轴下方另有一条浅金窄带表示对照窗，负六十至负五十八，同为三个交易日，横向位置落在估计窗之内。图中不画累计异常收益曲线，因为逐日路径未在正文给出。</desc>
+    <line x1="60" y1="122" x2="380" y2="122" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="71.08" y="96" width="246.15" height="24" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="317.23" y="96" width="46.77" height="24" fill="var(--accent)" opacity="0.22"></rect>
+    <rect x="364" y="96" width="7.38" height="24" fill="var(--gold)"></rect>
+    <rect x="218.77" y="142" width="7.38" height="16" fill="var(--gold)" opacity="0.45"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="18">交易日数轴（每 1 日 = 2.4615 像素）</text>
+      <text x="150" y="112">估计窗 100 日</text>
+      <text x="322" y="112">空窗</text>
+      <text x="286" y="88" font-size="10">事件窗 −1 至 +1</text>
+      <text x="230" y="155" font-size="10">对照窗 −60 至 −58</text>
+      <text x="66" y="136" font-size="10">−120</text>
+      <text x="310" y="136" font-size="10">−21</text>
+      <text x="364" y="136" font-size="10">0</text>
+      <text x="374" y="136" font-size="10">+5</text>
+      <text x="60" y="180" font-size="10">事件日注入 +1.5% ⇒ 平均 CAR 1.9%、横截面 SD 2.5%、t = 4.8</text>
+      <text x="60" y="197" font-size="10">对照窗口实测 +0.1%（t = 0.5）；10/40 家公司事件窗 CAR 为负</text>
+    </g>
+  </svg>
+  <figcaption>图 1：教学假设的事件研究窗口布局，数轴按注明比例绘制——131 个交易日映射到 320 像素，每 1 交易日 2.4615 像素。估计窗 t = −120 至 −21 共 100 日（宽 246.15 像素），空窗 −20 至 −2 共 19 日（46.77 像素），事件窗 −1 至 +1 共 3 日（金色窄带，7.38 像素）。数轴下方的浅金带是对照窗 t = −60 至 −58，同样 3 日，横向落在估计窗之内。实跑给出平均 CAR 1.9%、横截面标准差 2.5%、t = 4.8，对照窗口 0.1%（t = 0.5）。图中不画逐日累计曲线，因为该路径未在正文给出，画出来就是虚构。</figcaption>
+</figure>
+
+<h2>图解：1.9% 的误差棒</h2>
+<figure id="figure-event-ci">
+  <svg role="img" aria-labelledby="fig-event-ci-title fig-event-ci-desc" viewBox="0 0 380 300" width="100%">
+    <title id="fig-event-ci-title">平均 CAR 1.9% 的 95% 区间与注入效应 1.5% 的位置</title>
+    <desc id="fig-event-ci-desc">数轴从负一到三：注入效应 1.5 在 225 像素处，实测均值 1.9 在 253 像素处，误差棒从 1.12 到 2.68；1.5 落在区间内，零在区间外。</desc>
+    <text x="20" y="22" font-size="11" font-weight="650" fill="var(--text)" font-family="inherit">1.9% 的误差棒有多宽</text>
+    <text x="20" y="42" font-size="9.5" fill="var(--muted)" font-family="inherit">40 家假设公司｜三日 CAR｜市场模型</text>
+    <text x="225" y="76" font-size="9.5" font-weight="600" fill="var(--gold)" text-anchor="middle" font-family="inherit">注入 1.5%</text>
+    <text x="263" y="108" font-size="10" font-weight="650" fill="var(--text)" text-anchor="start" font-family="inherit">实测 1.9%</text>
+    <line x1="225" y1="84" x2="225" y2="190" stroke="var(--gold)" stroke-width="1.5"/>
+    <rect x="198" y="125" width="110" height="20" fill="var(--accent)" opacity="0.12"/>
+    <line x1="198" y1="135" x2="308" y2="135" stroke="var(--accent)" stroke-width="1.5"/>
+    <line x1="198" y1="129" x2="198" y2="141" stroke="var(--accent)" stroke-width="1.5"/>
+    <line x1="308" y1="129" x2="308" y2="141" stroke="var(--accent)" stroke-width="1.5"/>
+    <circle cx="253" cy="135" r="4" fill="var(--accent)"/>
+    <text x="236" y="160" font-size="9" fill="var(--secondary)" text-anchor="start" font-family="inherit">95% 区间 ≈ 1.12–2.68</text>
+    <line x1="50" y1="190" x2="330" y2="190" stroke="var(--border)" stroke-width="1.5"/>
+    <line x1="120" y1="84" x2="120" y2="190" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4"/>
+    <g fill="var(--muted)" font-size="9" text-anchor="middle" font-family="inherit">
+      <text x="50" y="208">−1%</text>
+      <text x="120" y="208">0</text>
+      <text x="190" y="208">1%</text>
+      <text x="260" y="208">2%</text>
+      <text x="330" y="208">3%</text>
+    </g>
+    <text x="40" y="230" font-size="9.5" fill="var(--accent)" font-family="inherit">对 0：t = 4.8，区间不跨 0</text>
+    <text x="40" y="248" font-size="9.2" fill="var(--muted)" font-family="inherit">与 1.5 的差：0.4 个百分点 ≈ 1 个标准误，落在区间内</text>
+    <text x="40" y="270" font-size="9" fill="var(--muted)" font-family="inherit">误差棒按 1.96×0.40 正态近似；40 家共享同一事件日，</text>
+    <text x="40" y="286" font-size="9" fill="var(--muted)" font-family="inherit">t 值只作上界理解，不能当成独立样本的精确显著性。</text>
+  </svg>
+  <figcaption>图 2：平均 CAR 1.9%、实测标准误 0.40 个百分点，按 ±1.96×0.40 的正态近似给出约 1.12–2.68 的 95% 区间。注入效应 1.5% 落在区间内，说明 1.9 与 1.5 的 0.4 个百分点差在抽样误差内；零在区间外，t=4.8 只是对零的粗略上界。40 家公司同一天，横截面独立性不成立。；样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>改用市场调整模型，或加入规模、价值等因子，点估计会变化；应同时报告基准模型与替代基准。</li>
+<li>事件日聚集时，横截面 t 会高估显著性，应按日聚合并使用聚类稳健标准误；本模拟 40 家公司集中在同一事件日，横截面独立性在构造上就不成立，单日也给不出按日聚合所需的自由度。</li>
+<li>对照窗口取在估计窗口之内，它的&quot;无注入&quot;是构造性的，因此只能演示&quot;检验不会凭空造出显著性&quot;，不是独立的经验安慰剂；要当作后者，需要一段既不参与拟合也不参与事件计量的区间。</li>
+<li>市场模型是否充分要靠残差判断，单一拟合统计量不能替代验证（NIST/SEMATECH，4.4.4）；残差的函数形式误设、异方差和相关都会改变标准误。</li>
+<li>检查 CAR 分布与离群公司，避免均值由少数公司驱动，并报告事件日是否有信息泄露。</li>
+</ul>
+<h2>局限</h2>
+<p>模拟只有一个干净事件日；真实事件存在日期不确定、信息泄露、同期其他消息和交易成本。市场模型可能遗漏风险因子，40 家公司的小样本使 t 值依赖近似正态。结果描述平均异常收益，不解释机制，也不等于因果。</p>
+<h2>复现</h2>
+<ol>
+<li>用固定种子生成 131 个交易日的市场收益和 40 家公司的收益。</li>
+<li>对每家公司在估计窗口（100 个交易日）用最小二乘拟合 α̂、β̂。</li>
+<li>在事件窗口 t = −1 至 +1 计算 AR 与 CAR。</li>
+<li>计算横截面均值、标准差、标准误和 t 值。</li>
+<li>在 t = −60 至 −58 的三日窗口重复第 3、4 步作为对照。</li>
+</ol>
+<p>正文全部数值由 <code>scripts/simulate-event-study.mjs</code> 一次实跑产生：不带参数打印模型参数与结果，<code>--selftest</code> 断言结构与 200 次重复的校准，<code>--check</code> 把本文表格与实跑值逐条比对。</p>
+<pre><code class="language-text">seed = 20261032; firms = 40; days t = -125..+5 (131)
+beta = 1.0 + N(0,0.2); alpha = N(0,0.001)
+r[i,t] = alpha + beta*rm[t] + N(0,0.012)
+rm[t] = N(0.006,0.04)
+event day 0: +0.015
+estimation: t = -120..-21 (OLS per firm)
+event CAR: t = -1..+1; control CAR: t = -60..-58
+</code></pre>
+<h2>结论强度</h2>
+<p>模拟中事件窗口存在显著为正的异常收益；对照窗口在这份样本里读出 0.1%（t = 0.5），与零不可区分但并不恰好为零，因此它支持的是&quot;检验不会凭空造出显著性&quot;，而不是&quot;无事件窗口一定等于零&quot;。单一事件、40 家公司和三日窗口不足以推断真实公告的市场反应，也不能把平均 CAR 解释为因果机制。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>收益</h3>
+<p><strong>定义</strong>：收益是资产价格或价值的变化率，简单收益是期末减期初除以期初，对数收益是价格对数差。</p>
+<p><strong>机制</strong>：简单收益可跨资产加权，对数收益可时间相加；分红、拆股和费用需纳入，频率影响年化。</p>
+<p><strong>例子</strong>：例如价格从 100 到 110，简单收益 10%，对数收益约 9.53%。</p>
+<p><strong>边界</strong>：收益不是价格；不同频率不可直接平均，简单与对数收益在大幅变动时差异大，复权和现金流处理错误会产生虚假收益。</p>
+<h3>复权</h3>
+<p><strong>定义</strong>：复权是调整历史价格以反映拆股、分红、配股等公司行为，使收益序列连续可比。</p>
+<p><strong>机制</strong>：前复权把历史价格按当前基准调整，后复权保持历史基准；分红调整把股息加入或调整价格。</p>
+<p><strong>例子</strong>：例如 2 拆 1 后价格减半，复权后历史价格也减半，避免虚假下跌。</p>
+<p><strong>边界</strong>：复权不是真实成交价；前复权和后复权数值不同，分红税和配股规则影响调整，复权方法不一致会导致回测和比较错误。</p>
+<h3>总回报</h3>
+<p><strong>定义</strong>：总回报是价格变化加分红、利息和票息再投资后的总收益，反映投资者实际持有回报。</p>
+<p><strong>机制</strong>：总回报指数假设现金流再投资；价格回报忽略分红，净回报扣除税费，币种和费用也影响。</p>
+<p><strong>例子</strong>：例如股票分红 2%、价格上涨 5%，总回报约 7%（再投资时略高）。</p>
+<p><strong>边界</strong>：总回报不是价格回报；再投资假设、税费和汇率会改变，分红时点和 withholding 也影响，比较高分红资产必须用总回报。</p>
+<h3>基准</h3>
+<p><strong>定义</strong>：基准是评价策略的参照，可是市场指数、同业组、负债或现金，需与策略范围和风险匹配。</p>
+<p><strong>机制</strong>：基准影响超额收益、归因和激励；币种、费用和再平衡口径必须一致。</p>
+<p><strong>例子</strong>：例如中国股票策略用沪深 300 总回报指数，而非价格指数。</p>
+<p><strong>边界</strong>：基准不是越低越好；不匹配会制造虚假 alpha，基准成分和权重变化也会影响比较，生存偏差和费用常被忽略。</p>
+<h3>换月</h3>
+<p><strong>定义</strong>：换月是把临近到期期货合约平仓并转入远月，构建连续价格序列时需处理换月跳跃。</p>
+<p><strong>机制</strong>：换月收益取决于曲线结构；连续合约有拼接、比率和 Panamax 等方法，不同方法产生不同历史收益。</p>
+<p><strong>例子</strong>：例如原油期货每月换月，远月升水时多头展期承担成本。</p>
+<p><strong>边界</strong>：换月不是无成本；曲线、流动性和交割规则造成展期损益，连续合约方法可夸大或掩盖收益，回测必须说明换月规则。</p>
+<h3>交易日历</h3>
+<p><strong>定义</strong>：交易日历定义市场开市、闭市、半日和节假日，影响数据对齐、收益计算和回测。</p>
+<p><strong>机制</strong>：不同市场日历、时区和结算周期造成缺口；跨市场策略需对齐时间戳，避免错位和虚假收益。</p>
+<p><strong>例子</strong>：例如中美节假日不同，跨市场组合在同一天可能只有一方有价格。</p>
+<p><strong>边界</strong>：日历不是背景；缺失日、半日和时区错误会产生虚假波动和前视，数据供应商日历也可能过时，必须显式处理。</p>
+<h3>事件和组合数据</h3>
+<p><strong>定义</strong>：事件数据记录公司行为、财报、并购、分红、拆股和退市，组合数据记录持仓、权重和交易。</p>
+<p><strong>机制</strong>：事件数据用于复权、因子和回测；组合数据用于归因、风险和容量，时点和版本决定正确性。</p>
+<p><strong>例子</strong>：例如并购完成改变流通股和指数成分，退市会造成幸存者偏差。</p>
+<p><strong>边界</strong>：事件不是公告日就等于生效日；生效、除权和支付时点不同，组合数据也可能滞后或重叠，处理错误会产生前视和虚假收益。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：线性回归入门（RES-013）。</li>
+<li>相关与推荐阅读：协方差与相关性（RES-010）、线性回归入门（RES-013）、可复现研究流程（RES-008）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">事件研究基础：机制链</title>
+    <desc id="fig-batch-chain-desc">事件研究基础 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">事件研究基础：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">用市场模型扣除正常收</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">益后，40 家假设公司…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">用市场模型扣除正常</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">收益后，40</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">家假设公司的三日平</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">均累计异常收益为</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">1.9%，t 值为…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：40</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">家假设公司在同一事件…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：40</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">家假设公司在同一事</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">件日发布消息，事件</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">能否带来异常收益？</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">本文用市场模型估计…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 公司数 | 40 |</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 频率与单位 |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">日频（交易日）；收益…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 3：事件研究基础的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">事件研究基础：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">事件研究基础：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟只有一个干净事件日；真实事件</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">存在日期不确定、信息泄露、同期其</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">他消息和交易成本。市场模型可能遗</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">漏风险因子，40 家公司的小样本使…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：事件研究基础的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">事件研究基础：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">事件研究基础：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">用市场模型扣除正常收益后</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">，40 家假设公司的三日平…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">模拟只有一个干净事件日；</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">真实事件存在日期不确定、…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 5：事件研究基础的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>估计窗口为什么不能包含事件窗口？</li>
+<li>CAR 显著是否等于事件导致收益变化？</li>
+<li>事件日聚集为什么会高估 t 值？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>事件会污染 α、β 的估计，使部分异常收益被吸收进正常收益。</li>
+<li>不等于。可能有同期其他消息、选择问题或模型误设；需要对照窗口、替代基准和稳健标准误。</li>
+<li>同一天的公司收益相关，横截面独立性假设失效，标准误被低估，t 值偏大。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>MacKinlay, A. Craig. “Event Studies in Economics and Finance.” <em>Journal of Economic Literature</em> 35, no. 1 (1997): 13–39. License unknown；本站取回的是 RePEc/IDEAS 索引页所载摘要，页内标注全文访问限于 AEA 会员，因此归属只到摘要表述。 <a href="https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html">https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html</a>（访问日期：2026-11-03）</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “12.3 The Regression Equation.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation">https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “4.4.4 How can I tell if a model fits my data?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能区分估计窗、空窗与事件窗，并解释为何 3 日事件窗仍需 100 日估计窗</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能用平均 CAR 1.9% 与横截面标准差 2.5% 复算横截面 t 值（1.9 ÷ (2.5/√40) ≈ 4.8），并说明事件日聚集与模型选择的敏感性</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能区分估计窗、空窗与事件窗，并解释为何 3 日事件窗仍需 100 日估计窗</li><li>能用平均 CAR 1.9% 与横截面标准差 2.5% 复算横截面 t 值（1.9 ÷ (2.5/√40) ≈ 4.8），并说明事件日聚集与模型选择的敏感性</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/covariance-and-correlation/">RES-010 · 协方差与相关性</a> </li><li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li><li> <a href="/learn/reproducible-research-workflow/">RES-008 · 可复现研究流程</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://ideas.repec.org/a/aea/jeclit/v35y1997i1p13-39.html" rel="noopener noreferrer" target="_blank">Event Studies in Economics and Finance</a> <p>A. Craig MacKinlay · Journal of Economic Literature, 35(1), 13-39</p> <p>访问：2026-11-03 · 许可：RePEc index record; cite the indexed item and link, no reproduction</p> <p>支持论点：目的、前提与方法范围三处主张由该页摘要逐字承载：&quot;The goal of an event study is to measure the effects of an economic event on the value of firms.&quot;；&quot;Event study methods exploit the fact that, given rationality in the marketplace, the effects of an event will be reflected immediately in security prices.&quot;；&quot;In this paper event study methods are described including some of the potential complications. An example is included to illustrate the approach.&quot;。取证方式：curl 返回 200 取回 IDEAS 记录页，剥标签后的摘要文本与两条独立提问的 WebFetch 路径互校一致。同页逐字标注 &quot;Download Restriction: Access to full text is restricted to AEA members.&quot;，全文未在本环境取回，故正文的三处归属只到摘要表述，不扩展到刊内论证。对照窗口日期、模拟区间与注入幅度不是该来源的主张，属本文自定义的教学模型设定（由仓内生成器产生）。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.3 The Regression Equation</a> <p>OpenStax · OpenStax, Rice University</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：最小二乘直线用于由 x 预测 y；数据通常不会完全落在直线上，预测只是近似。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 4.4.4 How can I tell if a model fits my data?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：高 R² 不保证模型拟合良好；残差分析是模型验证的主要工具，可检查函数形式、异方差和非独立误差。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/event-study-basics/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

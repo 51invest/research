@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>可复现研究流程 · 巫妖投资</title><meta name="description" content="可复现的意思是：别人拿到数据版本、代码、环境和说明后，能用一条命令重算出同一张表。代码能跑一次不算；可重算也不等于结论正确。"><link rel="canonical" href="https://research.51invest.com/learn/reproducible-research-workflow/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/reproducible-research-workflow/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/reproducible-research-workflow/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/reproducible-research-workflow/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/reproducible-research-workflow/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">可复现研究流程</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">可复现研究流程</h1> <p class="article-summary">可复现的意思是：别人拿到数据版本、代码、环境和说明后，能用一条命令重算出同一张表。代码能跑一次不算；可重算也不等于结论正确。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M12 · 数据工程与复现</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>一项月度分析有 36 个月度记录、其中 1 个月的数值缺失；作者删掉缺失月后保留 35 行，报告均值 4.2%、中位数 4.1%。另一位分析师用表格处理该缺失月，得到均值 4.3%；与作者相差 0.1 个百分点，但规则不可见。本文问：最小可复现流程包含什么，如何验证重算，又不能保证什么。数值为教学假设。</p>
+<h2>数据</h2>
+<p>假设一个原始文件只读、清洗与分析由脚本完成的小型月度项目。</p>
+<table>
+<thead>
+<tr>
+<th>产物</th>
+<th>定义</th>
+<th>单位</th>
+<th>频率</th>
+<th>期间</th>
+<th>示例（假设）</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始文件</td>
+<td>只读观测，带来源和哈希</td>
+<td>行</td>
+<td>月</td>
+<td>36 个月</td>
+<td>36 行 × 3 列</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>清洗数据</td>
+<td>按决策日志处理缺失</td>
+<td>行</td>
+<td>月</td>
+<td>同期</td>
+<td>35 行</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>代码与环境</td>
+<td>脚本与依赖锁定</td>
+<td>文件</td>
+<td>每次运行</td>
+<td>同期</td>
+<td>1 脚本 + 1 锁文件</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>结果表</td>
+<td>均值、中位数、样本量</td>
+<td>% 或行</td>
+<td>每次运行</td>
+<td>同期</td>
+<td>4.2 / 4.1 / 35</td>
+<td>不适用</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>流程分获取、清洗、分析、验证、归档五步。获取时保存原始文件、来源、日期、许可和哈希，不覆盖原始文件；清洗用脚本处理缺失、异常值和变换，把每个删除、插补或改值决定写进决策日志，输出到独立目录；分析只读清洗数据并生成结果；验证检查行数、缺失率、汇总统计和预期输出，单元与端到端测试覆盖关键计算；归档固定代码、数据版本、依赖和运行命令。代码与文档纳入版本控制，数据与凭证不提交；记录系统、语言、包版本和随机种子；一条命令按序运行，合并前自动检查。关键假设：原始数据未改、脚本覆盖全部手工步骤、依赖可重建、输出有文档；任一不成立，“可复现”就只是“在我机器上跑过”。下面是本文整理的通用最小流程，不是本站数据管线的现状。本站快照记录输入文件的字节数、SHA-256 与取得时间，派生结果放在 data/snapshots/&lt;快照日&gt;/；缺值会让脚本报错，而不是写入决策日志。本站目前没有 run.sh，也没有覆盖数值计算的单元或端到端测试；现有检查针对登记一致性与页面行为。不要把这套清单当成“本站已经做到”。</p>
+<h2>结果</h2>
+<p>项目原始 36 行，清洗后 35 行；结果表均值 4.2%、中位数 4.1%、样本量 35。按 README 和锁文件在新环境重跑，输出与校验和一致，耗时约 12 秒。手工表格得到均值 4.3%，因为它对缺失月用了不同规则；代码没错，但规则不可见。可复现性来自数据、代码、环境、文档和验证的整条链。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-pipe-title fig-pipe-desc" viewBox="0 0 420 200" width="100%">
+    <title id="fig-pipe-title">从原始文件到结果表的复现链路</title>
+    <desc id="fig-pipe-desc">三个方框由左到右用箭头相连。第一个方框写原始文件三十六行三列并带来源与哈希；第二个方框写清洗后数据三十五行，缺失处理记入决策日志；第三个方框写结果表四点二、四点一与三十五，即均值、中位数与样本量。下方注明代码与依赖锁定随每次运行一起保存。</desc>
+    <rect x="60" y="70" width="96" height="52" fill="var(--accent)" opacity="0.35"></rect>
+    <rect x="186" y="70" width="96" height="52" fill="var(--accent)" opacity="0.55"></rect>
+    <rect x="312" y="70" width="68" height="52" fill="var(--gold)" opacity="0.5"></rect>
+    <line x1="156" y1="96" x2="182" y2="96" stroke="var(--muted)" stroke-width="2"></line>
+    <polygon points="182,89 190,96 182,103" fill="var(--muted)"></polygon>
+    <line x1="282" y1="96" x2="304" y2="96" stroke="var(--muted)" stroke-width="2"></line>
+    <polygon points="304,89 312,96 304,103" fill="var(--muted)"></polygon>
+    <g fill="var(--muted)" font-size="10" font-family="inherit">
+      <text x="60" y="20">复现链路（教学假设）</text>
+      <text x="66" y="90">原始文件</text>
+      <text x="66" y="106">36 行 × 3 列</text>
+      <text x="192" y="90">清洗数据</text>
+      <text x="192" y="106">35 行</text>
+      <text x="318" y="90">结果表</text>
+      <text x="318" y="106">4.2 / 4.1 / 35</text>
+      <text x="66" y="140">带来源与 SHA-256 摘要</text>
+      <text x="192" y="140">缺失规则写入决策日志</text>
+      <text x="318" y="140">均值/中位数/n</text>
+      <text x="60" y="176">旁挂产物：1 个分析脚本 + 1 个依赖锁文件（每次运行都保存）</text>
+    </g>
+  </svg>
+  <figcaption>图 1：教学示例的复现链路——原始 36 行 × 3 列（只读、带哈希）→ 按决策日志剔除 1 期缺失得 35 行 → 结果表给出均值 4.2、中位数 4.1、样本量 35，脚本与依赖锁并行保存。方框大小只表示环节顺序，不带比例含义。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>在干净环境重建并重跑；故意删除输入、改列名或改单位（单位与口径见数据单位与统计口径主文，RES-001），确认流程清晰报错而不是静默产出；用校验和比较输出；让未参与分析的人按 README 独立重跑。结果不一致时，先查数据版本、缺失规则、软件版本和舍入。失败条件：手工 Excel 修改、未记录筛选、发布后修订、依赖漂移与许可限制。</p>
+<h2>局限</h2>
+<p>可复现不等于正确：同一流程可稳定复现有偏样本、错误定义或错误模型。机密数据可能只能由受托人重跑，公开复现受许可限制。软件环境会失效，文档也可能漏步骤。数值为假设，不是真实项目。</p>
+<h2>复现</h2>
+<p>建议目录：<code>data/raw/</code>、<code>data/clean/</code>、<code>src/</code>、<code>outputs/</code>，根目录放 <code>README.md</code>、<code>environment.lock</code> 和 <code>run.sh</code>。README 记录来源、访问日期、许可、版本或哈希、运行命令、预期输出、时长和限制；<code>run.sh</code> 用一条命令完成清洗、分析、测试和校验；结果表带生成时间和哈希。</p>
+<p>ONS 最佳实践指南把版本控制、测试、同行评审、数据管理与自动化列为可复现分析管道的组成部分：版本控制保存变更审计轨迹，测试验证代码按预期工作且可重复执行，同行评审检查分析是否适合用途，自动化在每次合并前运行测试[1]。</p>
+<p>NIST 研究数据框架把可复现性定义为使用相同的工具与材料（文档化的元数据、代码与数据）重做同一分析[2]。</p>
+<h2>结论强度</h2>
+<p>记录完整的流程可让另一位分析师重算出同一张表，但不能证明样本代表性、方法正确或结论因果成立。“可复现”回答“能否重算”，“有效”回答“是否可信”，两者要分开。36/35 行、4.2%/4.1%/4.3% 和 12 秒均为教学假设。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>API</h3>
+<p><strong>定义</strong>：API 是程序访问数据服务的接口，规定端点、参数、认证、分页和速率限制。</p>
+<p><strong>机制</strong>：API 通过密钥、配额和格式约束访问数据；分页、重试和缓存影响完整性与成本，版本变更可能破坏管道。</p>
+<p><strong>例子</strong>：例如用 REST API 按日期和代码拉取行情，用 token 认证并处理分页。</p>
+<p><strong>边界</strong>：API 不是稳定数据库；限流、字段变更、停机和授权撤回会造成缺失，实时性和修订口径也不同，需记录调用和错误处理。</p>
+<h3>文件</h3>
+<p><strong>定义</strong>：数据文件是本地或云端的结构化存储，如 CSV、JSON、Parquet、Excel 和数据库导出。</p>
+<p><strong>机制</strong>：格式影响类型、压缩、读取速度和 schema；编码、分隔符和嵌套结构会造成解析错误。</p>
+<p><strong>例子</strong>：例如 CSV 易读但类型丢失，Parquet 列式压缩适合大数据，JSON 适合嵌套。</p>
+<p><strong>边界</strong>：文件不是中性容器；编码、公式注入、隐藏行列和格式转换会改变数据，Excel 还会截断精度，需校验 schema 和编码。</p>
+<h3>清洗</h3>
+<p><strong>定义</strong>：清洗是修正类型、重复、缺失、格式、单位和异常，使数据可用于分析。</p>
+<p><strong>机制</strong>：清洗包括标准化日期和代码、去重、缺失处理、单位换算和异常标记；规则应可复现并记录。</p>
+<p><strong>例子</strong>：例如把“1,234 元”转为数值 1234，统一股票代码和日期格式。</p>
+<p><strong>边界</strong>：清洗不是随意改数；过度清洗会删除真实极端，插补会制造信息，规则不一致会产生不可比数据，原始数据应保留。</p>
+<h3>校验</h3>
+<p><strong>定义</strong>：校验是检查数据是否满足 schema、范围、唯一性、完整性和跨源一致性。</p>
+<p><strong>机制</strong>：校验规则包括类型、非空、主键唯一、数值范围和勾稽关系；失败应阻断或告警，而不是静默通过。</p>
+<p><strong>例子</strong>：例如检查价格非负、日期唯一、成交额与成交量乘价格大致一致。</p>
+<p><strong>边界</strong>：校验不是一次通过；规则过松会漏错，过严会阻断正常数据，跨源冲突需要优先级，校验也不能发现语义错误。</p>
+<h3>版本</h3>
+<p><strong>定义</strong>：版本是记录数据、代码和配置在时间上的状态，支持复现、回滚和审计。</p>
+<p><strong>机制</strong>：版本可用快照、哈希、时间戳和版本库；point-in-time 数据还需记录修订和可得时点。</p>
+<p><strong>例子</strong>：例如保存每日行情快照和代码 commit，回测可复现同一结果。</p>
+<p><strong>边界</strong>：版本不是简单备份；存储成本、保留期和隐私会影响，覆盖写入会丢失历史，版本不一致会产生前视和不可复现。</p>
+<h3>自动更新</h3>
+<p><strong>定义</strong>：自动更新是按计划或事件触发数据拉取、清洗、校验和入库，保持数据及时。</p>
+<p><strong>机制</strong>：更新需处理增量、幂等、失败重试、告警和回填；调度依赖数据发布日历和上游可用性。</p>
+<p><strong>例子</strong>：例如每日收盘后自动拉取行情，失败时告警并重试，缺失日回填。</p>
+<p><strong>边界</strong>：自动化不是无人值守；上游变更、时区和节假日会造成缺失，重复写入会污染数据，失败静默比停机更危险。</p>
+<h3>脚本</h3>
+<p><strong>定义</strong>：脚本是把数据获取、清洗、分析和输出写成可重复运行的代码，带参数、日志和错误处理。</p>
+<p><strong>机制</strong>：脚本应幂等、可配置、记录输入输出和随机种子；版本控制和测试保证可复现。</p>
+<p><strong>例子</strong>：例如一个脚本按日期范围拉数据、清洗、生成报告，重复运行结果一致。</p>
+<p><strong>边界</strong>：脚本不是一次性代码；硬编码路径、隐式状态和缺失日志会使结果不可复现，随机性和外部依赖也会改变输出。</p>
+<h3>配置与依赖</h3>
+<p><strong>定义</strong>：配置是脚本运行的外部参数，如路径、日期、API 密钥和模型参数；依赖是所需库、版本和系统环境。</p>
+<p><strong>机制</strong>：配置应与代码分离，密钥用环境变量或密钥管理，依赖用锁文件固定版本，环境用容器或虚拟环境复现。</p>
+<p><strong>例子</strong>：例如用 .env 存 API 密钥，用 lockfile 固定 pandas 版本。</p>
+<p><strong>边界</strong>：配置不是小事；硬编码密钥会泄露，依赖漂移会改变结果，环境差异和未固定版本会造成“在我机器上能跑”的问题。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：数据单位与统计口径（RES-001）。</li>
+<li>相关与推荐阅读：频率与时间对齐（RES-003）、季调与数据修订（RES-004）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">可复现研究流程：机制链</title>
+    <desc id="fig-batch-chain-desc">可复现研究流程 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">可复现研究流程：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">可复现的意思是：别人</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">拿到数据版本、代码、…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可复现的意思是：别</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">人拿到数据版本、代</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">码、环境和说明后，</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">能用一条命令重算出</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">同一张表。代码能跑…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一项月度分</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">析有 36 个月度记录…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一项月度</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">分析有 36</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个月度记录、其中</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">1 个月的数值缺失；</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">作者删掉缺失月后保…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">假设一个原始文件只读</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">、清洗与分析由脚本完…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">假设一个原始文件只</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">读、清洗与分析由脚</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">本完成的小型月度项</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">目。</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：可复现研究流程的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">可复现研究流程：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">可复现研究流程：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可复现不等于正确：同一流程可稳定</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">复现有偏样本、错误定义或错误模型</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">。机密数据可能只能由受托人重跑，</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">公开复现受许可限制。软件环境会失…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-001）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：可复现研究流程的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">可复现研究流程：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">可复现研究流程：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可复现的意思是：别人拿到</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">数据版本、代码、环境和说…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">可复现不等于正确：同一流</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">程可稳定复现有偏样本、错…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES-00</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">1）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：可复现研究流程的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>脚本每次运行都覆盖 <code>data/raw.csv</code>，有什么问题？应怎么改？</li>
+<li>README 至少应记录哪些内容，才能让别人重跑？</li>
+<li>重跑的表与论文一致，但用了不同的缺失规则，这算可复现吗？应如何报告？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>原始数据应只读，脚本写入 <code>data/clean/</code> 等派生目录并保存哈希；覆盖会破坏审计轨迹，也无法判断结果对应哪版数据。</li>
+<li>来源、访问日期、许可、版本或哈希、依赖版本、运行命令、预期输出、时长和限制。</li>
+<li>计算上可重复，但方法与文档不一致；应记录实际规则、说明差异，并重算与论文一致的结果。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>Office for National Statistics. “Quality assurance of code for analysis and research.” Open Government Licence v3.0. <a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html">https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html</a>（访问日期：2026-10-30）</li>
+<li>National Institute of Standards and Technology. “NIST Research Data Framework (RDaF), NIST SP 1500-18r2.” 许可未知. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能列出一条命令重算同一张表所需的四类产物：数据版本、代码、环境锁与说明</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能区分可复现与结论正确，并说明哈希与决策日志各自防止什么错误</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能列出一条命令重算同一张表所需的四类产物：数据版本、代码、环境锁与说明</li><li>能区分可复现与结论正确，并说明哈希与决策日志各自防止什么错误</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/data-units-and-definitions/">RES-001 · 数据单位与统计口径</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/frequency-and-time-alignment/">RES-003 · 频率与时间对齐</a> </li><li> <a href="/learn/seasonal-adjustment-and-revisions/">RES-004 · 季调与数据修订</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html" rel="noopener noreferrer" target="_blank">Quality assurance of code for analysis and research</a> <p>Office for National Statistics · Office for National Statistics (Best Practice and Impact)</p> <p>访问：2026-10-30 · 许可：Open Government Licence v3.0</p> <p>支持论点：该指南把版本控制、测试、同行评审、数据管理和自动化作为可复现分析管道的组成部分；版本控制保存变更审计轨迹，测试验证代码按预期工作并可重复执行，同行评审检查分析是否适合用途，自动化在每次合并前运行测试。</p> </div><div class="source"> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/1500-18/NIST.SP.1500-18r2.html" rel="noopener noreferrer" target="_blank">NIST Research Data Framework (RDaF), NIST SP 1500-18r2</a> <p>National Institute of Standards and Technology · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：NIST 研究数据框架把可复现性定义为使用相同的工具（如文档化元数据、代码、方法和仪器）复制数据的能力，并强调元数据、数据管理与共享在数据生命周期中的作用。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/reproducible-research-workflow/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

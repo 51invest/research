@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Research Reading and Writing: Question, Evidence and Reproduction · 51Invest</title><meta name="description" content="Good research is not “opinion plus data” but a question that can be answered, evidence that can be checked and a conclusion with boundaries. When reading, start with the question and identification, then the conclusion; when writing, make data, method, robustness and limits reproducible."><link rel="canonical" href="https://research.51invest.com/en/learn/research-reading-and-writing-question-evidence-reproduction/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/research-reading-and-writing-question-evidence-reproduction/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/research-reading-and-writing-question-evidence-reproduction/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/research-reading-and-writing-question-evidence-reproduction/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/research-reading-and-writing-question-evidence-reproduction/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Research Reading and Writing: Question, Evidence and Reproduction</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Research Reading and Writing: Question, Evidence and Reproduction</h1> <p class="article-summary">Good research is not “opinion plus data” but a question that can be answered, evidence that can be checked and a conclusion with boundaries. When reading, start with the question and identification, then the conclusion; when writing, make data, method, robustness and limits reproducible.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M14 · 研究阅读与写作</strong></div> <div class="meta-item"><span>Level</span><strong>Advanced</strong></div> <div class="meta-item"><span>Read</span><strong>3 min · 11 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>Is a study worth reading? First check whether the question is answerable, the evidence supports it, identification is credible and the conclusion stays within bounds. This article offers a reading and writing checklist; the point is not “is the conclusion right” but “can readers judge under what conditions it holds”[1].</p>
+<h2>Data</h2>
+<p>When reading, record data source, sample, time, variable definitions and missing-data treatment; when writing, provide the same. Data-quality frameworks (DQAF) stress completeness, accuracy, timeliness and accessibility; these dimensions also apply to research data[2].</p>
+<h2>Method</h2>
+<p>Split a study into four steps: question, evidence, identification, conclusion. Evidence levels can be ranked by design: systematic reviews and randomised trials are stronger, cohorts and cases weaker; but level is not strength, because sample, execution and bias matter. GRADE uses certainty ratings to remind us that high-level evidence can be downgraded for bias[3].</p>
+<h2>Results</h2>
+<p>Suppose a study uses a case to argue that “a policy promoted growth” without a control, time series or exclusion of external shocks. The conclusion can only be “improvement was observed in this case”, not “the policy works generally”. If another study uses a randomised trial replicated across sites, the conclusion is stronger but external validity still needs checking.</p>
+<h2>Robustness</h2>
+<p>When reading, check whether conclusions hold across samples, controls, time windows and identification strategies; when writing, report these tests. Robustness is not an appendix but part of the conclusion. If the author reports only one significant result, readers should ask about other specifications.</p>
+<h2>Limitations</h2>
+<p>First, an unanswerable question; second, unverifiable data; third, invalid identification; fourth, conclusions beyond the sample; fifth, confusion between evidence level and strength; sixth, missing reproduction information. Under these conditions, a study is a clue, not a verdict.</p>
+<h2>Reproduction</h2>
+<p>When writing, provide data, code, variable dictionary, model specification and robustness tables; when reading, check the same list. The goal is not to repeat the author’s conclusion but to let third parties judge the conditions under which it holds.</p>
+<h2>图表</h2>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-034-1-title fig-res-034-1-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-034-1-title">Three steps for reading research</title>
+    <desc id="fig-res-034-1-desc">Question 可回答, Evidence and ID 可核查, Conclusion 有范围. If any of the three steps is missing, the conclusion should be narrowed; numbers are teaching assumptions. Teaching mechanism figure.</desc>
+    <rect x="14" y="38" width="432" height="32" rx="7" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="28" y="59" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit">问题→识别→结论</text>
+    <rect x="14" y="82" width="132" height="92" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="26" y="104" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Question</text>
+    <text x="26" y="128" font-size="12" font-weight="700" fill="var(--accent)" font-family="inherit">可回答</text>
+    <text x="26" y="148" font-size="9.2" fill="var(--muted)" font-family="inherit">scope</text>
+    <text x="26" y="164" font-size="9.2" fill="var(--muted)" font-family="inherit">mechanism</text>
+    <rect x="164" y="82" width="132" height="92" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="176" y="104" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Evidence and ID</text>
+    <text x="176" y="128" font-size="12" font-weight="700" fill="var(--accent)" font-family="inherit">可核查</text>
+    <text x="176" y="148" font-size="9.2" fill="var(--muted)" font-family="inherit">data</text>
+    <text x="176" y="164" font-size="9.2" fill="var(--muted)" font-family="inherit">ID</text>
+    <rect x="314" y="82" width="132" height="92" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <text x="326" y="104" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Conclusion</text>
+    <text x="326" y="128" font-size="12" font-weight="700" fill="var(--accent)" font-family="inherit">有范围</text>
+    <text x="326" y="148" font-size="9.2" fill="var(--muted)" font-family="inherit">sample</text>
+    <text x="326" y="164" font-size="9.2" fill="var(--muted)" font-family="inherit">conditions</text>
+    <line x1="146" y1="128" x2="164" y2="128" stroke="var(--border)" stroke-width="1.5"></line>
+    <line x1="296" y1="128" x2="314" y2="128" stroke="var(--border)" stroke-width="1.5"></line>
+    <rect x="14" y="190" width="432" height="82" rx="8" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="28" y="214" font-size="10" font-weight="650" fill="var(--text)" font-family="inherit">Conclusion strength comes from evidence and identification, not tone</text>
+    <text x="28" y="236" font-size="9.6" fill="var(--muted)" font-family="inherit">If any of the three steps is missing, the conclusion should be narrowed; numbers are teaching assumptions.</text>
+    <text x="28" y="256" font-size="9.6" fill="var(--muted)" font-family="inherit"></text>
+  </svg>
+  <figcaption>Figure 1:Question 可回答, Evidence and ID 可核查, Conclusion 有范围. If any of the three steps is missing, the conclusion should be narrowed; numbers are teaching assumptions. Teaching mechanism figure.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-res-034-2-title fig-res-034-2-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-034-2-title">Evidence level and strength</title>
+    <desc id="fig-res-034-2-desc">Evidence level and strength. High level: Design 随机试验, Strength 较高, Use 外部有效性; Low level: Design 案例, Strength 较低, Use 不可推广. High level does not equal high strength; sample, execution and bias change certainty. Units: qualitative comparison; numbers are teaching assumptions. Numbers are teaching assumptions.</desc>
+    <rect x="14" y="36" width="432" height="34" rx="7" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="28" y="57" font-size="10" font-weight="650" fill="var(--text)" font-family="inherit">RCT＞队列＞案例</text>
+    <rect x="14" y="86" width="204" height="132" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="28" y="109" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">High level</text>
+    <text x="26" y="135" font-size="9.4" fill="var(--muted)" font-family="inherit">Design</text>
+    <text x="206" y="135" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">随机试验</text>
+    <text x="26" y="163" font-size="9.4" fill="var(--muted)" font-family="inherit">Strength</text>
+    <text x="206" y="163" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">较高</text>
+    <text x="26" y="191" font-size="9.4" fill="var(--muted)" font-family="inherit">Use</text>
+    <text x="206" y="191" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">外部有效性</text>
+    <rect x="242" y="86" width="204" height="132" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <text x="256" y="109" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Low level</text>
+    <text x="254" y="135" font-size="9.4" fill="var(--muted)" font-family="inherit">Design</text>
+    <text x="434" y="135" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">案例</text>
+    <text x="254" y="163" font-size="9.4" fill="var(--muted)" font-family="inherit">Strength</text>
+    <text x="434" y="163" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">较低</text>
+    <text x="254" y="191" font-size="9.4" fill="var(--muted)" font-family="inherit">Use</text>
+    <text x="434" y="191" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">不可推广</text>
+    <text x="28" y="240" font-size="9.6" fill="var(--muted)" font-family="inherit">High level does not equal high strength; sample, execution and bias change certainty. Units: qualitative comparison; numbers are teaching assumptions.</text>
+    <text x="28" y="262" font-size="9.6" fill="var(--muted)" font-family="inherit"></text>
+  </svg>
+  <figcaption>Figure 2:Evidence level and strength. High level: Design 随机试验, Strength 较高, Use 外部有效性; Low level: Design 案例, Strength 较低, Use 不可推广. High level does not equal high strength; sample, execution and bias change certainty. Units: qualitative comparison; numbers are teaching assumptions. Numbers are teaching assumptions.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-res-034-3-title fig-res-034-3-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-034-3-title">Reading versus writing checks</title>
+    <desc id="fig-res-034-3-desc">Reading versus writing checks. Reading: First 问题, Then 识别, Last 结论; Writing: First 问题, Then 数据, Last 复现. Reading starts with question and identification; writing with question and data; both return to reproducibility. Units: qualitative comparison; numbers are teaching assumptions. Teaching comparison figure.</desc>
+    <rect x="14" y="38" width="204" height="172" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="28" y="61" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Reading</text>
+    <text x="26" y="88" font-size="9.4" fill="var(--muted)" font-family="inherit">First</text>
+    <text x="206" y="88" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">问题</text>
+    <text x="26" y="116" font-size="9.4" fill="var(--muted)" font-family="inherit">Then</text>
+    <text x="206" y="116" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">识别</text>
+    <text x="26" y="144" font-size="9.4" fill="var(--muted)" font-family="inherit">Last</text>
+    <text x="206" y="144" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">结论</text>
+    <rect x="242" y="38" width="204" height="172" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <text x="256" y="61" font-size="10.2" font-weight="650" fill="var(--text)" font-family="inherit">Writing</text>
+    <text x="254" y="88" font-size="9.4" fill="var(--muted)" font-family="inherit">First</text>
+    <text x="434" y="88" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">问题</text>
+    <text x="254" y="116" font-size="9.4" fill="var(--muted)" font-family="inherit">Then</text>
+    <text x="434" y="116" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">数据</text>
+    <text x="254" y="144" font-size="9.4" fill="var(--muted)" font-family="inherit">Last</text>
+    <text x="434" y="144" text-anchor="end" font-size="9.6" font-weight="650" fill="var(--text)" font-family="inherit">复现</text>
+    <text x="28" y="240" font-size="9.6" fill="var(--muted)" font-family="inherit">Reading starts with question and identification; writing with question and data; both return to reproducibility. Units: qualitative comparison; numbers are teaching assumptions.</text>
+    <text x="28" y="262" font-size="9.6" fill="var(--muted)" font-family="inherit"></text>
+  </svg>
+  <figcaption>Figure 3:Reading versus writing checks. Reading: First 问题, Then 识别, Last 结论; Writing: First 问题, Then 数据, Last 复现. Reading starts with question and identification; writing with question and data; both return to reproducibility. Units: qualitative comparison; numbers are teaching assumptions. Teaching comparison figure.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-res-034-4-title fig-res-034-4-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-034-4-title">6 conditions for reproducible research writing</title>
+    <desc id="fig-res-034-4-desc">6 conditions for reproducible research writing. Answerable question; Verifiable data; Reproducible method; Credible identification; Complete robustness; Bounded conclusion. If one of the 6 conditions fails, readers cannot judge the boundary; reproducibility depends on these conditions. Units: condition checklist; numbers are teaching assumptions. These conditions decide whether the method applies.</desc>
+    <text x="28" y="36" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit">Check question, data, method and boundaries</text>
+    <rect x="14" y="52" width="204" height="52" rx="7" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <text x="24" y="72" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Answerable question</text>
+    <text x="24" y="89" font-size="9.2" fill="var(--muted)" font-family="inherit">scope and mechanism</text>
+    <rect x="242" y="52" width="204" height="52" rx="7" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <text x="252" y="72" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Verifiable data</text>
+    <text x="252" y="89" font-size="9.2" fill="var(--muted)" font-family="inherit">source and licence</text>
+    <rect x="14" y="110" width="204" height="52" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="24" y="130" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Reproducible method</text>
+    <text x="24" y="147" font-size="9.2" fill="var(--muted)" font-family="inherit">code and specification</text>
+    <rect x="242" y="110" width="204" height="52" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="252" y="130" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Credible identification</text>
+    <text x="252" y="147" font-size="9.2" fill="var(--muted)" font-family="inherit">control/exogenous</text>
+    <rect x="14" y="168" width="204" height="52" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="24" y="188" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Complete robustness</text>
+    <text x="24" y="205" font-size="9.2" fill="var(--muted)" font-family="inherit">alternatives</text>
+    <rect x="242" y="168" width="204" height="52" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="252" y="188" font-size="9.8" font-weight="650" fill="var(--text)" font-family="inherit">Bounded conclusion</text>
+    <text x="252" y="205" font-size="9.2" fill="var(--muted)" font-family="inherit">sample and conditions</text>
+    <text x="28" y="248" font-size="9.6" fill="var(--muted)" font-family="inherit">If one of the 6 conditions fails, readers cannot judge the boundary; reproducibility depends on these conditions. Units: condition checklist; numbers are teaching assumptions.</text>
+    <text x="28" y="270" font-size="9.6" fill="var(--muted)" font-family="inherit"></text>
+  </svg>
+  <figcaption>Figure 4:6 conditions for reproducible research writing. Answerable question; Verifiable data; Reproducible method; Credible identification; Complete robustness; Bounded conclusion. If one of the 6 conditions fails, readers cannot judge the boundary; reproducibility depends on these conditions. Units: condition checklist; numbers are teaching assumptions. These conditions decide whether the method applies.</figcaption>
+</figure>
+
+<h2>Related</h2>
+<ul>
+<li>与 <strong>RES-024 Evidence Hierarchies and Research Reports</strong> 的关系：The parent article gives the module&#39;s overall frame; this article isolates “how to judge questions, evidence and boundaries, and make writing reproducible” and turns it into a worked example and explicit conditions.</li>
+<li>与 <strong>RES-031 Regression and Econometrics: Coefficients, Standard Errors and Causality</strong> 的关系：An adjacent topic in the same station provides background or contrast; this article does not repeat its focus and concentrates on “how to judge questions, evidence and boundaries, and make writing reproducible”.</li>
+<li>与 <strong>RES-033 Alternative Data and Complex Systems: Signal, Noise and Networks</strong> 的关系：An adjacent topic in the same station provides background or contrast; this article does not repeat its focus and concentrates on “how to judge questions, evidence and boundaries, and make writing reproducible”.</li>
+</ul>
+<h2>Exercises</h2>
+<ol>
+<li>Reading question: a study has only a case and no control. How far can the conclusion go?</li>
+<li>Evidence question: randomised trial, cohort study and case report — what evidence levels are they, and how do they rank?</li>
+<li>Writing question: list three pieces of information needed for reproduction and explain why each is necessary.</li>
+</ol>
+<h2>Sources</h2>
+<ol>
+<li>International Monetary Fund, <em>Fifth Review of the Fund&#39;s Data Standards Initiatives</em>, International Monetary Fund. <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm">https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm</a></li>
+<li>David L. Sackett; William M. C. Rosenberg; J. A. Muir Gray; R. Brian Haynes; W. Scott Richardson, <em>Evidence based medicine: what it is and what it isn&#39;t</em>, BMJ, 312(7023), 71-72. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/">https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/</a></li>
+<li>GRADE Working Group, <em>GRADE home</em>, GRADE Working Group. <a href="https://www.gradeworkinggroup.org/">https://www.gradeworkinggroup.org/</a></li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Read a study in four steps: question, evidence, identification and conclusion.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Distinguish evidence level from evidence strength and avoid treating a case as a general law.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Read a study in four steps: question, evidence, identification and conclusion.</li><li>Distinguish evidence level from evidence strength and avoid treating a case as a general law.</li><li>List 6 conditions for research writing that let readers reproduce and judge boundaries.</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/evidence-hierarchies-and-research-reports/">RES-024 · Evidence Hierarchies and Research Reports</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/evidence-hierarchies-and-research-reports/">RES-024 · Evidence Hierarchies and Research Reports</a> </li><li> <a href="/en/learn/regression-and-econometrics-coefficients-standard-errors-causality/">RES-031 · Regression and Econometrics: Coefficients, Standard Errors and Causality</a> </li><li> <a href="/en/learn/alternative-data-and-complex-systems-signal-noise-networks/">RES-033 · Alternative Data and Complex Systems: Signal, Noise and Networks</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm" rel="noopener noreferrer" target="_blank">Fifth Review of the Fund&#39;s Data Standards Initiatives</a> <p>International Monetary Fund · International Monetary Fund</p> <p>Accessed: 2026-11-24 · License: IMF terms: linking permitted, personal non-commercial use only</p> <p>Supports: Used to check the public concept, institutional or historical background for “research reading and writing”; numerical examples are teaching assumptions, not statistics.</p> </div><div class="source"> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/" rel="noopener noreferrer" target="_blank">Evidence based medicine: what it is and what it isn&#39;t</a> <p>David L. Sackett; William M. C. Rosenberg; J. A. Muir Gray; R. Brian Haynes; W. Scott Richardson · BMJ, 312(7023), 71-72</p> <p>Accessed: 2026-11-24 · License: PMC notice: standard copyright applies absent a licence statement; reproduction needs the owner</p> <p>Supports: Used to check the public concept, institutional or historical background for “research reading and writing”; numerical examples are teaching assumptions, not statistics.</p> </div><div class="source"> <a href="https://www.gradeworkinggroup.org/" rel="noopener noreferrer" target="_blank">GRADE home</a> <p>GRADE Working Group · GRADE Working Group</p> <p>Accessed: 2026-11-24 · License: © 2004-2026 - The GRADE Working Group. Linked summary only.</p> <p>Supports: Used to check the public concept, institutional or historical background for “research reading and writing”; numerical examples are teaching assumptions, not statistics.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/research-reading-and-writing-question-evidence-reproduction/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

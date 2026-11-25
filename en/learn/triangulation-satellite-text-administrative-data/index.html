@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Triangulation across Sources: Satellite, Text and Administrative Data · 51Invest</title><meta name="description" content="Every single source has blind spots: satellites miss underground activity, text has selection bias and administrative data reflect reporting incentives. Triangulation is not 'using more sources' but cross-checking independent error structures to bound the true value."><link rel="canonical" href="https://research.51invest.com/en/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/triangulation-satellite-text-administrative-data/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/triangulation-satellite-text-administrative-data/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Triangulation across Sources: Satellite, Text and Administrative Data</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Method</span> <h1 class="article-title">Triangulation across Sources: Satellite, Text and Administrative Data</h1> <p class="article-summary">Every single source has blind spots: satellites miss underground activity, text has selection bias and administrative data reflect reporting incentives. Triangulation is not &#39;using more sources&#39; but cross-checking independent error structures to bound the true value.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M13 · 另类数据与复杂系统</strong></div> <div class="meta-item"><span>Level</span><strong>Systematic</strong></div> <div class="meta-item"><span>Read</span><strong>7 min · 15 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research problem and question</h2>
+<p><strong>Triangulation</strong> measures one phenomenon with multiple independent sources so that complementary error structures narrow uncertainty. It is not &#39;using more sources&#39; but requiring <strong>uncorrelated errors</strong> across sources.</p>
+<p>Blind spots: <strong>satellites</strong> (night lights, crop remote sensing) offer broad, high-frequency coverage but miss underground activity, services and income distribution; <strong>text</strong> (news, contracts, social media) is rich but selected and platform-biased; <strong>administrative data</strong> (tax, social security, registries) cover specific populations but reflect reporting incentives and definition changes.</p>
+<p>The core: if three sources point to the same interval, confidence rises; if they diverge, explain the divergence rather than averaging it away[1][2].</p>
+<h2>Data and worked example</h2>
+<p>Suppose we estimate regional economic growth. Night lights suggest 4%, text sentiment 6% and tax registrations 3%. The gap is large; averaging to 4.3% is wrong.</p>
+<p>Check errors: lights may reflect electrification and prices; text may reflect media bias; tax records may miss the informal sector. If lights and tax records cover the same formal sector, their errors are correlated and do not triangulate.</p>
+<p>If the three are independent and each gives a 3%-6% range, report a 4%-5% intersection or weighted median with uncertainty. The goal is a credible interval, not a precise point. All numbers are teaching assumptions.</p>
+<h2>Inputs and assumptions</h2>
+<p>Triangulation needs three input families: satellite imagery (night lights, NDVI, built-up footprints), text corpora (news, contracts, social platforms) and administrative records (tax, social security, business registers). Each input carries a geocode, timestamp, unit, coverage and collection rule; align administrative boundaries, firm identifiers and person identifiers before claiming mutual verification. Three assumptions matter: the sources measure the same economic construct, their errors are independent, and reporting definitions are stable over the comparison window. If any fails, triangulation degenerates into collecting more numbers.</p>
+<h2>Method and steps</h2>
+<p><strong>Check 1: independence.</strong> Do sources share underlying data, collection processes or stakeholders? More sharing means less validation value.</p>
+<p><strong>Check 2: coverage consistency.</strong> Do they measure the same population, period and definition? Align definitions first.</p>
+<p><strong>Check 3: error direction.</strong> Is each source biased up or down? If all bias up, averaging amplifies it; correct separately.</p>
+<p>Record data versions, cleaning rules and uncertainty; reproducibility matters more than the number of sources[3][4].</p>
+<h2>Figures</h2>
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-1-title fig-triangulation-satellite-text-administrative-data-1-desc" viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-1-title">From sources to interval</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-1-desc">Four steps: satellite, text, administrative data, interval estimate.</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">Multi-source triangulation chain</text>
+<text x="24" y="54" font-size="11" text-anchor="start">Satellite, text, administrative da</text>
+<text x="24" y="68" font-size="11" text-anchor="start">ta and interval estimation.</text>
+<rect x="14" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="69" y="140" font-size="12" text-anchor="middle">Satellite</text>
+<text x="69" y="184" font-size="12" text-anchor="middle" font-weight="700">Lights 4%</text>
+<rect x="136" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="191" y="140" font-size="12" text-anchor="middle">Text</text>
+<text x="191" y="184" font-size="12" text-anchor="middle" font-weight="700">Sentiment 6%</text>
+<rect x="258" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="313" y="140" font-size="12" text-anchor="middle">Administrative</text>
+<text x="313" y="184" font-size="12" text-anchor="middle" font-weight="700">Registrations 3%</text>
+<rect x="380" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="435" y="140" font-size="12" text-anchor="middle">Interval</text>
+<text x="435" y="184" font-size="12" text-anchor="middle" font-weight="700">4%-5%</text>
+<line x1="125" y1="160" x2="135" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<line x1="247" y1="160" x2="257" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<line x1="369" y1="160" x2="379" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<text x="24" y="246" font-size="11" text-anchor="start">Teaching diagram, no statistical data.</text>
+</g>
+</svg>
+<figcaption>Figure 1: from sources to interval; teaching diagram.</figcaption>
+</figure>
+
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-2-title fig-triangulation-satellite-text-administrative-data-2-desc" viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-2-title">Multi-source estimate comparison</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-2-desc">Point estimates from three sources and the overall range.</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">Three source estimates and ranges</text>
+<text x="24" y="54" font-size="11" text-anchor="start">Satellite 4%, text 6%, administrat</text>
+<text x="24" y="68" font-size="11" text-anchor="start">ive 3%; range 3%-6%.</text>
+<line x1="178" y1="64" x2="178" y2="270" stroke="currentColor" stroke-width="1" opacity=".45"/>
+<text x="20" y="97" font-size="12">Satellite</text>
+<rect x="178" y="78" width="240" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="95" font-size="12" font-weight="700">4%</text>
+<text x="20" y="145" font-size="12">Text</text>
+<rect x="178" y="126" width="360" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="143" font-size="12" font-weight="700">6%</text>
+<text x="20" y="193" font-size="12">Administrative</text>
+<rect x="178" y="174" width="180" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="191" font-size="12" font-weight="700">3%</text>
+<text x="20" y="241" font-size="12">Upper bound</text>
+<rect x="178" y="222" width="360" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="239" font-size="12" font-weight="700">6%</text>
+<text x="24" y="292" font-size="11" text-anchor="start">Teaching assumptions; unit: %.</text>
+</g>
+</svg>
+<figcaption>Figure 2: multi-source estimate comparison; teaching assumptions.</figcaption>
+</figure>
+
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-3-title fig-triangulation-satellite-text-administrative-data-3-desc" viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-3-title">Two-dimensional matrix of multi-source combinations</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-3-desc">Axes: independence and coverage consistency; quadrants map to strong validation, weak validation, definition conflict and pseudo-validation.</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">Four multi-source combinations by</text>
+<text x="24" y="49" font-size="16" text-anchor="start">independence and coverage</text>
+<text x="24" y="54" font-size="11" text-anchor="start">Independent with consistent covera</text>
+<text x="24" y="68" font-size="11" text-anchor="start">ge is most credible; shared source</text>
+<text x="24" y="82" font-size="11" text-anchor="start">s with inconsistent coverage is le</text>
+<text x="24" y="96" font-size="11" text-anchor="start">ast credible.</text>
+<text x="40" y="68" font-size="11">Independent</text>
+<text x="40" y="286" font-size="11">Shared sources</text>
+<text x="110" y="314" font-size="11" text-anchor="middle">Inconsistent coverage</text>
+<text x="500" y="314" font-size="11" text-anchor="middle">Consistent coverage</text>
+<rect x="96" y="76" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="108" y="100" font-size="12" text-anchor="start">Definition conflict</text>
+<text x="108" y="130" font-size="11" text-anchor="start">Independent, inconsistent</text>
+<text x="108" y="170" font-size="11" font-weight="700">Align first</text>
+<rect x="338" y="76" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="350" y="100" font-size="12" text-anchor="start">Strong validation</text>
+<text x="350" y="130" font-size="11" text-anchor="start">Independent, consistent</text>
+<text x="350" y="170" font-size="11" font-weight="700">Credible</text>
+<rect x="96" y="190" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="108" y="214" font-size="12" text-anchor="start">Pseudo-validation</text>
+<text x="108" y="244" font-size="11" text-anchor="start">Shared, inconsistent</text>
+<text x="108" y="284" font-size="11" font-weight="700">Not credible</text>
+<rect x="338" y="190" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="350" y="214" font-size="12" text-anchor="start">Weak validation</text>
+<text x="350" y="244" font-size="11" text-anchor="start">Shared, consistent</text>
+<text x="350" y="284" font-size="11" font-weight="700">Reference</text>
+</g>
+</svg>
+<figcaption>Figure 3: two-dimensional matrix of multi-source combinations; classification diagram.</figcaption>
+</figure>
+
+<p>Figure 1 links satellite, text, administrative data and interval estimation. Figure 2 compares three source estimates and ranges. Figure 3 uses independence and coverage consistency axes to mark four multi-source combinations. All numbers are teaching assumptions.</p>
+<h2>Failure conditions and boundaries</h2>
+<p><strong>Boundary 1: multiple sources are not independent.</strong> If all three cite the same statistic, they are not independent validation; check collection.</p>
+<p><strong>Boundary 2: satellites are not universal.</strong> Lights and remote sensing measure activity and land change, not income distribution, service quality or institutions; combine with other sources.</p>
+<p><strong>Boundary 3: text has narrative bias.</strong> News and social media reflect platforms, language and events; popularity is not fact.</p>
+<p><strong>Mistake 1: averaging three sources is triangulation.</strong> Averaging hides disagreement; check independence and error direction first.</p>
+<p><strong>Mistake 2: administrative data are most accurate.</strong> They cover specific populations, and under-reporting and incentives create systematic bias; they are not truth.</p>
+<h2>Interpreting the results: triangulation, satellite data and administrative data</h2>
+<p><strong>Triangulation is not &#39;find more data sources&#39;</strong> but validating one construct with independent measurements. Satellite imagery, text, administrative records and surveys each carry different errors; if three point to the same conclusion, confidence rises; if they diverge, explain why.</p>
+<p><strong>Satellite data</strong> offer broad coverage, high frequency and history; weaknesses are resolution, clouds, algorithms and ground truth. Night lights, crop NDVI, building footprints and ship AIS need calibration; lights and economic activity are non-linear, not a direct GDP proxy.</p>
+<p><strong>Text data</strong> (news, filings, social media) capture expectations and sentiment but are shaped by platform selection, language, censorship and algorithms; word frequency is not an economic variable and needs human labels, topic models and external validation.</p>
+<p><strong>Administrative data</strong> (tax, social security, customs, registers) cover the population with clear definitions but may lag, change definitions or be access-restricted; differences from survey definitions make them incomparable.</p>
+<p><strong>Matching and privacy</strong>: micro-matching needs identifiers and is restricted by privacy law; differential privacy, aggregation and synthetic data reduce risk but lose precision.</p>
+<p><strong>Triangulation design</strong>: define the construct and error structure first, then choose independent sources; sources derived from the same survey are not independent validation.</p>
+<p><strong>Measurement</strong>: coverage, frequency, error, definition consistency and match rate. Precision of one source is not overall credibility.</p>
+<p><strong>Common misuses</strong>: night lights as GDP, word frequency as sentiment, administrative data as error-free, and related sources as independent validation.</p>
+<p><strong>Finally</strong>, triangulation works when errors are uncorrelated; if errors share a source, more data only repeats the same bias.</p>
+<h2>Reproduction and checklist</h2>
+<p>A reproduction checklist should record data versions and download dates, image cloud cover and preprocessing, text keywords and deduplication, administrative reporting rules and revisions, geographic and temporal alignment, missing-data handling, interval-combination rules, and sources of uncertainty. Code should regenerate the same interval table from raw files; where judgement is involved, state the rule and the reviewer. Reproduction does not demand an identical point estimate; it lets readers inspect how each source entered the final interval.</p>
+<h2>Multi-source checklist</h2>
+<p>When handed a &#39;multi-source verification&#39; conclusion, ask five questions:</p>
+<ol>
+<li><strong>Are the sources truly independent?</strong> Shared underlying data, one collection agency or one stakeholder turns &#39;multiple sources&#39; into copies of the same error.</li>
+<li><strong>Do they measure the same construct?</strong> Night lights, text sentiment and tax records may proxy activity, confidence and the formal sector; without alignment, intersection is meaningless.</li>
+<li><strong>Is the error direction known?</strong> Which way and under what conditions each source is biased; if all bias upward, averaging amplifies it.</li>
+<li><strong>How is the interval combined?</strong> Intersection, weighted median and Bayesian updating carry different assumptions; report uncertainty sources and weights.</li>
+<li><strong>Can it be reproduced?</strong> Data versions, cleaning rules, geographic alignment and code; an unreproducible multi-source claim is several stories.</li>
+</ol>
+<p>Triangulation is independent errors checking each other, not a count of sources.</p>
+<h2>What would change the conclusion</h2>
+<p>Triangulation conclusions depend on independence and definitions:</p>
+<ol>
+<li><strong>Sources share underlying data.</strong> If satellite, text and administrative data come from one collection system or agency, errors are highly correlated and verification adds little.</li>
+<li><strong>Constructs do not align.</strong> If lights proxy activity, text proxies sentiment and tax records proxy the formal sector, they do not measure the same thing and intersection is meaningless.</li>
+<li><strong>Error direction is unknown.</strong> If all three sources bias upward, averaging amplifies rather than reduces error.</li>
+<li><strong>Interval combination is wrong.</strong> If independent intervals are simply averaged without weights and correlation, uncertainty is understated.</li>
+<li><strong>It cannot be reproduced.</strong> If data versions, cleaning rules and code are closed, a multi-source conclusion is several stories.</li>
+</ol>
+<p><strong>Practical implication:</strong> multi-source verification should establish independence, then construct alignment, then combine intervals; the number of sources is not information, independent errors are what counts.</p>
+<p><strong>Data note:</strong> report missingness, coverage and error direction for each source; when missingness is not random, interval combination is biased.</p>
+<p><strong>Scope note:</strong> report missingness and coverage by group; an overall rate hides bias in small regions and high-income groups.</p>
+<p><strong>Final note:</strong> report missingness by group; an overall rate hides bias in small regions and high-income groups.</p>
+<h2>Exercises</h2>
+<ol>
+<li><p>Explain the blind spots of satellite, text and administrative data.</p>
+</li>
+<li><p>Three estimates of 4%, 6% and 3%: can they be averaged directly?</p>
+</li>
+<li><p>Why do lights and tax data fail as independent validation if they share a source?</p>
+</li>
+<li><p>How do you report an interval intersection?</p>
+</li>
+<li><p>What are the three triangulation checks?</p>
+</li>
+<li><p>Why are administrative data not truth?</p>
+</li>
+<li><p>True or false: more sources always mean more credible conclusions. Explain.</p>
+</li>
+<li><p>Why can night lights not serve directly as GDP?</p>
+</li>
+<li><p>When are multiple data sources not independent for triangulation?</p>
+</li>
+</ol>
+<h2>Further reading: satellite, text and administrative-data research</h2>
+<p><strong>Satellite economics</strong>: Henderson and co-authors validated night lights against GDP and urbanisation; Chen and Nordhaus calibrated regional output with lights; crop NDVI, ship AIS and building footprints are used for trade, activity and infrastructure.</p>
+<p><strong>Text as data</strong>: Gentzkow, Kelly and Taddy survey text in economics; word counts, topic models and embeddings need human validation and cannot treat &#39;sentiment&#39; directly as a variable.</p>
+<p><strong>Administrative data</strong>: Chetty and co-authors use tax records to study mobility, neighbourhoods and intergenerational transmission; administrative data offer full samples but raise definition, access and privacy issues.</p>
+<p><strong>Triangulation</strong>: mixed-methods research stresses independent errors and construct consistency; multi-source estimates should report ranges, disagreement and explanations, not simple averages.</p>
+<p><strong>Reading suggestion</strong>: read one classic application each of satellite, text and administrative data, then design your own triangulation around error structure, not data quantity.</p>
+<h2>Chapter takeaways</h2>
+<ul>
+<li>Triangulation requires independent errors; more sources is not automatically better.</li>
+<li>Satellite data cover widely but are limited by resolution, clouds, algorithms and ground truth.</li>
+<li>Text data are shaped by platform, language, censorship and algorithms; word counts are not variables.</li>
+<li>Administrative data cover populations but may lag, change definitions or restrict access.</li>
+<li>Report ranges, disagreement and explanations rather than simple averages.</li>
+</ul>
+<h2>Related</h2>
+<p>Prerequisite RES-004; compare RES-010; neighbours RES-031 and ECO-025.</p>
+<h2>Sources</h2>
+<ol>
+<li>OECD, <em>Data-Driven Innovation: Big Data for Growth and Well-Being</em>. OECD Publishing, 2015, accessed 2026-11-21. <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf">https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf</a></li>
+<li>Klaus Deininger; World Bank, <em>Land Policies for Growth and Poverty Reduction</em>. World Bank, accessed 2026-11-23. <a href="https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content">https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content</a></li>
+<li>Board of Governors of the Federal Reserve System, <em>Survey of Consumer Finances (SCF)</em>. Board of Governors of the Federal Reserve System, accessed 2026-10-30. <a href="https://www.federalreserve.gov/econres/scfindex.htm">https://www.federalreserve.gov/econres/scfindex.htm</a></li>
+<li>Steven A. Greenlaw; David Shapiro; Daniel MacDonald, <em>Principles of Economics 3e, 15.4 Income Inequality: Measurement and Causes</em>. OpenStax, accessed 2026-11-03. <a href="https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes">https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes</a></li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Explain the error structures of satellite, text and administrative data.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Design independence and coverage checks for triangulation.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Explain the error structures of satellite, text and administrative data.</li><li>Design independence and coverage checks for triangulation.</li><li>Report interval estimates rather than point estimates.</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/seasonal-adjustment-and-revisions/">RES-004 · Seasonal Adjustment and Revisions</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/covariance-and-correlation/">RES-010 · Covariance and Correlation</a> </li><li> <a href="/en/learn/regression-and-econometrics-coefficients-standard-errors-causality/">RES-031 · Regression and Econometrics: Coefficients, Standard Errors and Causality</a> </li><li> <a href="https://economics.51invest.com/en/learn/games-and-information/">ECO-025 · Games and Information</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf" rel="noopener noreferrer" target="_blank">Data-Driven Innovation: Big Data for Growth and Well-Being</a> <p>OECD · OECD Publishing, 2015</p> <p>Accessed: 2026-11-21 · License: © OECD; linked summary only</p> <p>Supports: Supports big data, data-driven innovation and measurement opportunities.</p> </div><div class="source"> <a href="https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content" rel="noopener noreferrer" target="_blank">Land Policies for Growth and Poverty Reduction</a> <p>Klaus Deininger; World Bank · World Bank</p> <p>Accessed: 2026-11-23 · License: World Bank publication; cite-only under World Bank terms of use</p> <p>Supports: Supports measurement issues in land, property rights and geographic information.</p> </div><div class="source"> <a href="https://www.federalreserve.gov/econres/scfindex.htm" rel="noopener noreferrer" target="_blank">Survey of Consumer Finances (SCF)</a> <p>Board of Governors of the Federal Reserve System · Board of Governors of the Federal Reserve System</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: Supports household wealth, income and survey sampling methods.</p> </div><div class="source"> <a href="https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes" rel="noopener noreferrer" target="_blank">Principles of Economics 3e, 15.4 Income Inequality: Measurement and Causes</a> <p>Steven A. Greenlaw; David Shapiro; Daniel MacDonald · OpenStax</p> <p>Accessed: 2026-11-03 · License: CC BY-NC-SA 4.0</p> <p>Supports: Supports income-inequality measurement, definitions and limitations.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/triangulation-satellite-text-administrative-data/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

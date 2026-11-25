@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>证据等级与研究报告 · 巫妖投资</title><meta name="description" content="12 项模拟研究按证据层级抽样后，平均效应为实现值 A 层 2.4%、B 层 4.5%、C 层 8.2%，全体 4.7%、剔除 C 层后 3.6%；报告应给出分层、范围和证据确定性，而不是一个单一数字。"><link rel="canonical" href="https://research.51invest.com/learn/evidence-hierarchies-and-research-reports/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/evidence-hierarchies-and-research-reports/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/evidence-hierarchies-and-research-reports/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/evidence-hierarchies-and-research-reports/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/evidence-hierarchies-and-research-reports/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">证据等级与研究报告</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">证据等级与研究报告</h1> <p class="article-summary">12 项模拟研究按证据层级抽样后，平均效应为实现值 A 层 2.4%、B 层 4.5%、C 层 8.2%，全体 4.7%、剔除 C 层后 3.6%；报告应给出分层、范围和证据确定性，而不是一个单一数字。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M14 · 研究阅读与写作</strong></div> <div class="meta-item"><span>层级</span><strong>进阶</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>假设某研究报告要评估“因子 X 能预测收益”这一主张，手上只有 12 项模拟研究。按研究设计、样本覆盖和是否做样本外检验分层后，平均效应从多少降到多少？报告应如何表述证据等级，而不把分层结果藏在一个平均值里？数据由仓内脚本 <code>scripts/simulate-evidence-hierarchy.mjs</code> 以种子 20261038 生成，不是真实研究。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>证据层级</th>
+<th align="right">研究数</th>
+<th align="right">平均效应</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A：同行评审、全样本、样本外</td>
+<td align="right">4</td>
+<td align="right">2.4%</td>
+</tr>
+<tr>
+<td>B：同行评审、仅样本内</td>
+<td align="right">5</td>
+<td align="right">4.5%</td>
+</tr>
+<tr>
+<td>C：从业者笔记、样本定义不全</td>
+<td align="right">3</td>
+<td align="right">8.2%</td>
+</tr>
+<tr>
+<td>全部</td>
+<td align="right">12</td>
+<td align="right">4.7%</td>
+</tr>
+<tr>
+<td>A+B</td>
+<td align="right">9</td>
+<td align="right">3.6%</td>
+</tr>
+<tr>
+<td>A</td>
+<td align="right">4</td>
+<td align="right">2.4%</td>
+</tr>
+<tr>
+<td>口径与频率</td>
+<td align="right">—</td>
+<td align="right">每项研究一个平均效应（百分比）；一次性模拟设定，无时间序列</td>
+</tr>
+<tr>
+<td>时间范围</td>
+<td align="right">—</td>
+<td align="right">不适用：12 项研究对象由种子生成，不指任何真实期间</td>
+</tr>
+<tr>
+<td>层内标准差</td>
+<td align="right">—</td>
+<td align="right">A 0.87%、B 1.37%、C 1.28%（每项仅 3–5 个观测，本身也不稳定）</td>
+</tr>
+<tr>
+<td>单位</td>
+<td align="right">—</td>
+<td align="right">平均效应为百分比</td>
+</tr>
+<tr>
+<td>许可</td>
+<td align="right">—</td>
+<td align="right">模拟数据，无外部许可</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>把研究分为三层：A 层为同行评审、覆盖完整样本并做样本外检验；B 层为同行评审但只有样本内结果；C 层为从业者笔记、样本定义不全。这里的样本内与样本外口径沿用样本外与过拟合主文（RES-022），本文不重新定义。每层的研究效应是从该层设定的正态分布抽出的实现值：设定均值为 A 2.1%、B 4.8%、C 9.6%，设定标准差为 A 1.5%、B 2.0%、C 3.0%；上表的层均值是这一批 12 个抽样的<strong>实现值</strong>（A 2.4%、B 4.5%、C 8.2%），不是设定参数本身，两者的差就是 3–5 项一层的抽样噪声。计算各层与合并的平均效应。</p>
+<p>证据等级不是按研究类型机械排序，这是本文自身的判断。GRADE 工作组首页逐字列出评估证据确定性的域：&quot;Explicit consideration should be given to each of the GRADE domains for assessing the certainty in the evidence (i.e., risk of bias, imprecision, inconsistency, indirectness, publication bias, large effects, dose response gradients, and residual plausible opposing bias)&quot;[3]，同页也逐字称其方法是&quot;a common, sensible and transparent approach to grading quality (or certainty) of evidence and strength of recommendations&quot;[3]——域共有八项，本文正文只用到其中五项，这个取舍是本文的选择。数据质量方面，IMF 的 DQAF 页面逐字写道：&quot;Assessments have a six-part structure starting with a review of the legal and institutional environment (prerequisites of quality) and followed by an analysis of five dimensions of quality.&quot;，五个质量维度在该页列为 Assurances of integrity、Methodological soundness、Accuracy and reliability、Serviceability、Accessibility[1]。Sackett 等（1996）常被引作&quot;循证医学不限于随机试验与荟萃分析&quot;的出处[2]；本站在本环境取不回该页正文，故该句在本中只作书目指引，不作逐字依据（见局限）。</p>
+<h2>结果</h2>
+<p>12 项研究的合并平均效应为 4.7%；A+B 层 3.6%；A 层 2.4%。C 层三项分别为 7.76%、9.65%、7.20%，均值 8.2%，是把合并均值从 A 层的 2.4% 抬到 4.7% 的主要来源。纳入范围从只含 A 层到全部研究时，合并估计在 2.4%–4.7% 之间。报告若只写 4.7%，会掩盖层级差异；若只写 2.4%，又忽略了 B 层的 5 项证据。用表中舍入后的层均值复算：(4×2.4 + 5×4.5 + 3×8.2) ÷ 12 = 4.725%，(4×2.4 + 5×4.5) ÷ 9 = 3.567%，与脚本输出的 4.7% 与 3.6% 一致。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-evi-title fig-evi-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-evi-title">证据层级越弱，报告的平均效应越大</title>
+    <desc id="fig-evi-desc">四根零基线柱，每百分点十四像素。A 级（同行评审、全样本、样本外，四项研究）实现平均效应 2.4%，柱高三十三点六像素；B 级（同行评审、仅样本内，五项）4.5%，六十三点零像素；C 级（从业者笔记、样本定义不全，三项）8.2%，一百一十四点八像素；全部十二项合计 4.7%，六十五点八像素。基线在一百八十像素处。</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="80" y="146.4" width="56" height="33.6" fill="var(--accent)" opacity="0.9"></rect>
+    <rect x="156" y="117" width="56" height="63" fill="var(--accent)" opacity="0.65"></rect>
+    <rect x="232" y="65.2" width="56" height="114.8" fill="var(--gold)" opacity="0.9"></rect>
+    <rect x="308" y="114.2" width="56" height="65.8" fill="var(--muted)" opacity="0.5"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">平均效应（%，零基线，每 1 个百分点 = 14 像素）</text>
+      <text x="86" y="142">2.4</text>
+      <text x="162" y="113">4.5</text>
+      <text x="238" y="61">8.2</text>
+      <text x="314" y="110">4.7</text>
+      <text x="72" y="200">A（4 项）</text>
+      <text x="148" y="200">B（5 项）</text>
+      <text x="224" y="200">C（3 项）</text>
+      <text x="298" y="200">全部（12 项）</text>
+    </g>
+  </svg>
+  <figcaption>图 1：按证据层级分组的实现平均效应（零基线，每百分点 14 像素，柱高＝值×14）：A 级 2.4%（4 项，33.6 像素）、B 级 4.5%（5 项，63.0 像素）、C 级 8.2%（3 项，114.8 像素）、全部 4.7%（12 项，65.8 像素）。报告的效应随证据强度下降而上升，&quot;全部平均&quot;被 C 级拉高；比较时要用同一层级，而不是只看一个总数。数值是本文定义模型在种子 20261038 下的一次实跑结果，不是真实研究。；样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>按研究规模加权，若大样本研究集中在 A 层，合并效应会更接近 2.4%。</li>
+<li>去掉 C 层中最大的 9.65% 一项，C 层平均降为 7.5%，全样本平均降为 4.28%。</li>
+<li>把 A 层中一项样本外结果改为不显著，A 层平均会下降，说明层级内部也有质量差异。</li>
+<li>改变分层标准（例如把“样本外”改为“独立数据”）会改变归属，但“低质量证据效应更大”的方向不变：脚本在 2000 次重复中，C＞B＞A 的实现排序占 98.5%。</li>
+<li>换种子会改变实现值（例如层均值可能落到设定参数之下或之上），但不会改变分层逻辑；本文发表的就是种子 20261038 这一份实现值。</li>
+</ul>
+<p>评估证据确定性时应考虑上文引自 GRADE 首页的域，包括偏倚风险、不精确性、不一致性、间接性与发表偏差[3]。</p>
+<h2>局限</h2>
+<p>12 项研究是模拟设定，分层标准简化，层均值是点估计，未给置信区间；真实系统综述需要检索策略、纳入排除标准、效应量加权、异质性分析和发表偏差检验。A 层也可能有偏倚；C 层也可能包含有价值的实地信息。证据等级是沟通工具，不是真理标签。未做独立复核，不能称为系统综述或荟萃分析。三份来源中，GRADE 与 IMF 页面可核对；Sackett 等（1996）原文在此次取用中未能打开，因此只作书目指引，不逐字引用。</p>
+<h2>复现</h2>
+<ol>
+<li>用种子 20261038 生成 12 项研究：A 层 4 项、B 层 5 项、C 层 3 项，每项效应从该层设定的均值与标准差抽出的正态实现值。</li>
+<li>计算各层与合并平均。</li>
+<li>做剔除最大 C 层研究的敏感性检验。</li>
+<li>按 DQAF 与 GRADE 维度填写证据表。</li>
+<li>报告分层、区间、局限、来源和复核状态（谁复核、复核到什么程度），不只报一个数。</li>
+</ol>
+<p>正文全部数值由 <code>scripts/simulate-evidence-hierarchy.mjs</code> 一次实跑产生：不带参数打印逐项效应与各层统计量，<code>--selftest</code> 断言结构并以 2000 次重复检验参数能否被恢复，<code>--check</code> 把本文表格与实跑值逐条比对，同时禁止把设定参数当实现值留下。</p>
+<pre><code class="language-text">script = scripts/simulate-evidence-hierarchy.mjs; seed = 20261038
+studies = 12; A = 4; B = 5; C = 3
+effect[k,i] = layerMean[k] + layerSd[k] * N(0,1)
+layerMean = A 2.1, B 4.8, C 9.6 (%)   layerSd = A 1.5, B 2.0, C 3.0 (%)
+realised: A 2.4, B 4.5, C 8.2; all 4.7; A+B 3.6
+drop largest C (9.65): C 7.5, all 4.28
+2000 replications recover the parameters: A 2.09, B 4.79, C 9.65
+</code></pre>
+<h2>结论强度</h2>
+<p>平均效应随证据层级下降而上升，说明合并数字依赖纳入哪些研究；这不是说低层级研究一定错；报告必须展示分层、范围和确定性。结论支持在研究报告中使用证据等级和数据质量清单，不支持用一个 4.7% 的单一数字代表全部证据。按结论类型分开表述：本文的数字只是观察与方法层面的演示，既不构成“因子 X 能预测收益”的相关证据，更不构成因果证据；因果结论需要的设计与假设见因果关系与识别主文（RES-015），多次尝试带来的假阳性见多重检验与数据窥探主文（RES-023）。同一标准也适用于本站自己的图：CHART-004、CHART-008 这类共动图的验证说明写明同期共动不等于因果、不能据此推断方向性结论，因此引用它们最多支持“两条序列同向变动”，不能升级为因果主张。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>问题</h3>
+<p><strong>定义</strong>：研究问题是可回答、有边界、有理论或现实意义的疑问，应明确对象、时间、机制和可观测含义。</p>
+<p><strong>机制</strong>：好问题具体、可检验、不过宽；它决定数据、设计和结论范围，模糊问题会导致事后挑数据。</p>
+<p><strong>例子</strong>：例如“最低工资上升是否降低低技能就业”比“最低工资好不好”更可研究。</p>
+<p><strong>边界</strong>：问题不是命题；预设答案、价值判断和不可观测概念会使研究无法检验，问题过窄也可能缺乏意义，需与文献和决策连接。</p>
+<h3>文献</h3>
+<p><strong>定义</strong>：文献综述是系统阅读、比较和综合已有研究，识别共识、争议、方法和空白。</p>
+<p><strong>机制</strong>：文献综述应覆盖关键理论、证据、方法和数据，说明检索范围和评价标准； gap 需具体而非“没人研究”。</p>
+<p><strong>例子</strong>：例如比较最低工资研究的不同国家、时期和识别方法，指出制度背景差异。</p>
+<p><strong>边界</strong>：文献不是堆引用；选择性引用、英语偏误和发表偏差会误导，综述也可能复制他人错误，需批判性评估而非罗列。</p>
+<h3>研究设计</h3>
+<p><strong>定义</strong>：研究设计是把问题转化为可检验方案，包括数据、样本、识别策略、变量、对照和预分析计划。</p>
+<p><strong>机制</strong>：设计需处理偏差、混杂、功效和伦理；实验、准实验、观察和模拟各有识别假设，预注册减少事后调整。</p>
+<p><strong>例子</strong>：例如用双重差分评估政策，事先定义处理组、对照组、结果和时间窗口。</p>
+<p><strong>边界</strong>：设计不是方法堆砌；识别假设不成立、测量错误和样本不足会使结果无效，复杂设计也不能替代清晰问题，事后改设计会引入偏差。</p>
+<h3>复现</h3>
+<p><strong>定义</strong>：复现是用相同数据、代码和方法得到相同结果，或在新数据中验证结论。</p>
+<p><strong>机制</strong>：复现需要可得数据、版本化代码、环境、随机种子和文档；计算复现与实证复现不同。</p>
+<p><strong>例子</strong>：例如公开清洗脚本和回归代码，其他研究者运行得到相同系数。</p>
+<p><strong>边界</strong>：复现不是保证正确；数据不可得、代码缺失和保密限制会阻碍，复现相同错误也可能，独立复现和稳健性更重要。</p>
+<h3>证据等级</h3>
+<p><strong>定义</strong>：证据等级是对研究设计、偏差控制和可推广性的分级，如系统综述、随机试验、准实验、观察研究和案例。</p>
+<p><strong>机制</strong>：等级反映内部有效性和外部有效性的权衡；随机试验强识别但可能样本窄，观察研究更真实但混杂多。</p>
+<p><strong>例子</strong>：例如随机试验支持药物因果效应，系统综述综合多研究，案例提供机制但难推广。</p>
+<p><strong>边界</strong>：等级不是绝对排序；好观察研究可优于差试验，证据等级也因问题而异，机械套用会忽略情境和测量质量。</p>
+<h3>结论边界与报告</h3>
+<p><strong>定义</strong>：结论边界说明研究能主张什么、不能主张什么，报告是透明呈现问题、方法、结果、不确定性和局限。</p>
+<p><strong>机制</strong>：边界包括样本、时期、识别假设、测量误差和外推范围；报告应避免选择性结果、夸大因果和隐藏利益冲突。</p>
+<p><strong>例子</strong>：例如研究只覆盖某国某时期，结论不能直接推广到所有国家；置信区间和局限应报告。</p>
+<p><strong>边界</strong>：边界不是免责声明；事后补限、选择性报告和 p-hacking 会误导，透明也不能修复坏设计，结论应匹配证据强度。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：因果关系与识别（RES-015）、多重检验与数据窥探（RES-023）。</li>
+<li>相关与推荐阅读：可复现研究流程（RES-008）、因果关系与识别（RES-015）、多重检验与数据窥探（RES-023）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">证据等级与研究报告：机制链</title>
+    <desc id="fig-batch-chain-desc">证据等级与研究报告 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">证据等级与研究报告：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">项模拟研究按证据层级</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">抽样后，平均效应为实…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">项模拟研究按证据层</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">级抽样后，平均效应</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">为实现值 A 层</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">2.4%、B 层</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">4.5%、C 层…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：假设某研究</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">报告要评估“因子 X…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：假设某研</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">究报告要评估“因子</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> X 能预测收益”这</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">一主张，手上只有</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">12 项模拟研究。按…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 证据层级 |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究数 | 平均效应…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 证据层级 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究数 | 平均效应</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> | | --- | ---:</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| ---: | |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A：同行评审、全样…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：证据等级与研究报告的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">证据等级与研究报告：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">证据等级与研究报告：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">项研究是模拟设定，分层标准简化，</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">层均值是点估计，未给置信区间；真</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">实系统综述需要检索策略、纳入排除</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">标准、效应量加权、异质性分析和发…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：因果关系与识别（RES-01</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">5）、多重检验与数据窥探（RES-023</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：证据等级与研究报告的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">证据等级与研究报告：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">证据等级与研究报告：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">项模拟研究按证据层级抽样</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">后，平均效应为实现值 A…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">项研究是模拟设定，分层标</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">准简化，层均值是点估计…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：因果关系与识别（RES-015）、</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">多重检验与数据窥探（RES-023）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：证据等级与研究报告的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>计算 12 项研究的合并平均效应。</li>
+<li>计算 A+B 层的平均效应。</li>
+<li>为什么不能只按“是否随机试验”排序？</li>
+<li>研究报告至少应写明哪些内容？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>(4×2.4% + 5×4.5% + 3×8.2%) ÷ 12 = 4.725% ≈ 4.7%，与脚本实跑的 4.7% 一致。</li>
+<li>(4×2.4% + 5×4.5%) ÷ 9 = 3.567% ≈ 3.6%。</li>
+<li>金融研究很少有随机试验；执行质量、样本外检验和复现同样重要——这也是本文按多维域而非研究类型分层的理由。</li>
+<li>问题、数据、方法、分层结果、区间、局限、来源和复核状态；不能只报一个合并数字。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>International Monetary Fund. “Fifth Review of the Fund&#39;s Data Standards Initiatives.” June 25, 2003. License unknown. <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm">https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm</a>（访问日期：2026-11-03）</li>
+<li>Sackett, David L., William M. C. Rosenberg, J. A. Muir Gray, R. Brian Haynes, and W. Scott Richardson. “Evidence based medicine: what it is and what it isn&#39;t.” <em>BMJ</em> 312, no. 7023 (1996): 71–72. License unknown. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/">https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/</a>（访问日期：2026-10-30，本环境取不回正文）</li>
+<li>GRADE Working Group. “GRADE home.” License unknown. <a href="https://www.gradeworkinggroup.org/">https://www.gradeworkinggroup.org/</a>（访问日期：2026-11-03；本次仅取到公开摘要）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能区分分层抽样的设定参数（A 2.1%、B 4.8%、C 9.6%）与一次实跑的实现均值（A 2.4%、B 4.5%、C 8.2%、全体 4.7%），并说明总数被哪一层抬高</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能写出含分层、范围与证据确定性的研究摘要，而不是单一效应数字</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能区分分层抽样的设定参数（A 2.1%、B 4.8%、C 9.6%）与一次实跑的实现均值（A 2.4%、B 4.5%、C 8.2%、全体 4.7%），并说明总数被哪一层抬高</li><li>能写出含分层、范围与证据确定性的研究摘要，而不是单一效应数字</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/causality-and-identification/">RES-015 · 因果关系与识别</a> </li><li> <a href="/learn/multiple-testing-and-data-snooping/">RES-023 · 多重检验与数据窥探</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/reproducible-research-workflow/">RES-008 · 可复现研究流程</a> </li><li> <a href="/learn/causality-and-identification/">RES-015 · 因果关系与识别</a> </li><li> <a href="/learn/multiple-testing-and-data-snooping/">RES-023 · 多重检验与数据窥探</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.imf.org/external/np/sta/dsbb/2003/eng/dqaf.htm" rel="noopener noreferrer" target="_blank">Fifth Review of the Fund&#39;s Data Standards Initiatives</a> <p>International Monetary Fund · International Monetary Fund</p> <p>访问：2026-11-03 · 许可：IMF terms: linking permitted, personal non-commercial use only</p> <p>支持论点：该页逐字给出 DQAF 的结构与维度：&quot;Assessments have a six-part structure starting with a review of the legal and institutional environment (prerequisites of quality) and followed by an analysis of five dimensions of quality.&quot;，五个质量维度逐字列为 &quot;Assurances of integrity&quot;、&quot;Methodological soundness&quot;、&quot;Accuracy and reliability&quot;、&quot;Serviceability&quot;、&quot;Accessibility&quot;。因此本文旧稿写的&quot;诚信、方法健全性、准确性、适用性、可获取性和前提条件&quot;六个同级维度有两处不成立：prerequisites 是六段结构里的第一环（法律与制度环境），不是第六个维度；页面上也没有名为&quot;适用性&quot;的维度。取证方式：本机 curl 对该 URL 返回 403 与 431 字节机器人拦截体，正文由两条独立提问的网络取回路径取得，两次都给出同一句六段结构（首字母大小写不同）与同一组五个维度名，按&quot;两路径一致&quot;登记；逐字串未经 HTML 字节层核对，故只登记短语级别的一致性，页面级长句不作逐字断言。</p> </div><div class="source"> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2349778/" rel="noopener noreferrer" target="_blank">Evidence based medicine: what it is and what it isn&#39;t</a> <p>David L. Sackett; William M. C. Rosenberg; J. A. Muir Gray; R. Brian Haynes; W. Scott Richardson · BMJ, 312(7023), 71-72</p> <p>访问：2026-10-30 · 许可：PMC notice: standard copyright applies absent a licence statement; reproduction needs the owner</p> <p>支持论点：本条在本环境**取不回正文**，因此正文不再由它承担逐字依据：curl 对该 URL 与其 http 变体均返回连接层失败（HTTP 000、0 字节）；两条网络取回提问中，第一条只给出短语 &quot;not restricted to randomised trials and meta-analyses&quot; 与 &quot;Integration of individual clinical expertise with the best external evidence.&quot;，第二条未返回可核对的完整句。按本站既定规则（两条独立提问须一致才可登记），这句在本中只作书目指引：正文把它改写为&quot;本文自身的判断＋该文献常被视为该观点的出处&quot;，并声明取不回。许可维持 unknown。</p> </div><div class="source"> <a href="https://www.gradeworkinggroup.org/" rel="noopener noreferrer" target="_blank">GRADE home</a> <p>GRADE Working Group · GRADE Working Group</p> <p>访问：2026-11-03 · 许可：© 2004-2026 - The GRADE Working Group. Linked summary only.</p> <p>支持论点：首页逐字列出评估证据确定性的域：&quot;Explicit consideration should be given to each of the GRADE domains for assessing the certainty in the evidence (i.e., risk of bias, imprecision, inconsistency, indirectness, publication bias, large effects, dose response gradients, and residual plausible opposing bias)&quot;，并逐字称其方法为 &quot;a common, sensible and transparent approach to grading quality (or certainty) of evidence and strength of recommendations&quot;。域共八项（含 large effects、dose response gradients、residual plausible opposing bias 三项），本文正文只使用前五项，该取舍是本文的选择。取证方式：该主机 HTTPS 在本环境握手失败（curl 000），HTTP 返回 200、96,075 字节，逐字串由剥 style/script 与标签后的正文切片取得并与原 HTML 复核；页脚逐字为 &quot;© 2004-2026 - The GRADE Working Group&quot;，页内无 &quot;All rights reserved&quot; 或任何允许转载的字样。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/evidence-hierarchies-and-research-reports/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

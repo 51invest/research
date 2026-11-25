@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Seasonal Adjustment and Revisions · 51Invest</title><meta name="description" content="Seasonal adjustment strips out calendar-driven swings, and the adjusted numbers are themselves revised; a monthly change smaller than the typical revision is not yet evidence of a trend."><link rel="canonical" href="https://research.51invest.com/en/learn/seasonal-adjustment-and-revisions/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/seasonal-adjustment-and-revisions/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/seasonal-adjustment-and-revisions/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/seasonal-adjustment-and-revisions/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/seasonal-adjustment-and-revisions/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Seasonal Adjustment and Revisions</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Seasonal Adjustment and Revisions</h1> <p class="article-summary">Seasonal adjustment strips out calendar-driven swings, and the adjusted numbers are themselves revised; a monthly change smaller than the typical revision is not yet evidence of a trend.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M04 · 数据口径</strong></div> <div class="meta-item"><span>Level</span><strong>Foundation</strong></div> <div class="meta-item"><span>Read</span><strong>5 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>December retail sales are 25% above October, so is demand stronger, or is this seasonality? The first release shows a seasonally adjusted change of 0.0%, and the next release cuts the December adjusted level by 0.6%. The question is when one release&#39;s adjusted monthly change can support a trend claim, and when the answer must wait for revisions. Scope: the rules that govern adjustment and revisions; all numbers are hypothetical.</p>
+<h2>Data</h2>
+<p>Suppose a monthly retail index with seasonal and calendar effects, adjusted multiplicatively: adjusted = raw ÷ seasonal factor.</p>
+<table>
+<thead>
+<tr>
+<th>Series</th>
+<th>Definition</th>
+<th>Unit</th>
+<th>Frequency</th>
+<th>Period</th>
+<th>Example (hypothetical)</th>
+<th>License</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Raw index</td>
+<td>Unadjusted retail sales</td>
+<td>Index</td>
+<td>Monthly</td>
+<td>Oct–Dec of year t</td>
+<td>105.6 / 118.8 / 132.0</td>
+<td>Not applicable (teaching example)</td>
+</tr>
+<tr>
+<td>Seasonal factor</td>
+<td>Multiplicative seasonal component, calendar effects included here</td>
+<td>Ratio</td>
+<td>Monthly</td>
+<td>Same months</td>
+<td>0.96 / 1.08 / 1.20</td>
+<td>Not applicable (teaching example)</td>
+</tr>
+<tr>
+<td>Adjusted index</td>
+<td>Raw ÷ seasonal factor</td>
+<td>Index</td>
+<td>Monthly</td>
+<td>Same months</td>
+<td>110.0 / 110.0 / 110.0</td>
+<td>Not applicable (teaching example)</td>
+</tr>
+<tr>
+<td>Adjusted change</td>
+<td>Change from previous month</td>
+<td>%</td>
+<td>Monthly</td>
+<td>Nov–Dec</td>
+<td>0.0</td>
+<td>Not applicable (teaching example)</td>
+</tr>
+</tbody></table>
+<p>After revision: December raw is 132.3 with a factor of 1.21, so the adjusted value is <code>132.3 ÷ 1.21 = 109.3</code>; November raw is 119.0 with a factor of 1.08, giving 110.2.</p>
+<h2>Method and assumptions</h2>
+<p>Adjustment assumes a series combines trend-cycle, seasonal (including calendar) and irregular behaviour: additive Y = C + S + I, multiplicative Y = C × S × I. In the multiplicative case seasonal effects move proportionally with the level, in the additive case they stay broadly constant, and a multiplicative decomposition cannot handle zeros or negatives. Trading-day counts, moving holidays and leap years are calendar effects; outliers, level shifts and seasonal breaks should be identified before estimation. Revisions are planned improvements that add data, benchmark, update factors or rebase; corrections respond to identified errors. The examples assume consistent monthly definitions, factors estimated from a long enough history, and an irregular term equal to 1, so the three identical adjusted values simply demonstrate the division rather than describe a real series.</p>
+<p>Seasonal adjustment removes systematic calendar-related variation so consecutive periods can be compared - the ONS page states verbatim &quot;The purpose of seasonal adjustment is to remove systematic calendar-related variation associated with the time of the year, that is, seasonal effects. This facilitates comparisons between consecutive time periods.&quot;. A series decomposes into trend-cycle, seasonality including calendar effects, and the irregular component; the page writes &quot;These three components are: systematic calendar-related effects, irregular fluctuations and trend behaviour.&quot; and gives the models as &quot;additive model: Y equals C plus S plus I multiplicative model: Y equals C multiplied by S multiplied by I&quot;. Outliers, level shifts and seasonal spikes affect adjustment quality - the page likewise states &quot;There are a variety of issues that can impact on the quality of the seasonal adjustment.&quot;, listing outliers, trend breaks (also known as level shifts) and seasonal breaks [1].</p>
+<h2>Results</h2>
+<p>The raw series rises 25.0% from October to December (105.6 to 132.0), while the adjusted series is 110.0 in all three months, a change of 0.0%: almost the entire rise is seasonal. With an additive model and a December seasonal component of +12.0, the adjusted value would be <code>132.0 - 12.0 = 120.0</code> rather than 110.0, so the model choice moves the level.</p>
+<p>After revision, December is 109.3 and November 110.2, so the monthly change is <code>109.3 ÷ 110.2 - 1 ≈ -0.8%</code>. The shift from 0.0% to -0.8% combines a 0.2% upward revision to the raw value with a 0.8% upward revision to the factor; the December adjusted level itself moves by 0.6%. Because the 0.8-percentage-point revision is as large as the monthly change, a single release cannot support a trend claim; look at cumulative changes over three months or more and compare them with the series&#39; typical revision size.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-sea-title fig-sea-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-sea-title">Raw and seasonally adjusted indices</title>
+    <desc id="fig-sea-desc">Two lines over October, November and December on a zero-based index axis. The solid raw line runs 105.6, 118.8 and 132.0; the dashed adjusted line is flat at 110.0 for all three months. Because the axis starts at zero, the gap between the lines is not visually exaggerated.</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <polyline points="100,66.9 210,52.7 320,38.6" fill="none" stroke="var(--accent)" stroke-width="2.5"></polyline>
+    <polyline points="100,62.1 210,62.1 320,62.1" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4"></polyline>
+    <g fill="var(--accent)">
+      <circle cx="100" cy="66.9" r="4.5"></circle>
+      <circle cx="210" cy="52.7" r="4.5"></circle>
+      <circle cx="320" cy="38.6" r="4.5"></circle>
+    </g>
+    <g fill="var(--gold)">
+      <circle cx="100" cy="62.1" r="4.5"></circle>
+      <circle cx="210" cy="62.1" r="4.5"></circle>
+      <circle cx="320" cy="62.1" r="4.5"></circle>
+    </g>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">Index (zero baseline, 1.0714 px per point)</text>
+      <text x="66" y="40">adjusted 110.0 / 110.0 / 110.0 (dashed)</text>
+      <text x="300" y="32">132.0</text>
+      <text x="76" y="80">105.6</text>
+      <text x="188" y="66">118.8</text>
+      <text x="90" y="200">Oct</text>
+      <text x="200" y="200">Nov</text>
+      <text x="310" y="200">Dec</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: the raw index 105.6, 118.8 and 132.0 divided by seasonal factors 0.96, 1.08 and 1.20 gives 110.0 in all three months, so the adjusted month-on-month change is 0.0. The solid line is raw and the dashed line adjusted - colour plus line style, so the series stay separable in light and dark themes - and the axis starts at zero so the gap is not exaggerated. Numbers are teaching assumptions.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<p>Compare the raw year-on-year change; use a three-month moving average to reduce endpoint noise; compare vintages and record each month&#39;s value in every release; switch model or calendar adjustment. If a claim holds only in one vintage or under one model, report that.</p>
+<p>A revision is a scheduled change to published output: routine recalculations include updated seasonal factors and benchmarking, annual reassessments typically incorporate major annual sources about 18 months after the year being measured, and annual chain-weighting moves the reference year, so volume series are revised [3].</p>
+<h2>Limitations</h2>
+<p>Seasonal factors are estimates and are least stable at the ends of a series; a changing seasonal pattern, a structural break or an unusual year can invalidate historical factors. Seasonal factors are least stable at the ends of a series, a general limitation of seasonal adjustment; the ONS page only discusses outliers, trend breaks and seasonal breaks, and does not expand on the endpoint problem [1]. Revisions carry their own error, and benchmarking can shift an entire history. Adjustment does not create information, it only rearranges variation, and it cannot explain why demand changed. The numbers are hypothetical and are not the actual data of any country or institution.</p>
+<h2>Reproduction</h2>
+<p>Record the series code, vintage dates, adjustment method and software, model, seasonal factor table, outlier treatment and each revision&#39;s release date; recompute with <code>adjusted = raw ÷ seasonal factor</code>, noting that the factor table here is fixed while institutions update seasonal factors in routine recalculations, so this division is an approximation that will not usually reproduce an officially adjusted series; label hypothetical scenarios separately from observations.</p>
+<h2>Strength of conclusions</h2>
+<p>The results are descriptive consistency: it is fair to say the December increase is mostly seasonal, and that a monthly change smaller than the revision is not enough to establish a trend. It is not fair to say consumption strengthened, that policy worked, or that any causal link exists.</p>
+<p>Revisions are not error corrections: the ONS explains that they improve quality by incorporating additional data, benchmarking, improved methods or rebasing, that first estimates trade off timeliness against accuracy, and that revisions are normally reported in the next release [2].</p>
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Frequency and Time Alignment (RES-003).</li>
+<li>Related reading: Stocks and Flows (RES-002), Indexing, Logarithms and Growth Rates (RES-006).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Seasonal Adjustment and Revisions: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Seasonal Adjustment and Revisions — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal Adjustment and Revisions: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal adjustme</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">nt strips out…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal adjustm</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ent strips out</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">calendar-driven</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">swings, and the</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">adjusted numbers…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction:</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Record the…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction:</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Record the</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">series code,</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">vintage dates,</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">adjustment…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Suppose a monthly</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> retail index…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Suppose a</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">monthly retail</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">index with</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">seasonal and</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">calendar effects…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Seasonal Adjustment and Revisions — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Seasonal Adjustment and Revisions: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal Adjustment and Revisions: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal factors are</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">estimates and are least</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">stable at the ends of a</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">series; a changing seasonal…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">December retail sales are</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">25% above October, so is</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">demand stronger, or is this</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">seasonality?…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Seasonal Adjustment and Revisions — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Seasonal Adjustment and Revisions: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal Adjustment and Revisions: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal adjustment</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">strips out calendar-d…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Seasonal factors are</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">estimates and are…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">December retail sales are 25%</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">above October, so is demand…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Seasonal Adjustment and Revisions — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>December raw is 132.0 and the seasonal factor is 1.20. What is the adjusted value?</li>
+<li>November adjusted is 110.2 and December adjusted is 109.3. What is the monthly change?</li>
+<li>The first release shows 0.0% and the revised figure is -0.8%. How should the conclusion be stated?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li><code>132.0 ÷ 1.20 = 110.0</code>.</li>
+<li><code>109.3 ÷ 110.2 - 1 ≈ -0.8%</code>.</li>
+<li>Say “the first estimate was 0.0% and the revised figure is -0.8%; the change is no larger than the revision, so it does not establish a trend,” and keep both vintage dates.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Office for National Statistics. “Seasonal adjustment.” Methodology topics and statistical concepts. Open Government Licence v3.0. <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment">https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment</a> (accessed 2026-10-30)</li>
+<li>Office for National Statistics. “The Office for National Statistics&#39; Revisions Policy and Correction of Errors Policy.” Open Government Licence v3.0. <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/guidetostatisticalrevisions">https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/guidetostatisticalrevisions</a> (accessed 2026-10-30)</li>
+<li>Office for National Statistics. “National Accounts Revisions Policy: updated January 2026.” Open Government Licence v3.0. <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/revisionspoliciesforeconomicstatistics/nationalaccountsrevisionspolicyupdateddecember2017">https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/revisionspoliciesforeconomicstatistics/nationalaccountsrevisionspolicyupdateddecember2017</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>State what seasonal adjustment removes and keeps, and why adjusted figures are still revised</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Judge whether a month-on-month move is evidence of a trend by comparing it with the typical revision size</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>State what seasonal adjustment removes and keeps, and why adjusted figures are still revised</li><li>Judge whether a month-on-month move is evidence of a trend by comparing it with the typical revision size</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/frequency-and-time-alignment/">RES-003 · Frequency and Time Alignment</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/stocks-and-flows/">RES-002 · Stocks and Flows</a> </li><li> <a href="/en/learn/indexing-logarithms-and-growth-rates/">RES-006 · Indexing, Logarithms and Growth Rates</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment" rel="noopener noreferrer" target="_blank">Seasonal adjustment (Methodology topics and statistical concepts)</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>Accessed: 2026-11-03 · License: Open Government Licence v3.0</p> <p>Supports: Verbatim (page fetched 2026-11-03; 8030 characters after stripping tags and unescaping entities): purpose &quot;The purpose of seasonal adjustment is to remove systematic calendar-related variation associated with the time of the year, that is, seasonal effects. This facilitates comparisons between consecutive time periods.&quot;; components &quot;These three components are: systematic calendar-related effects, irregular fluctuations and trend behaviour.&quot;; models &quot;additive model: Y equals C plus S plus I multiplicative model: Y equals C multiplied by S multiplied by I&quot;; quality issues &quot;There are a variety of issues that can impact on the quality of the seasonal adjustment.&quot; (listing outliers, trend breaks also known as level shifts, and seasonal breaks). The page never discusses endpoint instability - the word faces least stable, end of the series, endpoint/end point, re-estimate/reestimate and each estimation all return 0 - so &quot;seasonal factors are least stable at the ends of a series&quot; and &quot;factors are re-estimated each release&quot; are not this page&#39;s statements.</p> </div><div class="source"> <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/guidetostatisticalrevisions" rel="noopener noreferrer" target="_blank">The Office for National Statistics&#39; Revisions Policy and Correction of Errors Policy</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>Accessed: 2026-10-30 · License: Open Government Licence v3.0</p> <p>Supports: Revisions improve quality by incorporating additional data, benchmarking, improved methods or rebasing, and are distinct from corrections of errors; initial estimates trade timeliness against accuracy, and revisions are usually reported in the next release.</p> </div><div class="source"> <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/revisions/revisionspoliciesforeconomicstatistics/nationalaccountsrevisionspolicyupdateddecember2017" rel="noopener noreferrer" target="_blank">National Accounts Revisions Policy: updated January 2026</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>Accessed: 2026-11-03 · License: Open Government Licence v3.0</p> <p>Supports: (2026-11-03 fetch; 19385 characters) The page title matches &quot;National Accounts Revisions Policy: updated January 2026&quot; while the registered URL slug still reads …policyupdateddecember2017. The title says updated January 2026 and the slug says december2017; the publisher keeps the legacy identifier, so citations follow the page title and the URL still resolves.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/seasonal-adjustment-and-revisions/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

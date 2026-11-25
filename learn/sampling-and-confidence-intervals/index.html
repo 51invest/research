@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>抽样与置信区间 · 巫妖投资</title><meta name="description" content="置信区间把样本均值和抽样误差放在一起，给出总体均值的一个范围；95% 指重复抽样下约 95% 的区间会覆盖总体均值，而不是这个区间有 95% 的概率包含它。"><link rel="canonical" href="https://research.51invest.com/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/sampling-and-confidence-intervals/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/sampling-and-confidence-intervals/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/sampling-and-confidence-intervals/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">抽样与置信区间</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">抽样与置信区间</h1> <p class="article-summary">置信区间把样本均值和抽样误差放在一起，给出总体均值的一个范围；95% 指重复抽样下约 95% 的区间会覆盖总体均值，而不是这个区间有 95% 的概率包含它。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M03 · 统计推断</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>8 分钟 · 14 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>某假设策略 36 个月的月均收益为 1.20%，样本标准差 2.40%。仅凭 1.20% 能否推断总体均值？换一批样本，结果会差多少？本文构造均值置信区间，说明标准误、t 分布和覆盖率的含义，并指出区间不能修正有偏样本。数值为教学假设。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+<th>单位或说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>样本量 n</td>
+<td align="right">36</td>
+<td>月</td>
+</tr>
+<tr>
+<td>样本均值 x̄</td>
+<td align="right">1.20</td>
+<td>% / 月</td>
+</tr>
+<tr>
+<td>样本标准差 s</td>
+<td align="right">2.40</td>
+<td>百分点</td>
+</tr>
+<tr>
+<td>标准误 s/√n</td>
+<td align="right">0.40</td>
+<td>百分点</td>
+</tr>
+<tr>
+<td>95% 置信区间</td>
+<td align="right">0.39 至 2.01</td>
+<td>% / 月</td>
+</tr>
+</tbody></table>
+<p>这是假设的简单随机样本；原始 36 个观测、抽样框和缺失处理没有给出。真实分析应保存这些信息。</p>
+<h2>方法与假设</h2>
+<p>样本均值的抽样分布以总体均值 μ 为中心，标准误为 σ/√n；当观察独立同分布且样本量足够大（或总体近似正态）时，样本均值近似正态（OpenStax 7.1）。总体标准差未知时，用样本标准差 s 代替，并改用 t 分布，自由度 n-1：</p>
+<div class="formula" role="math" aria-label="标准误等于样本标准差除以样本量的平方根">SE = s / √n</div>
+
+<div class="formula" role="math" aria-label="置信区间等于样本均值加减 t 分位数乘以标准误">CI = x̄ ± t(α/2, n-1) × SE</div>
+
+<p>95% 区间使用 t(0.975, 35) = 2.030（OpenStax 8.2；NIST 说明区间宽度由标准差和样本量决定）。</p>
+<p>关键假设：简单随机抽样、观察独立、分布没有极端到使 t 近似失效、样本标准差能代表总体波动。若抽样有偏，区间会偏离目标；若观察相关，公式宽度会低估真实不确定性。</p>
+<h2>结果</h2>
+<p>SE = 2.40/√36 = 0.40（百分点）。</p>
+<p>误差界限 = 2.030×0.40 = 0.812。</p>
+<p>95% 区间 = 1.20 ± 0.812，即 0.39% 至 2.01%。</p>
+<p>若重复抽取同样大小的样本并每次构造区间，约 95% 的区间会覆盖总体均值；单个区间 [0.39, 2.01] 要么覆盖、要么不覆盖，不能说“总体均值有 95% 的概率落在其中”。区间宽度 1.62 个百分点，主要来自 2.40 的月度波动。若样本量增到 100，SE 降为 0.24，区间变为 0.72% 至 1.68%（假设均值和标准差不变）；样本量仍为 36 时，99% 区间更宽，为 0.11% 至 2.29%。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-ci-title fig-ci-desc" viewBox="0 0 420 175" width="100%">
+    <title id="fig-ci-title">样本均值与其 95% 置信区间</title>
+    <desc id="fig-ci-desc">水平数轴从 0 到 2.5 每月百分数。样本均值 1.20 用圆点标出，95% 置信区间 0.39 至 2.01 用横线与端点竖线表示；0 处画虚线，区间整体位于 0 右侧。</desc>
+    <line x1="60" y1="140" x2="380" y2="140" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="60" y1="55" x2="60" y2="145" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <g stroke="var(--accent)" stroke-width="2">
+      <line x1="108" y1="95" x2="308" y2="95"></line>
+      <line x1="108" y1="87" x2="108" y2="103"></line>
+      <line x1="308" y1="87" x2="308" y2="103"></line>
+    </g>
+    <circle cx="208" cy="95" r="6" fill="var(--gold)"></circle>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="70" y="80">95% 区间 0.39 至 2.01（t 分布，df = 35）</text>
+      <text x="200" y="120">x̄ = 1.20</text>
+      <text x="56" y="158">0</text>
+      <text x="122" y="158">0.5</text>
+      <text x="183" y="158">1.0</text>
+      <text x="245" y="158">1.5</text>
+      <text x="306" y="158">2.0</text>
+      <text x="368" y="158">2.5</text>
+      <text x="66" y="50">月度超额收益（% / 月）；虚线为零效应</text>
+    </g>
+  </svg>
+  <figcaption>图 1：36 个月样本的均值 1.20% / 月，标准误 0.40 百分点，按 df = 35 的 t 临界值 2.030 得 95% 区间 0.39% 至 2.01%（1.20 ± 2.030 × 0.40）。区间不含 0 只说明在该样本下能拒绝&quot;均值为零&quot;，不说明效应大小，也不保证重复抽样一定覆盖真值。数值为教学假设。</figcaption>
+</figure>
+
+<h2>图解：中心、宽度、覆盖率</h2>
+<figure id="figure-ci-three-layers">
+  <svg role="img" aria-labelledby="fig-ci-layers-title fig-ci-layers-desc" viewBox="0 0 380 420" width="100%">
+    <title id="fig-ci-layers-title">置信区间的三层解释：标准误、区间宽度与覆盖率边界</title>
+    <desc id="fig-ci-layers-desc">第一层由样本标准差二点四、样本量三十六算出标准误零点四，并用 t 临界值二点零三得误差界限零点八一二；第二层比较 n 三十六的百分之九十五区间、n 一百的百分之九十五区间与 n 三十六的百分之九十九区间；第三层说明覆盖率、抽样偏差、依赖结构与经济意义四条边界。</desc>
+    <text x="20" y="22" font-size="11" font-weight="650" fill="var(--text)" font-family="inherit">置信区间：中心、宽度、覆盖率</text>
+    <text x="20" y="43" font-size="9" fill="var(--muted)" font-family="inherit">36 个月，月均 1.20%，样本标准差 2.40%</text>
+    <rect x="16" y="54" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="70" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">① 从样本到标准误</text>
+    <text x="28" y="91" font-size="9" fill="var(--secondary)" font-family="inherit">SE = s / √n = 2.40 / √36 = 0.40</text>
+    <text x="28" y="110" font-size="9" fill="var(--secondary)" font-family="inherit">t(0.975, df = 35) = 2.030</text>
+    <text x="28" y="129" font-size="9" fill="var(--secondary)" font-family="inherit">误差界限 = 2.030 × 0.40 = 0.812</text>
+    <rect x="16" y="164" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="180" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">② 三个区间，三种宽度</text>
+    <text x="28" y="201" font-size="8.9" fill="var(--secondary)" font-family="inherit">95%，n = 36：0.39 – 2.01（宽 1.62）</text>
+    <text x="28" y="220" font-size="8.9" fill="var(--secondary)" font-family="inherit">95%，n = 100：0.72 – 1.68（宽 0.96）</text>
+    <text x="28" y="239" font-size="8.9" fill="var(--secondary)" font-family="inherit">99%，n = 36：0.11 – 2.29（宽 2.18）</text>
+    <text x="28" y="259" font-size="8.4" fill="var(--muted)" font-family="inherit">样本量放大缩窄区间；置信水平抬高加宽区间。</text>
+    <rect x="16" y="274" width="348" height="104" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="28" y="290" font-size="9.8" font-weight="650" fill="var(--accent)" font-family="inherit">③ 四条边界</text>
+    <text x="28" y="311" font-size="8.6" fill="var(--secondary)" font-family="inherit">95% 是重复抽样的覆盖率，不是单个区间的概率</text>
+    <text x="28" y="329" font-size="8.6" fill="var(--secondary)" font-family="inherit">区间只覆盖抽样误差，不修选择偏差与幸存偏差</text>
+    <text x="28" y="347" font-size="8.6" fill="var(--secondary)" font-family="inherit">序列相关、重叠样本会让普通标准误偏小</text>
+    <text x="28" y="365" font-size="8.6" fill="var(--secondary)" font-family="inherit">统计上不含 0 ≠ 经济上重要；还要看效应大小</text>
+    <text x="20" y="400" font-size="8.6" fill="var(--muted)" font-family="inherit">图为教学假设；n = 100 与 99% 区间沿用同一均值与标准差。</text>
+  </svg>
+  <figcaption>图 2：三层读置信区间。先算标准误：2.40/√36 = 0.40，t 临界值 2.030，误差界限 0.812；再比宽度：95%/n=36 为 0.39–2.01，n 增到 100 缩为 0.72–1.68，99%/n=36 放宽到 0.11–2.29；最后看边界：95% 是覆盖率、区间不修偏差、依赖结构会让标准误偏小，统计显著也不等于经济重要。数字为教学假设。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>改用 z = 1.96 得 0.42% 至 1.98%，与 t 结果接近；小样本时差异更大，应使用 t。提高置信水平会加宽区间，降低样本量也会加宽。检查异常值和子时期：若去掉最大月后均值明显下降，说明结论依赖少数观测。用自助法重抽样可检查非正态下的区间，但不能修复选择偏差。若收益存在序列相关、重叠期或按基金聚类，普通标准误偏小，应使用稳健或聚类标准误。失败条件：便利样本、幸存者偏差、缺失非随机、样本量过小且分布厚尾。</p>
+<h2>局限</h2>
+<p>置信区间只覆盖抽样误差，不覆盖偏差。95% 覆盖率依赖抽样设计和模型假设；真实金融样本往往不是简单随机样本，基金历史还有幸存和回填偏差。区间不说明经济意义，也不检验因果。样本均值对极端值敏感；非正态、小样本下 t 区间可能失真。本文数值为假设。</p>
+<h2>复现</h2>
+<ol>
+<li>固定抽样框、期间、频率和缺失规则。</li>
+<li>计算 n、x̄ 和 s。</li>
+<li>计算 SE = s/√n。</li>
+<li>选择置信水平和 t 分位数，自由度 n-1。</li>
+<li>计算区间，报告单位、样本期和假设。</li>
+<li>检查异常值、子时期和依赖结构。</li>
+</ol>
+<pre><code class="language-text">se = s / sqrt(n)
+margin = qt(0.975, df=n-1) * se
+ci = (mean - margin, mean + margin)
+</code></pre>
+<h2>结论强度</h2>
+<p>在假设的 36 个月简单随机样本中，月均收益的 95% 置信区间为 0.39% 至 2.01%。这描述抽样不确定性，不是对策略未来收益的预测，也不证明收益来自技能。若样本有偏或观察相关，区间会过窄。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>置信区间</h3>
+<p><strong>定义</strong>：置信区间是围绕估计值构造的区间，在重复抽样下以一定频率覆盖真实参数。</p>
+<p><strong>机制</strong>：区间由估计值、标准误和临界值决定；95% 置信区间不意味着真实参数有 95% 概率落在该区间。</p>
+<p><strong>例子</strong>：例如样本均值 10、标准误 2，95% 区间约为 6.1 到 13.9。</p>
+<p><strong>边界</strong>：置信区间不是概率陈述；频率学派含义是重复抽样覆盖率，模型错误、偏差和多重比较会使实际覆盖下降，窄区间也不代表重要。</p>
+<h3>假设检验</h3>
+<p><strong>定义</strong>：假设检验设定原假设和备择假设，用样本数据判断是否拒绝原假设。</p>
+<p><strong>机制</strong>：检验统计量、显著性水平和 p 值衡量证据；p 值是在原假设下观察到至少如此极端结果的概率，不是原假设为真的概率。</p>
+<p><strong>例子</strong>：例如比较两组均值，p 值小于 0.05 常被说成统计显著，但不等于效应大或因果成立。</p>
+<p><strong>边界</strong>：检验不是证明；显著性受样本量、多重比较和设定影响，p 值不能给出效应大小或实际重要性，拒绝原假设也不证明备择假设。</p>
+<h3>效应大小</h3>
+<p><strong>定义</strong>：效应大小是结果的实际 magnitude，如均值差、标准化差、相关系数或风险差，独立于样本量。</p>
+<p><strong>机制</strong>：效应大小帮助判断实际重要性；标准化效应便于跨研究比较，但需结合单位和情境解释。</p>
+<p><strong>例子</strong>：例如药物降低血压 5 毫米汞柱，统计显著但临床意义可能有限。</p>
+<p><strong>边界</strong>：效应大小不是 p 值；大样本可使微小效应显著，标准化也会掩盖单位和分布，效应大小仍受测量和设计偏差影响。</p>
+<h3>功效</h3>
+<p><strong>定义</strong>：统计功效是当备择假设为真时正确拒绝原假设的概率，通常用 1 减第二类错误概率表示。</p>
+<p><strong>机制</strong>：功效随样本量、效应大小、显著水平和方差变化；功效不足会漏掉真实效应，功效过高会把微小差异当重要。</p>
+<p><strong>例子</strong>：例如小样本检测小效应，功效可能只有 30%，真实效应常被漏掉。</p>
+<p><strong>边界</strong>：功效不是事后借口；低功效研究不可靠，事后功效计算也有争议，高功效不等于设计无偏，测量和多重比较仍会影响。</p>
+<h3>贝叶斯更新与多重检验</h3>
+<p><strong>定义</strong>：贝叶斯更新用先验和似然得到后验，多重检验是同时检验许多假设时控制错误率。</p>
+<p><strong>机制</strong>：后验正比于先验乘似然，随数据更新；多重检验用 Bonferroni、FDR 等方法控制假阳性。</p>
+<p><strong>例子</strong>：例如先验认为某策略难有效，看到有限证据后后验仍保守；检验 100 个因子需校正阈值。</p>
+<p><strong>边界</strong>：贝叶斯不是主观任意；先验选择影响结果，后验也依赖模型；多重检验校正会降低功效，未校正的“显著”结果常是数据窥探。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：概率分布与期望方差（RES-009）。</li>
+<li>相关与推荐阅读：概率分布与期望方差（RES-009）、假设检验与实际意义（RES-012）、线性回归入门（RES-013）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">抽样与置信区间：机制链</title>
+    <desc id="fig-batch-chain-desc">抽样与置信区间 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">抽样与置信区间：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">置信区间把样本均值和</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">抽样误差放在一起，给…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">置信区间把样本均值</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">和抽样误差放在一起</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">，给出总体均值的一</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个范围；95%</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">指重复抽样下约…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：某假设策略</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> 36 个月的月均收益…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：某假设策</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">略 36 个月的月均</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">收益为 1.20%，样本</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">标准差 2.40%。仅</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">凭 1.20%…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">单位或说明 | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">单位或说明 | |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: |</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">--- | | 样本量</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">n | 36 | 月 | |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 3：抽样与置信区间的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">抽样与置信区间：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">抽样与置信区间：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">置信区间只覆盖抽样误差，不覆盖偏</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">差。95% 覆盖率依赖抽样设计和模</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">型假设；真实金融样本往往不是简单</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">随机样本，基金历史还有幸存和回填…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：概率分布与期望方差（RES</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-009）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：抽样与置信区间的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">抽样与置信区间：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">抽样与置信区间：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">置信区间把样本均值和抽样</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">误差放在一起，给出总体均…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">置信区间只覆盖抽样误差，</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">不覆盖偏差。95%…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：概率分布与期望方差（RES-00</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">9）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 5：抽样与置信区间的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>解释“95% 置信区间”的正确说法和常见错误说法。</li>
+<li>若 n = 100、均值 1.20%、s = 2.40%，求 95% 区间（t = 1.984）。</li>
+<li>如果只调查仍然存续的基金，置信区间会怎样？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>正确：重复抽样下约 95% 的区间覆盖总体均值。错误：这个区间有 95% 概率包含总体均值，或总体均值有 95% 概率落在区间内。</li>
+<li>SE = 0.24；误差界限 = 1.984×0.24 ≈ 0.476；区间为 0.72% 至 1.68%。</li>
+<li>中心会偏高，因为已清盘的基金被排除；区间只反映抽样误差，不能修复幸存者偏差，可能整体偏离真实总体。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “7.1 The Central Limit Theorem for Sample Means (Averages).” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages">https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “8.2 A Single Population Mean using the Student t Distribution.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution">https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “1.3.5.2 Confidence Limits for the Mean.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能用样本均值与标准误构造 t 区间，并复算 1.20 ± 2.030 × 0.40 得 0.39 至 2.01</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能正确解释 95% 的含义，避免该区间有 95% 概率包含真值的误读</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能用样本均值与标准误构造 t 区间，并复算 1.20 ± 2.030 × 0.40 得 0.39 至 2.01</li><li>能正确解释 95% 的含义，避免该区间有 95% 概率包含真值的误读</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/probability-distributions-expectation-and-variance/">RES-009 · 概率分布与期望方差</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/probability-distributions-expectation-and-variance/">RES-009 · 概率分布与期望方差</a> </li><li> <a href="/learn/hypothesis-testing-and-practical-significance/">RES-012 · 假设检验与实际意义</a> </li><li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/7-1-the-central-limit-theorem-for-sample-means-averages" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 7.1 The Central Limit Theorem for Sample Means (Averages)</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：样本均值的抽样分布随样本量增大趋近正态，其中心等于总体均值，标准误为 σ/√n。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/8-2-a-single-population-mean-using-the-student-t-distribution" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 8.2 A Single Population Mean using the Student t Distribution</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：总体标准差未知时使用样本标准差 s 和 t 分布；误差界限为 t(α/2)(s/√n)，自由度 n−1，区间为样本均值加减误差界限；假设随机抽样和近似正态总体。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 1.3.5.2 Confidence Limits for the Mean</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：置信区间是均值的区间估计；95% 指重复抽样下约 95% 的区间会覆盖真实均值；区间宽度由标准差和样本量决定，样本越大越精确。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/sampling-and-confidence-intervals/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>预测与机器学习 · 巫妖投资</title><meta name="description" content="预测与机器学习真正要管的是时间边界、基线、验证方式与漂移监控，模型复杂度不是第一位。"><link rel="canonical" href="https://research.51invest.com/learn/forecasting-and-machine-learning/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/forecasting-and-machine-learning/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/forecasting-and-machine-learning/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/forecasting-and-machine-learning/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/forecasting-and-machine-learning/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">预测与机器学习</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">预测与机器学习</h1> <p class="article-summary">预测与机器学习真正要管的是时间边界、基线、验证方式与漂移监控，模型复杂度不是第一位。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M09 · 预测与机器学习</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>8 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <blockquote>
+<p>读完这一篇，你能按预测原点切分训练、验证和测试，读懂 MAE 的下降，并用“特征当时可得吗”和“样本外是否赢基线”两道门检查数据泄漏与虚假提升。</p>
+</blockquote>
+<h2>问题</h2>
+<p><strong>预测与机器学习</strong>（forecasting and machine learning）要解决的是：给定历史数据与时间边界，能否对未来某个变量给出可检验的预测，并知道模型在什么条件下会失效。真正决定成败的是任务定义、基线、验证方式与漂移监控，不是模型复杂度[1][3][4][5]。</p>
+<h2>输入</h2>
+<p><strong>输入</strong>（inputs）包括：预测对象、预测期（1 步还是多步）、可用信息的时间戳、特征的定义与更新频率、评估指标（误差、方向准确率或经济价值）。如果输入包含未来才知道的数据，模型再准也是泄漏[4]。</p>
+<h2>假设</h2>
+<p><strong>假设</strong>（assumptions）包括：历史模式在未来一段时间内可复用；样本具有代表性；特征与目标的关系相对稳定；误差分布可用于评估。时间序列还假设顺序重要、不能随机打乱；结构性断点会让历史关系失效。</p>
+<p><strong>机器学习</strong>（machine learning）额外假设训练与测试同分布；若分布漂移，模型性能会下降。可解释性方法（特征重要性、部分依赖）也有假设，不能直接当作因果关系[2][4]。</p>
+<h2>步骤</h2>
+<p><strong>步骤</strong>（steps）可以归为四组动作：定任务（预测对象、期限、指标与时间边界）；建基线（上一期值或历史均值）；按时间验证（按时间切分、特征防泄漏、模型选择与调参、留出评估）；上线后监控漂移与误差。</p>
+<p>示例：用 2010—2019 年数据训练、2020—2021 年验证、2022—2024 年测试；所有特征只能使用预测时点之前可得的信息。基线是“下个月的通货膨胀等于本月”，任何模型都必须先打败这个基线[3][4]。</p>
+<h2>图表</h2>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-026-chain-title fig-res-026-chain-desc" viewBox="0 0 560 310" width="100%">
+    <title id="fig-res-026-chain-title">预测与机器学习：三段判断链</title>
+    <desc id="fig-res-026-chain-desc">定任务：预测对象、期限与指标；按时间验证：训练、验证、测试分开；监控漂移：上线后的误差与分布</desc>
+    <rect x="0.5" y="0.5" width="559" height="309" rx="12" fill="var(--surface)" stroke="var(--border)"/>
+    <rect x="24" y="16" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="16" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="35" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">起点</text>
+    <text x="44" y="56" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">定任务</text>
+    <text x="44" y="76" font-size="10.5" fill="var(--secondary)" font-family="inherit">预测对象、期限与指标</text>
+    <line x1="280" y1="102" x2="280" y2="108" stroke="var(--border)" stroke-width="1.5"/>
+    <path d="M276 106 L280 110 L284 106" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    <rect x="24" y="112" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="112" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="131" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">机制</text>
+    <text x="44" y="152" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">按时间验证</text>
+    <text x="44" y="172" font-size="10.5" fill="var(--secondary)" font-family="inherit">训练、验证、测试分开</text>
+    <line x1="280" y1="198" x2="280" y2="204" stroke="var(--border)" stroke-width="1.5"/>
+    <path d="M276 202 L280 206 L284 202" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+    <rect x="24" y="208" width="512" height="86" rx="10" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+    <rect x="24" y="208" width="5" height="86" rx="2.5" fill="var(--accent)"/>
+    <text x="44" y="227" font-size="9.5" letter-spacing="1.1" fill="var(--accent)" font-family="inherit">判断</text>
+    <text x="44" y="248" font-size="13" font-weight="650" fill="var(--text)" font-family="inherit">监控漂移</text>
+    <text x="44" y="268" font-size="10.5" fill="var(--secondary)" font-family="inherit">上线后的误差与分布</text>
+  </svg>
+  <figcaption>图 1：预测与机器学习的三段判断链——定任务 → 按时间验证 → 监控漂移。三段是判断链，不是唯一路径；图中文字取自本文正文，不含统计数据。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure id="figure-time-split">
+  <svg role="img" aria-labelledby="fig-time-split-title fig-time-split-desc" viewBox="0 0 480 200" width="100%">
+    <title id="fig-time-split-title">按时间切分训练、验证与测试</title>
+    <desc id="fig-time-split-desc">一条从左到右的时间轴，2010 至 2019 为训练段，2020 至 2021 为验证段，2022 至 2024 为测试段；三段按真实年数比例绘制，按时间顺序排列，不能随机打乱。</desc>
+    <line x1="60" y1="120" x2="440" y2="120" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="60" y="70" width="253.3" height="30" rx="4" fill="var(--accent)" opacity="0.75"></rect>
+    <rect x="313.3" y="70" width="50.7" height="30" rx="4" fill="var(--gold)" opacity="0.6"></rect>
+    <rect x="364" y="70" width="76" height="30" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"></rect>
+    <g fill="var(--text)" font-size="10.5" font-family="inherit">
+      <text x="62" y="58">训练 2010–2019（10 年）</text>
+      <text x="338" y="40" text-anchor="middle">验证</text><text x="338" y="88" text-anchor="middle">2020–21</text>
+      <text x="368" y="58">测试 2022–2024</text>
+      <text x="60" y="142">过去</text><text x="410" y="142">未来</text>
+      <text x="60" y="170">时间只向前：先训练，再验证，测试；不得打乱或使用未来信息。</text>
+    </g>
+  </svg>
+  <figcaption>图 2：这条时间线按时间顺序切分训练、验证与测试；三段宽度按 10 年、2 年、3 年的真实年数比例绘制（每 1 年 25.33 像素）。随机打乱会把未来信息带进训练；正确做法是先按预测原点切块，再在训练块内做交叉验证。示例年份为教学设定。</figcaption>
+</figure>
+
+<p>一个教学算例：测试期真实通胀为 2.0%、2.2%、2.1%，朴素基线用上月值预测为 1.9%、2.0%、2.2%，MAE=(0.1+0.2+0.1)/3≈0.133 个百分点；某模型预测 2.0%、2.1%、2.0%，MAE=(0+0.1+0.1)/3≈0.067 个百分点，误差约减半。若模型只把 MAE 降到 0.12，却带来更大的峰值误差、更高的维护成本或更差的解释性，就不值得替换基线。数值为教学假设，不是某国通胀数据。</p>
+<h2>图解：MAE 降了多少，以及提升是否可信</h2>
+<p>前两张图讲操作顺序和时间切分；下面两张图把测试集上的误差下降画成数量，并用决策树检查这个下降是不是来自未来信息或过拟合。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-mae-bars-title fig-mae-bars-desc" viewBox="0 0 440 240" width="100%">
+    <title id="fig-mae-bars-title">测试集 MAE：基线 0.133，模型 0.067</title>
+    <desc id="fig-mae-bars-desc">在 2022–2024 测试集上，基线 MAE 约 0.133，模型 MAE 约 0.067，下降约 0.066，即约 49.6%。这是单点估计，没有置信区间；不能据此断言模型在别的时期或别的样本上也稳定。</desc>
+    <text x="20" y="24" font-size="12.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">测试集 MAE 从 0.133 降到 0.067，约 −49.6%</text>
+    <line x1="70" y1="180" x2="400" y2="180" stroke="var(--border)" stroke-width="1.5"/>
+    <rect x="110" y="80" width="80" height="100" fill="var(--muted)" opacity="0.5"/>
+    <rect x="250" y="129.6" width="80" height="50.4" fill="var(--accent)" opacity="0.75"/>
+    <g font-family="inherit" font-size="10" text-anchor="middle">
+      <text x="150" y="70" fill="var(--text)">基线 0.133</text><text x="290" y="120" fill="var(--text)">模型 0.067</text>
+      <text x="150" y="200" fill="var(--muted)">只用历史均值/简单规则</text><text x="290" y="200" fill="var(--muted)">加入特征与模型</text>
+      <text x="220" y="222" fill="var(--gold)">下降约 0.066（相对基线 −49.6%）</text>
+    </g>
+    <text x="20" y="238" font-size="8.5" fill="var(--muted)" font-family="inherit" text-anchor="start">单位：与目标同量纲的平均绝对误差；2022–2024 测试集、0.133/0.067 为教学示例。</text>
+  </svg>
+  <figcaption>图 3：2022–2024 测试集上，基线 MAE 约 0.133，模型 MAE 约 0.067，下降约 0.066，即相对基线约 −49.6%。这是单点估计，没有置信区间，不能据此断言模型在别的时期或别的样本上也稳定。单位与目标同量纲；数字为教学示例。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-leakage-tree-title fig-leakage-tree-desc" viewBox="0 0 340 354" width="100%">
+    <title id="fig-leakage-tree-title">从预测原点检查泄漏、基线和解法</title>
+    <desc id="fig-leakage-tree-desc">先问每个特征在预测原点是否已经可得；若否，就是数据泄漏，必须删掉或改用当时可得版本。若是，再问样本外是否真的赢过基线；若否，不要部署。若是，仍要监控漂移并定期重训。时间切分和样本外比较是两道不同的门。</desc>
+    <text x="16" y="22" font-size="10.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">两道门：先防泄漏，再问是否有用</text>
+    <g font-family="inherit">
+      <rect x="14" y="36" width="312" height="72" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="26" y="52" font-size="8.2" fill="var(--muted)" text-anchor="start">第 1 道门</text>
+      <text x="26" y="70" font-size="9.3" font-weight="650" fill="var(--text)" text-anchor="start">特征在预测原点已经可得吗？</text>
+      <text x="26" y="86" font-size="8.4" fill="var(--text)" text-anchor="start">否 → 数据泄漏：删掉或改用当时可得版本</text>
+      <text x="26" y="100" font-size="8.2" fill="var(--muted)" text-anchor="start">不是“后来能拿到”</text>
+    </g>
+    <text x="170" y="122" font-size="8.4" fill="var(--muted)" font-family="inherit" text-anchor="middle">是 ↓</text>
+    <g font-family="inherit">
+      <rect x="14" y="126" width="312" height="76" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="26" y="142" font-size="8.2" fill="var(--muted)" text-anchor="start">第 2 道门</text>
+      <text x="26" y="160" font-size="9.3" font-weight="650" fill="var(--text)" text-anchor="start">样本外真的赢过基线吗？</text>
+      <text x="26" y="176" font-size="8.4" fill="var(--text)" text-anchor="start">否 → 不要部署：回到基线或改问题</text>
+      <text x="26" y="190" font-size="8.2" fill="var(--muted)" text-anchor="start">同一测试期、同一指标</text>
+    </g>
+    <text x="170" y="212" font-size="8.4" fill="var(--muted)" font-family="inherit" text-anchor="middle">是 ↓</text>
+    <g font-family="inherit">
+      <rect x="14" y="216" width="312" height="58" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="26" y="238" font-size="9.3" font-weight="650" fill="var(--text)" text-anchor="start">可以部署，但要监控漂移</text>
+      <text x="26" y="254" font-size="8.4" fill="var(--text)" text-anchor="start">定期重训、记录失败条件</text>
+      <text x="26" y="267" font-size="8.2" fill="var(--muted)" text-anchor="start">两道门都过，也只是一次测试期的证据</text>
+    </g>
+    <line x1="16" y1="292" x2="324" y2="292" stroke="var(--border)" stroke-width="1"/>
+    <text x="16" y="306" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">时间切分防偷看未来；样本外赢基线证明有用。</text>
+    <text x="16" y="320" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">漂移、样本选择与成本仍可能让上线失败。</text>
+    <text x="16" y="334" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为检查流程，不是模型选择或投资建议。</text>
+  </svg>
+  <figcaption>图 4：先问每个特征在预测原点是否已经可得，若否就是数据泄漏，必须删掉或改用当时可得版本；若是，再问样本外是否真的赢过基线，若否不要部署；若是，仍要监控漂移并定期重训。时间切分回答“有没有偷看未来”，样本外赢基线回答“模型有没有用”，两道门不能互相替代。图为检查流程，不是模型选择或投资建议。</figcaption>
+</figure>
+
+<h2>结果解读</h2>
+<p><strong>结果解读</strong>（interpreting results）要报告样本外误差、误差的时间分布与方向准确率；区分统计显著与经济可用。模型在测试集上好，不等于在实盘或政策场景中可用；交易成本、决策延迟与阈值选择都会改变结果[2][3]。</p>
+<h2>失败条件</h2>
+<p><strong>失败条件</strong>（failure conditions）包括：数据泄漏（未来信息进入特征）；随机切分时间序列；过拟合；样本外测试被反复用于调参；分布漂移与结构性断点；评估指标与决策目标不一致。模型失败，问题常常出在任务定义和验证设计上，而不在算法[4][5]。</p>
+<h2>复现与验证</h2>
+<p><strong>复现与验证</strong>（reproduction）要求固定数据版本、特征代码、随机种子与超参数；保存训练/验证/测试切分；报告基线对比与敏感性。外部验证（不同时间段、不同地区）比单一样本内的交叉验证更能暴露漂移风险[1][2][3][5]。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>预测任务</h3>
+<p><strong>定义</strong>：预测任务定义要预测的目标、时间范围、损失函数和可接受错误，分为回归、分类、排序和概率预测。</p>
+<p><strong>机制</strong>：目标决定特征、验证和评价；回归预测连续值，分类预测类别，概率预测给分布，损失函数影响优化重点。</p>
+<p><strong>例子</strong>：例如预测下月收益是回归，预测是否违约是分类，预测违约概率是概率模型。</p>
+<p><strong>边界</strong>：任务不是模型选择；目标泄漏、时间范围和损失错配会使模型优化错误，准确率高也不代表经济有用，预测目标需与决策一致。</p>
+<h3>基线</h3>
+<p><strong>定义</strong>：基线是简单、透明、可复现的参照预测，如历史均值、朴素外推、随机猜测或线性模型。</p>
+<p><strong>机制</strong>：基线用于判断复杂模型是否真正改进；没有基线的高准确率可能只是任务简单或数据泄漏。</p>
+<p><strong>例子</strong>：例如预测明天价格用今天价格作基线，复杂模型必须显著超过它。</p>
+<p><strong>边界</strong>：基线不是形式；基线太弱会高估模型，太强会掩盖可行改进，基线也需同样数据和评估口径，时间序列基线尤其重要。</p>
+<h3>训练验证测试</h3>
+<p><strong>定义</strong>：训练集用于拟合模型，验证集用于调参和选择，测试集用于最终评估；时间序列需按时间切分。</p>
+<p><strong>机制</strong>：训练-验证-测试分离防止过拟合；交叉验证提高样本利用，但时间序列不能随机打乱，否则泄漏未来。</p>
+<p><strong>例子</strong>：例如用 2010—2018 训练、2019 验证、2020—2022 测试，避免未来信息进入训练。</p>
+<p><strong>边界</strong>：切分不是机械步骤；时间泄漏、重叠样本和多次测试会使测试集失效，验证集被反复使用也会过拟合，分布漂移使历史测试不代表未来。</p>
+<h3>特征</h3>
+<p><strong>定义</strong>：特征是模型输入的变量或变换，如收益率、估值、宏观指标、文本和交互项。</p>
+<p><strong>机制</strong>：特征工程把原始数据转为可学习信号；标准化、编码、缺失处理和特征选择影响模型；特征应与预测时点可得。</p>
+<p><strong>例子</strong>：例如用市盈率、动量和波动率作为选股特征，做标准化和缺失填补。</p>
+<p><strong>边界</strong>：特征不是越多越好；泄漏、共线性、噪声和维度灾难会降低泛化，特征重要性也可能不稳定，领域知识比自动生成更重要。</p>
+<h3>可解释性</h3>
+<p><strong>定义</strong>：可解释性说明模型为何给出预测，方法包括特征重要性、部分依赖、SHAP、规则和代理模型。</p>
+<p><strong>机制</strong>：全局解释看整体模式，局部解释看单次预测；解释应稳定、可验证并与领域机制一致。</p>
+<p><strong>例子</strong>：例如 SHAP 显示某笔违约预测主要受负债率和逾期次数驱动。</p>
+<p><strong>边界</strong>：可解释不等于因果；重要性受相关和尺度影响，代理模型可能失真，解释也可能事后合理化，复杂交互难以完全呈现。</p>
+<h3>漂移与评估</h3>
+<p><strong>定义</strong>：漂移是数据分布、关系或目标随时间变化，评估是用准确率、召回率、校准、经济收益等衡量预测。</p>
+<p><strong>机制</strong>：数据漂移、概念漂移和标签漂移改变模型表现；监控、再训练和校准维持效果。</p>
+<p><strong>例子</strong>：例如利率 regime 变化使历史违约模型失效，需重新校准和更新特征。</p>
+<p><strong>边界</strong>：评估不是单一准确率；类别不平衡、成本不对称和时间变化使指标失真，漂移检测有滞后，再训练也可能引入不稳定。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<table>
+<thead>
+<tr>
+<th>知识 ID</th>
+<th>标题</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RES-017</td>
+<td>领先滞后与预测</td>
+<td>先修</td>
+</tr>
+<tr>
+<td>RES-013</td>
+<td>线性回归入门</td>
+<td>建议阅读</td>
+</tr>
+<tr>
+<td>RES-020</td>
+<td>回测与前视偏差</td>
+<td>建议阅读</td>
+</tr>
+<tr>
+<td>RES-022</td>
+<td>样本外与过拟合</td>
+<td>建议阅读</td>
+</tr>
+</tbody></table>
+<h2>练习</h2>
+<ol>
+<li>概念辨别：说明为什么时间序列不能随机划分训练集与测试集。</li>
+<li>计算或推理：给出一个朴素基线，并说明它为什么必须先于复杂模型建立。</li>
+<li>适用条件：举一个数据泄漏的例子，并说明如何避免。</li>
+</ol>
+<details>
+<summary>参考答案要点</summary>
+
+<ol>
+<li>时间序列的相邻观测相关，未来值依赖过去；随机划分会让模型在训练中看到测试期之前/之后的信息，评估被高估。应按时间切块，并留出缓冲期。</li>
+<li>基线可以是“下月等于本月”或历史均值；它给出最低参照，暴露模型是否真的学到信号。复杂模型若连基线都打不败，就没有使用价值。</li>
+<li>例如用当月修订后的 GDP 预测当月市场反应，而修订数据在预测时点还不可得。避免方法是按预测原点保存数据快照、给每个特征标注可得时间，并在管线中做时间戳审计。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>OpenStax. <em>Introductory Statistics 2e, 12.5 Prediction</em>. OpenStax, Rice University. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-10-30%EF%BC%89">https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction（访问日期：2026-10-30）</a></li>
+<li>Davide Chicco; Giuseppe Jurman. <em>The ABC recommendations for validation of supervised machine learning results in biomedical sciences</em>. Frontiers in Big Data, 5, 979465. <a href="https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-10-30%EF%BC%89">https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full（访问日期：2026-10-30）</a></li>
+<li>Rob J. Hyndman and George Athanasopoulos. <em>Forecasting: Principles and Practice</em>, 3rd edition. OTexts, 2021. <a href="https://otexts.com/fpp3/%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://otexts.com/fpp3/（访问日期：2026-11-21）</a></li>
+<li>scikit-learn developers. <em>Common pitfalls and recommended practices</em>. scikit-learn documentation. <a href="https://scikit-learn.org/stable/common_pitfalls.html%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://scikit-learn.org/stable/common_pitfalls.html（访问日期：2026-11-21）</a></li>
+<li>D. Sculley et al. <em>Machine Learning: The High-Interest Credit Card of Technical Debt</em>. Google Research, 2014. <a href="https://research.google/pubs/machine-learning-the-high-interest-credit-card-of-technical-debt/%EF%BC%88%E8%AE%BF%E9%97%AE%E6%97%A5%E6%9C%9F%EF%BC%9A2026-11-21%EF%BC%89">https://research.google/pubs/machine-learning-the-high-interest-credit-card-of-technical-debt/（访问日期：2026-11-21）</a></li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能写出一个预测任务的输入、时间戳、预测期与评估指标，并先建立朴素基线</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能说明时间序列为什么不能随机划分训练集与测试集，并指出至少两种泄漏路径</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能写出一个预测任务的输入、时间戳、预测期与评估指标，并先建立朴素基线</li><li>能说明时间序列为什么不能随机划分训练集与测试集，并指出至少两种泄漏路径</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/leads-lags-and-forecasting/">RES-017 · 领先滞后与预测</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li><li> <a href="/learn/backtesting-and-look-ahead-bias/">RES-020 · 回测与前视偏差</a> </li><li> <a href="/learn/out-of-sample-testing-and-overfitting/">RES-022 · 样本外与过拟合</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.5 Prediction</a> <p>OpenStax · OpenStax, Rice University</p> <p>访问：2026-11-21 · 许可：CC BY-NC-SA 4.0 (OpenStax Introductory Statistics 2e)</p> <p>支持论点：该节说明用回归方程做预测、预测区间与外推风险；预测值依赖模型与样本范围，超出样本范围的外推不可靠。本文用其支持预测任务与基线/误差解释。</p> </div><div class="source"> <a href="https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full" rel="noopener noreferrer" target="_blank">The ABC recommendations for validation of supervised machine learning results in biomedical sciences</a> <p>Davide Chicco and Giuseppe Jurman · Frontiers in Big Data 5, 979465</p> <p>访问：2026-11-21 · 许可：CC BY 4.0</p> <p>支持论点：文章给出监督学习结果验证建议：训练/验证/测试分离、避免数据泄漏、报告交叉验证与置信区间、比较基线、避免测试集反复调参；强调结果可复现与外部验证。本文用其支持验证设计与过拟合控制。</p> </div><div class="source"> <a href="https://otexts.com/fpp3/" rel="noopener noreferrer" target="_blank">Forecasting: Principles and Practice, 3rd edition</a> <p>Rob J. Hyndman and George Athanasopoulos · OTexts, 2021</p> <p>访问：2026-11-21 · 许可：© OTexts; free online, cite-only</p> <p>支持论点：该书覆盖时间序列探索、基准方法、训练/测试切分、时间序列交叉验证、预测准确度与残差诊断；强调测试集不能用于模型开发，朴素基准必须先建立。本文用其支持时间切分、基线与预测评估。</p> </div><div class="source"> <a href="https://scikit-learn.org/stable/common_pitfalls.html" rel="noopener noreferrer" target="_blank">Common pitfalls and recommended practices</a> <p>scikit-learn developers · scikit-learn documentation</p> <p>访问：2026-11-21 · 许可：© scikit-learn developers; documentation linked, cite-only</p> <p>支持论点：文档说明数据泄漏（在切分前做预处理、用未来信息构造特征）、时间序列随机切分、测试集反复调参、样本不均衡与评估指标选择等常见错误，并给出 pipeline 与时间序列切分建议。本文用其支持泄漏与验证设计。</p> </div><div class="source"> <a href="https://research.google/pubs/machine-learning-the-high-interest-credit-card-of-technical-debt/" rel="noopener noreferrer" target="_blank">Machine Learning: The High-Interest Credit Card of Technical Debt</a> <p>D. Sculley, Gary Holt, Daniel Golovin, Eugene Davydov, Todd Phillips, Dietmar Ebner, Vinay Chaudhary, Michael Young, Jean-François Crespo and Dan Dennison · Google Research, 2014</p> <p>访问：2026-11-21 · 许可：© Google; linked summary only</p> <p>支持论点：论文指出机器学习系统有隐藏依赖、数据依赖、反馈回路、未稳定输入与变化的外部世界；模型上线后需要监控、测试与所有权，性能会随分布漂移下降。本文用其支持漂移监控与上线后验证。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/forecasting-and-machine-learning/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>缺失异常与样本选择 · 巫妖投资</title><meta name="description" content="同一个“平均增长”会随谁被抽中、谁回答、缺失值怎么补和异常值怎么处理而改变；报告规则和敏感性区间，比报告一个精确数字更诚实。"><link rel="canonical" href="https://research.51invest.com/learn/missing-data-outliers-and-sample-selection/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/missing-data-outliers-and-sample-selection/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/missing-data-outliers-and-sample-selection/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/missing-data-outliers-and-sample-selection/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/missing-data-outliers-and-sample-selection/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">缺失异常与样本选择</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">缺失异常与样本选择</h1> <p class="article-summary">同一个“平均增长”会随谁被抽中、谁回答、缺失值怎么补和异常值怎么处理而改变；报告规则和敏感性区间，比报告一个精确数字更诚实。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M04 · 数据口径</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>6 分钟 · 12 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>一项调查从 1,000 家企业抽取 100 家，80 家回答；回答者平均增长 6.0%，未回答者假设 -2.0%。只看回答者为 6.0%，按 80%/20% 加权为 4.4%，差 1.6 个百分点。本文问：缺失、异常值和样本选择如何改变描述性统计量，应报告什么才能说明证据边界。数值均为教学假设，未回答者的值现实中不可观测。</p>
+<h2>数据</h2>
+<p>假设年度调查：总体 1,000 家，样本 100 家。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>单位</th>
+<th>频率</th>
+<th>期间</th>
+<th>示例值（假设）</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总体 / 样本 / 应答</td>
+<td>覆盖、抽取、完成</td>
+<td>家</td>
+<td>年</td>
+<td>某年</td>
+<td>1,000 / 100 / 80</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>应答率</td>
+<td>应答 ÷ 样本</td>
+<td>%</td>
+<td>年</td>
+<td>某年</td>
+<td>80.0</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>应答者均值</td>
+<td>应答者增长均值</td>
+<td>%</td>
+<td>年</td>
+<td>某年</td>
+<td>6.0</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>未应答者均值</td>
+<td>假设值</td>
+<td>%</td>
+<td>年</td>
+<td>某年</td>
+<td>-2.0</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>加权平均</td>
+<td>0.8 × 6.0 + 0.2 × (-2.0)</td>
+<td>%</td>
+<td>年</td>
+<td>某年</td>
+<td>4.4</td>
+<td>不适用（教学假设）</td>
+</tr>
+</tbody></table>
+<p>两例：五个企业增长率 4.0、5.0、6.0、5.0、60.0（%）；十个企业利润率，八个观测均值 6.0%，两个缺失。</p>
+<p>异常值是明显偏离样本中其他观测的观测，可能来自编码错误，也可能是真实变异；只有在确认为错误时才可以剔除——这是 NIST/SEMATECH 手册的界定[1]。</p>
+<h2>方法与假设</h2>
+<p>先定义总体、抽样框、设计和权重；概率抽样给每个单位已知入选概率，权重还原总体。无应答分单位（整个个案）和项目（个别变量）两类。完整案例分析只保留无缺失个案，简单但可能改变样本构成；用于时间序列或配对面板时，它只保留各条序列同时可得的期，其余整期剔除且不插值，被剔除的期要写进记录并在图上留出断点，代价是其他序列在这些期本来可用的观测一并丢弃、可比窗口缩短。加权调整应答者结构；插补用相似单位或模型填补，但引入假设。异常值明显偏离其他观测；先查编码、单位和合并错误，再判断是否真实；识别判据应在查看结果之前定下，不能按结果挑选规则；Grubbs、ESD 和箱线图可辅助识别，掩蔽与淹没会让单一检验漏判或误判，需结合图形判断。异常值不应自动删除；可用中位数、截尾均值或稳健回归，并报告含与不含该值的结果。关键假设是：给定协变量后应答者与未应答者可比较；若缺失取决于未观测结果，加权和插补都不能保证无偏。</p>
+<p>站内已有一例可直接核对：本项目两条多序列月度面板（见图表登记）按完整案例处理，2025-10 因来源无值被整月剔除——CHART-002 面板取 2024-01 至 2026-09 共 33 个月，剔除后只余 32 个观测；CHART-010 面板取 2024-01 至 2025-12 共 24 个月，同样剔除该月后余 23 个观测（见 docs/chart-register.json 对应条目）。这不是插补问题：整期剔除保全了逐期对应关系，代价是共同窗口缩短、图上留下断点，因此被剔除的期必须写进记录与图注，不能只在图上看出来。</p>
+<p>对无应答造成的缺失值，ONS 采用插补，用相似企业的回报值来估计，并说明插补优于删除所有含缺失值的个案[2]。</p>
+<h2>结果</h2>
+<p>调查中应答者均值 6.0%；加权后 <code>0.8 × 6.0 + 0.2 × (-2.0) = 4.4%</code>，差 1.6 个百分点。</p>
+<p>五个企业 4.0、5.0、6.0、5.0、60.0（%）：均值 16.0%，中位数 5.0%，去掉 60.0% 后 5.0%；一个观测把均值抬高 11.0 个百分点，中位数不变。十个企业中八个观测均值 6.0%；两个缺失均为 0.0% 时全样本均值 4.8%，均为 12.0% 时 7.2%。6.0% 只是一个情景：全样本均值 <code>(48.0 + v1 + v2) ÷ 10</code> 随两个缺失值单调递增，所以只要两值都落在 0.0% 到 12.0% 之间，均值就在 4.8% 到 7.2% 之间；假设一改，这一区间即失效。合理报告要连同假设给出区间，而不是只报 6.0%。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-nr-title fig-nr-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-nr-title">应答者、未应答者与加权总体</title>
+    <desc id="fig-nr-desc">以零线为基准的三根柱，每百分点十五像素。应答者（八十家）增长均值为正六个百分点，向上九十像素；假设的未应答者（二十家）均值负二个百分点，向下三十像素；按八比二加权的总体均值为正四点四个百分点，向上六十六像素。</desc>
+    <line x1="60" y1="120" x2="380" y2="120" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="90" y="30" width="60" height="90" fill="var(--accent)" opacity="0.85"></rect>
+    <rect x="190" y="120" width="60" height="30" fill="var(--gold)" opacity="0.9"></rect>
+    <rect x="290" y="54" width="60" height="66" fill="var(--accent)" opacity="0.5"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="13">增长均值（%，零线基准，每 1 个百分点 = 15 像素）</text>
+      <text x="96" y="26">+6.0</text>
+      <text x="196" y="166">−2.0</text>
+      <text x="296" y="50">+4.4</text>
+      <text x="72" y="200">应答者 80 家</text>
+      <text x="176" y="212">未应答者 20 家（假设）</text>
+      <text x="284" y="200">加权总体（按 80/20 加权）</text>
+    </g>
+  </svg>
+  <figcaption>图 1：从 1,000 家总体中抽取 100 家、80 家应答（应答率 80%）：应答者均值 +6.0%，若未应答者其实是 −2.0%，真实加权均值为 0.8 × 6.0 + 0.2 × (−2.0) = 4.4%，比只看应答者低 1.6 个百分点（零线基准，每百分点 15 像素）。未应答者均值是假设值，真实研究里它恰恰不可观测——这正是样本选择风险所在。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>用中位数、截尾均值或稳健回归替代均值；用抽样、应答或后分层权重；比较应答者与抽样框的规模、行业和地区分布；对缺失值做最好/最坏情景和多重插补；改变异常值规则，报告含与不含极端值的结果；按子样本重算。结论只在一种假设下成立时，应明确写出。失败条件：缺失与未观测结果相关、权重基于错误抽样框、异常值是真实重要观测、样本太小导致中位数不稳定。</p>
+<h2>局限</h2>
+<p>未应答者真实值不可观测，加权只调整已观测特征；插补模型错了，填补值也错。异常值可能是数据错误或真实结构变化，不能仅凭统计规则判定。小样本的中位数和截尾均值不稳定。数值为假设，不是任何调查或总体的估计。</p>
+<p>便利抽样使用现成可得的结果，可能高度偏误；抽样偏差发生在某些总体成员被选中的可能性较低时，会导致对总体作出错误结论——OpenStax 的这组界定适用于本文的样本选择讨论[3]。</p>
+<h2>复现</h2>
+<p>记录抽样框版本、设计、日期、应答状态、权重、缺失指示（包括被整期剔除的期）、异常值规则、插补模型和软件版本；提供缺失率表、异常值清单和敏感性区间；用原始数据重算 6.0%、4.4%、16.0%、5.0%、4.8% 和 7.2%，并标明假设情景。</p>
+<h2>结论强度</h2>
+<p>这是描述性敏感性分析：应答者均值 6.0%、加权估计 4.4%、异常值把均值抬高 11.0 个百分点、在两个缺失值都取 0.0% 到 12.0% 之间的假设下全样本均值落在 4.8% 到 7.2% 之间；但不能说总体增长率就是 4.4%，也不能说差异由某个原因造成。</p>
+<h2>关联</h2>
+<ul>
+<li>必需先修：数据单位与统计口径（RES-001）。</li>
+<li>相关与推荐阅读：频率与时间对齐（RES-003）、季调与数据修订（RES-004）、幸存者偏差与交易成本（RES-021）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">缺失异常与样本选择：机制链</title>
+    <desc id="fig-batch-chain-desc">缺失异常与样本选择 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">缺失异常与样本选择：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">同一个“平均增长”会</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">随谁被抽中、谁回答、…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">同一个“平均增长”</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">会随谁被抽中、谁回</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">答、缺失值怎么补和</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">异常值怎么处理而改</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">变；报告规则和敏感…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一项调查从</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> 1,000 家企业抽取…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一项调查</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">从 1,000</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">家企业抽取 100</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">家，80 家回答；回答</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">者平均增长 6.0%…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">假设年度调查：总体</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">1,000 家，样本 100…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">假设年度调查：总体</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> 1,000 家，样本</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">100 家。</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：缺失异常与样本选择的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">缺失异常与样本选择：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">缺失异常与样本选择：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">未应答者真实值不可观测，加权只调</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">整已观测特征；插补模型错了，填补</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">值也错。异常值可能是数据错误或真</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">实结构变化，不能仅凭统计规则判定…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-001）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：缺失异常与样本选择的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">缺失异常与样本选择：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">缺失异常与样本选择：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">同一个“平均增长”会随谁</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">被抽中、谁回答、缺失值怎…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">未应答者真实值不可观测，</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">加权只调整已观测特征；插…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES-00</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">1）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：缺失异常与样本选择的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>100 家中 80 家应答，应答者平均增长 6.0%，未应答者假设 -2.0%，加权平均是多少？</li>
+<li>五个企业的增长率为 4.0、5.0、6.0、5.0、60.0（%），均值、中位数和去掉 60.0 后的均值各是多少？</li>
+<li>十个企业中八个观测均值 6.0%，两个缺失；若缺失值为 0.0% 或 12.0%，全样本均值分别是多少？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li><code>0.8 × 6.0 + 0.2 × (-2.0) = 4.4%</code>。</li>
+<li>均值 <code>80.0 ÷ 5 = 16.0%</code>；中位数 5.0%；去掉 60.0 后 <code>20.0 ÷ 4 = 5.0%</code>。</li>
+<li>缺失为 0.0% 时 <code>(8 × 6.0 + 2 × 0.0) ÷ 10 = 4.8%</code>；为 12.0% 时 <code>(8 × 6.0 + 2 × 12.0) ÷ 10 = 7.2%</code>。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>NIST/SEMATECH. “e-Handbook of Statistical Methods, 1.3.5.17 Detection of Outliers.” 许可未知. <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h.htm">https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h.htm</a>（访问日期：2026-10-30）</li>
+<li>Office for National Statistics. “Annual Business Survey technical report: August 2018.” Open Government Licence v3.0. <a href="https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/methodologies/annualbusinesssurveytechnicalreportaugust2018">https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/methodologies/annualbusinesssurveytechnicalreportaugust2018</a>（访问日期：2026-10-30）</li>
+<li>OpenStax. “Introductory Statistics 2e, 1.2 Data, Sampling, and Variation in Data and Sampling.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling">https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能说明抽样、应答与缺失处理如何改变同一个平均增长，并写出可复核的处理规则</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能为缺失值与异常值给出敏感性区间而不是单点估计</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能说明抽样、应答与缺失处理如何改变同一个平均增长，并写出可复核的处理规则</li><li>能为缺失值与异常值给出敏感性区间而不是单点估计</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/data-units-and-definitions/">RES-001 · 数据单位与统计口径</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/frequency-and-time-alignment/">RES-003 · 频率与时间对齐</a> </li><li> <a href="/learn/seasonal-adjustment-and-revisions/">RES-004 · 季调与数据修订</a> </li><li> <a href="/learn/survivorship-bias-and-trading-costs/">RES-021 · 幸存者偏差与交易成本</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 1.3.5.17 Detection of Outliers</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：异常值是明显偏离样本中其他观测的观测；可能来自编码错误，也可能是真实变异；确认错误时可更正或删除，否则不应简单删除，应使用稳健方法；Grubbs、ESD 和箱线图可辅助识别，掩蔽和淹没要求结合图形。</p> </div><div class="source"> <a href="https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/methodologies/annualbusinesssurveytechnicalreportaugust2018" rel="noopener noreferrer" target="_blank">Annual Business Survey technical report: August 2018</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>访问：2026-10-30 · 许可：Open Government Licence v3.0</p> <p>支持论点：对无应答造成的缺失值采用插补，用相似企业的回报值估计；插补优于删除所有含缺失值的个案；正式估计要求最低应答率（8 月底 64%、12 月底 74%）。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.2 Data, Sampling, and Variation in Data and Sampling</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：便利抽样使用现成可得的结果，可能高度偏误；抽样偏差发生在某些总体成员被选中的可能性较低时，会导致对总体作出错误结论；无应答或拒绝参与会使应答者不再代表总体。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/missing-data-outliers-and-sample-selection/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>线性回归入门 · 巫妖投资</title><meta name="description" content="线性回归用一条直线概括两个变量的平均关系；斜率、截距和 R² 描述样本，显著性和因果解释取决于设计、假设与证据边界。"><link rel="canonical" href="https://research.51invest.com/learn/linear-regression-introduction/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/linear-regression-introduction/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/linear-regression-introduction/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/linear-regression-introduction/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/linear-regression-introduction/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">线性回归入门</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">线性回归入门</h1> <p class="article-summary">线性回归用一条直线概括两个变量的平均关系；斜率、截距和 R² 描述样本，显著性和因果解释取决于设计、假设与证据边界。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M06 · 回归与计量</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>7 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-regression"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>一个假设的 48 个月样本：某基金月度超额收益 y 与市场月度超额收益 x。问题：x 每高 1 个百分点，y 平均高多少？这条线能否用于预测和解释？本文只做描述与统计推断，不把相关写成因果。所有数值为教学假设，不是真实市场数据。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>样本量 n</td>
+<td align="right">48</td>
+</tr>
+<tr>
+<td>x 均值</td>
+<td align="right">0.50% / 月</td>
+</tr>
+<tr>
+<td>y 均值</td>
+<td align="right">0.80% / 月</td>
+</tr>
+<tr>
+<td>x 样本标准差</td>
+<td align="right">2.00 百分点</td>
+</tr>
+<tr>
+<td>y 样本标准差</td>
+<td align="right">2.80 百分点</td>
+</tr>
+<tr>
+<td>相关系数 r</td>
+<td align="right">0.8571</td>
+</tr>
+<tr>
+<td>观测范围</td>
+<td align="right">x 约 -3.6% 至 4.2%</td>
+</tr>
+</tbody></table>
+<p>数据为假设的月度观测；未做季调；均值以 % / 月 表示，标准差与系数变化以百分点表示。</p>
+<h2>方法与假设</h2>
+<p>最小二乘回归线写作：</p>
+<div class="formula" role="math" aria-label="线性回归方程">y = a + b x</div>
+
+<p>斜率 b = Σ(x-x̄)(y-ȳ) / Σ(x-x̄)²，截距 a = ȳ - b x̄（OpenStax 12.3）。b 表示 x 每增加一单位时 y 的平均变化。R² = r² 是样本内被线性拟合解释的方差比例（OpenStax 12.3）。推断假设：线性关系、误差独立、同方差、残差近似正态，且数据来自设计良好的随机抽样或随机化实验；相关系数检验的原假设为 ρ = 0（OpenStax 12.4）。本例是假设的月度时间序列，不是随机抽样，检验结果只能作为近似参考。</p>
+<h2>结果</h2>
+<p>b = 1.20，a = 0.20%，R² = 0.735。回归标准误 s_e = 1.46 百分点；斜率标准误 0.106，t = 11.29（df = 46），p &lt; 0.001，95% 区间 0.99 至 1.41。</p>
+<p>解释：样本中市场超额收益每高 1 个百分点，基金超额收益平均高 1.20 个百分点；市场收益为 1.00% 时，预测基金收益为 0.20% + 1.20 × 1.00% = 1.40% / 月。R² = 0.735 表示样本内约 73.5% 的 y 方差可由这条线解释，不表示因果解释力为 73.5%，也不保证样本外预测。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-reg-title fig-reg-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-reg-title">拟合直线与均值点</title>
+    <desc id="fig-reg-desc">横轴为自变量 x（每月百分数，范围负三点六到四点四），纵轴为因变量 y（每月百分数，范围负五到五点五）。一条直线从左下（负三点六，负四点一二）延伸到右上（四点二，五点二四），并经过均值点（零点五，零点八）。虚线标出 x 等于零与 y 等于零的位置。图中没有散点，因为正文未给出观测值。</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="60" y1="30" x2="60" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="212.4" y1="30" x2="212.4" y2="180" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="60" y1="108.6" x2="380" y2="108.6" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="75.2" y1="167.4" x2="372.4" y2="33.7" stroke="var(--accent)" stroke-width="2.5"></line>
+    <circle cx="231.4" cy="97.1" r="6" fill="var(--gold)"></circle>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="22">y（% / 月，范围 −5 至 5.5）</text>
+      <text x="240" y="90">均值点 (0.50, 0.80)</text>
+      <text x="290" y="30">ŷ = 0.20 + 1.20x</text>
+      <text x="70" y="198">x = −3.6</text>
+      <text x="330" y="198">x = 4.2</text>
+      <text x="196" y="212">x = 0（虚线）</text>
+    </g>
+  </svg>
+  <figcaption>图 1：由正文统计量唯一确定的拟合线 ŷ = 0.20 + 1.20x（斜率 1.20 = 0.8571 × 2.80 ÷ 2.00，截距 0.20 = 0.80 − 1.20 × 0.50）与均值点 (0.50, 0.80)。x 轴取正文给出的观测范围 −3.6% 至 4.2%；图中不画散点，因为正文没有给出 48 个观测值，画出来就是虚构。数值为教学假设。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>使用稳健标准误，斜率标准误约 0.11，结论不变。</li>
+<li>剔除残差绝对值最大的 2 个观测，b ≈ 1.16，R² ≈ 0.71，方向不变。</li>
+<li>样本分为前后两半，b 分别约为 1.05 和 1.34，均显著，区间有重叠。</li>
+<li>若 x 超出观测范围（例如 6.00%），预测属于外推，线性关系未必保持（OpenStax 12.5）。</li>
+<li>若误差存在序列相关或异方差，常规标准误和 t 值会失真，应使用稳健方法或时间序列模型。</li>
+</ul>
+<h2>局限</h2>
+<p>回归只描述样本中的平均线性关系。遗漏变量、测量误差、反向因果和选择偏差都会使 b 偏离目标；R² 高也不代表模型正确。48 个月不足以稳定估计长期关系，市场结构变化会改变参数。相关不等于因果（OpenStax 12.3）。本文数值为假设，不能用于投资决策；读者应把它当作方法练习，而不是对某只基金的评价。</p>
+<h2>复现</h2>
+<ol>
+<li>固定样本、频率和变量定义，画出散点图。</li>
+<li>计算 x̄、ȳ、s_x、s_y、r。</li>
+<li>用上述公式求 b、a、残差和 R²。</li>
+<li>计算 s_e、SE(b)、t 和 95% 区间。</li>
+<li>检查残差图、异常值和样本外预测。</li>
+</ol>
+<pre><code class="language-text">b = sum((x - mean(x)) * (y - mean(y))) / sum((x - mean(x))^2)
+a = mean(y) - b * mean(x)
+r2 = corr(x, y)^2
+se_b = sqrt(sum(resid^2) / (n - 2) / sum((x - mean(x))^2))
+</code></pre>
+<h2>结论强度</h2>
+<p>在这组假设数据中，市场超额收益与基金超额收益呈较强的样本内线性关系（b = 1.20，95% 区间 0.99 至 1.41，R² = 0.735）。这是关联与预测描述，不是因果效应；外推到观测范围之外、其他时期或其他基金需要额外证据。</p>
+<p>说明：标准误、置信区间与稳健性数字用于说明方法和方向。其中稳健性一节的四项数字是教学示意，不能仅凭文中汇总量复算，不应作为精确估计引用。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>控制变量</h3>
+<p><strong>定义</strong>：控制变量是在回归中加入其他解释变量，以隔离目标变量的偏效应。</p>
+<p><strong>机制</strong>：控制变量可减少遗漏偏差，但坏控制会引入过度控制、共线性和中介效应；选择应基于因果图和机制。</p>
+<p><strong>例子</strong>：例如研究教育对收入的影响时控制年龄、地区和家庭背景，但不能控制毕业后职业这一中介。</p>
+<p><strong>边界</strong>：控制不是越多越好；控制中介会挡住真实效应，控制碰撞变量会制造偏差，测量误差和共线性也会使系数不稳定。</p>
+<h3>估计诊断</h3>
+<p><strong>定义</strong>：估计诊断是检查回归结果是否可信，包括残差、拟合、共线性、影响点和模型设定。</p>
+<p><strong>机制</strong>：残差图查非线性和异方差，VIF 查共线性，Cook 距离查异常影响，R² 和标准误查拟合与精度。</p>
+<p><strong>例子</strong>：例如残差呈漏斗形提示异方差，某点 Cook 距离很大提示强影响。</p>
+<p><strong>边界</strong>：诊断不是形式；通过诊断不等于因果正确，R² 高也可能过拟合，诊断图主观且遗漏变量偏差不会被残差发现，需结合设计。</p>
+<h3>异方差</h3>
+<p><strong>定义</strong>：异方差是误差方差随观察或解释变量变化，不满足同方差假设。</p>
+<p><strong>机制</strong>：异方差使普通标准误有偏，但系数仍可能一致；可用稳健标准误、加权最小二乘或变换处理。</p>
+<p><strong>例子</strong>：例如收入越高消费波动越大，误差方差随收入上升。</p>
+<p><strong>边界</strong>：异方差不是致命错误；它主要影响推断效率，稳健标准误可修正但样本小不稳定，遗漏变量和非线性也可能伪装成异方差。</p>
+<h3>自相关</h3>
+<p><strong>定义</strong>：自相关是误差在时间上相关，即相邻或滞后观测的误差不独立。</p>
+<p><strong>机制</strong>：自相关使标准误低估、t 值偏大；可用 Newey-West、模型动态或差分处理，但需区分真实动态和遗漏变量。</p>
+<p><strong>例子</strong>：例如月度数据中误差持续正相关，普通回归显著性被高估。</p>
+<p><strong>边界</strong>：自相关不是只存在于时间序列；空间和分组数据也有相关，稳健标准误不能修复错误模型，滞后选择和单位根也需处理。</p>
+<h3>内生性</h3>
+<p><strong>定义</strong>：内生性是解释变量与误差相关，导致回归系数有偏，来源包括遗漏变量、反向因果、测量误差和 simultaneity。</p>
+<p><strong>机制</strong>：内生性不能靠控制所有变量解决，需工具变量、实验、面板固定效应或结构模型；方向和机制决定方法。</p>
+<p><strong>例子</strong>：例如教育影响收入，但能力同时影响教育和收入，遗漏能力使教育系数偏高。</p>
+<p><strong>边界</strong>：内生性不是技术细节；它决定能否因果解释，工具变量需相关且外生，固定效应不能解决时变遗漏，测量误差会衰减系数。</p>
+<h3>离散与面板模型</h3>
+<p><strong>定义</strong>：离散模型处理二值、计数或类别结果，面板模型处理同一单位跨时间的重复观察。</p>
+<p><strong>机制</strong>：logit/probit 用于二值，泊松用于计数，面板用固定或随机效应控制不随时间变化的个体差异。</p>
+<p><strong>例子</strong>：例如研究是否违约用 logit，研究多期企业投资用面板固定效应。</p>
+<p><strong>边界</strong>：模型不是按结果类型随便选；离散模型系数解释非线性，固定效应不能估计不随时间变化的变量，随机效应假设个体效应与解释变量不相关，聚类标准误也重要。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：协方差与相关性（RES-010）、抽样与置信区间（RES-011）。</li>
+<li>相关与推荐阅读：协方差与相关性（RES-010）、抽样与置信区间（RES-011）、假设检验与实际意义（RES-012）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">线性回归入门：机制链</title>
+    <desc id="fig-batch-chain-desc">线性回归入门 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归入门：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归用一条直线概</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">括两个变量的平均关系…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归用一条直线</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">概括两个变量的平均</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">关系；斜率、截距和</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> R² 描述样本，显著</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">性和因果解释取决于…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一个假设的</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> 48 个月样本：某基金…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一个假设</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">的 48 个月样本：某</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">基金月度超额收益</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">y 与市场月度超额</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">收益 x。问题：x…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 样本量 n | 48</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | x 均值 |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">0.50% / 月 | |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：线性回归入门的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">线性回归入门：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归入门：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">回归只描述样本中的平均线性关系。</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">遗漏变量、测量误差、反向因果和选</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">择偏差都会使 b 偏离目标；R²</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">高也不代表模型正确。48…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：协方差与相关性（RES-01</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">0）、抽样与置信区间（RES-011）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：线性回归入门的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">线性回归入门：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归入门：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">线性回归用一条直线概括两</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个变量的平均关系；斜率、…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">回归只描述样本中的平均线</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">性关系。遗漏变量、测量误…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：协方差与相关性（RES-010）、</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">抽样与置信区间（RES-011）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：线性回归入门的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>斜率 1.20 的单位是什么？</li>
+<li>R² = 0.735 是否说明模型解释了 73.5% 的因果效应？</li>
+<li>为什么在 x = 6.00% 处预测要谨慎？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>y 的百分点除以 x 的百分点；x 每增加 1 个百分点，y 平均增加 1.20 个百分点。</li>
+<li>不是。R² 是样本内方差比例，不衡量因果，也不保证样本外预测。</li>
+<li>6.00% 超出观测范围（约 -3.6% 至 4.2%），属于外推，线性关系可能不成立。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “12.3 The Regression Equation.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation">https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “12.4 Testing the Significance of the Correlation Coefficient.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-4-testing-the-significance-of-the-correlation-coefficient">https://openstax.org/books/introductory-statistics-2e/pages/12-4-testing-the-significance-of-the-correlation-coefficient</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “12.5 Prediction.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction">https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-regression" data-demo="regression" data-lang="zh" aria-labelledby="demo-regression-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-regression-title">一条回归线，三个数</h2> <p class="demo-intro">样本的均值、标准差和相关系数固定。拖动 x 的离散程度，看斜率怎么变；再移动预测点，看什么时候已经走出观测范围。</p> </header>         <div class="demo-grid"> <div class="demo-controls"> <div class="demo-field"> <label for="regression-sx"><span>x 的标准差（百分点）</span><output data-for="sx">2.0</output></label> <input id="regression-sx" data-role="sx" data-default="2" type="range" min="1.2" max="3" step="0.1" value="2"> </div> <div class="demo-field"> <label for="regression-pred-x"><span>预测点 x（%）</span><output data-for="predX">1.0</output></label> <input id="regression-pred-x" data-role="predX" data-default="1" type="range" min="-2" max="8" step="0.1" value="1"> </div> <p class="demo-hint">点是按正文均值、标准差和 r 重新生成的教学样本，不是原始 48 个观测；相关不等于因果。</p> <div class="demo-readorder"> <span>读图顺序</span> <p> 先看斜率：x 每多 1 个百分点，y 平均多 b 个百分点。再看截距：x=0 时线在哪里。最后看 R²：样本内被这条线解释的 y 方差比例。 </p> </div> </div> <div class="demo-output"> <div class="demo-stats"> <div class="demo-stat"><span>斜率 b</span><strong data-out="regSlope">—</strong></div> <div class="demo-stat"><span>截距 a</span><strong data-out="regIntercept">—</strong></div> <div class="demo-stat"><span>R²</span><strong data-out="regR2">—</strong></div> </div> <div class="demo-chart"> <p class="demo-chart-label">48 个教学观测与拟合线</p> <svg class="demo-scatter demo-regression" data-chart="regression" viewBox="0 0 440 260" role="img" aria-label="48 个教学观测与拟合线"></svg> </div> <p class="demo-action" data-out="regressionNote"></p> </div> </div>  <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能用相关系数与两个标准差复算斜率 1.20 与截距 0.20，并指出回归线通过均值点</li><li>能说明 R²、标准误与 t 值在样本内的含义及其对假设的依赖</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/covariance-and-correlation/">RES-010 · 协方差与相关性</a> </li><li> <a href="/learn/sampling-and-confidence-intervals/">RES-011 · 抽样与置信区间</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/covariance-and-correlation/">RES-010 · 协方差与相关性</a> </li><li> <a href="/learn/sampling-and-confidence-intervals/">RES-011 · 抽样与置信区间</a> </li><li> <a href="/learn/hypothesis-testing-and-practical-significance/">RES-012 · 假设检验与实际意义</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.3 The Regression Equation</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：最小二乘回归线是拟合线；斜率 b = Σ(x−x̄)(y−ȳ)/Σ(x−x̄)²，截距 a = ȳ − b x̄；斜率表示 x 每增加一单位时 y 的平均变化；强相关不意味着 x 导致 y，也不宜外推到观测范围之外。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-4-testing-the-significance-of-the-correlation-coefficient" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.4 Testing the Significance of the Correlation Coefficient</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：相关系数检验的原假设是 ρ = 0；p 值小于显著性水平时拒绝原假设；检验假设包括线性关系、y 在直线周围正态分布、标准差相等和误差独立。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.5 Prediction</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：在观测到的 x 值范围内预测称为内插；在观测范围之外预测称为外推。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/linear-regression-introduction/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

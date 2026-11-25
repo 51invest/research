@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Control Variables and Confounding · 51Invest</title><meta name="description" content="Control variables are used to block confounding paths, not to include every available variable; a simple association can shrink after adjustment, but adjustment itself can introduce new bias."><link rel="canonical" href="https://research.51invest.com/en/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/control-variables-and-confounding/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/control-variables-and-confounding/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Control Variables and Confounding</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Control Variables and Confounding</h1> <p class="article-summary">Control variables are used to block confounding paths, not to include every available variable; a simple association can shrink after adjustment, but adjustment itself can introduce new bias.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M07 · 因果推断</strong></div> <div class="meta-item"><span>Level</span><strong>Systematic</strong></div> <div class="meta-item"><span>Read</span><strong>9 min · 14 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>A hypothetical 72-month sample: fund monthly excess return y, a standardized investor-sentiment index x and market monthly excess return z. Simple regression shows a positive x–y association. How much of x&#39;s coefficient remains after adding z, and is z a confounder, a mediator or some other structure? This article sets out the logic of choosing controls and the limits of the evidence. All numbers are hypothetical, not real market data.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sample size n</td>
+<td align="right">72</td>
+</tr>
+<tr>
+<td>Mean / standard deviation of y</td>
+<td align="right">0.70% / 0.77 percentage points</td>
+</tr>
+<tr>
+<td>Mean / standard deviation of x</td>
+<td align="right">0 / 1.00</td>
+</tr>
+<tr>
+<td>Mean / standard deviation of z</td>
+<td align="right">0.55% / 4.00 percentage points</td>
+</tr>
+<tr>
+<td>Correlation of x and z</td>
+<td align="right">0.60</td>
+</tr>
+<tr>
+<td>Simple regression slope on x</td>
+<td align="right">0.45 (SE 0.075)</td>
+</tr>
+<tr>
+<td>Multiple regression slope on x</td>
+<td align="right">0.10 (SE 0.062)</td>
+</tr>
+<tr>
+<td>Multiple regression slope on z</td>
+<td align="right">0.146 (SE 0.0156)</td>
+</tr>
+<tr>
+<td>R²</td>
+<td align="right">0.34 → 0.71</td>
+</tr>
+</tbody></table>
+<p>x is a standardized sentiment index (unitless) and z is the market excess return; the data are hypothetical monthly observations, not real data. The figures come from a setting a reader can rebuild: the true model is <code>y = 0.10·x + 0.146·z + u</code>, with <code>u</code> of standard deviation 0.41 percentage points and <code>corr(x,z) = 0.60</code>; this gives a standard deviation of <code>y</code> of 0.77 percentage points and <code>R² = 0.71</code>. Regressing <code>y</code> on <code>x</code> alone returns a slope of <code>0.10 + 0.146 × 2.40 = 0.45</code>, which is exactly the bias left by the omitted confounder. The standard errors use the population approximations <code>SE(b) = s_e/(s_x·√(n-2))</code> for the simple regression and <code>SE = s_e/(s_x·√(n-3)·√(1-corr(x,z)²))</code> for the multiple regression; the table rounds them, so a resampled reproduction can differ by about 0.01.</p>
+<h2>Method and assumptions</h2>
+<p>The simple regression is y = a + b x; the multiple regression is y = a + b x + c z. Confounding means that the effects of several factors on a response cannot be separated, and a relationship between two variables does not mean that one causes the other (OpenStax 1.2). If z affects both x and y and is not caused by x, it confounds; omitting it biases b. Omitted-variable bias is approximately c × δ, where c is the coefficient on z in the multiple regression and δ is the slope obtained by regressing the confounder on the explanatory variable, i.e. <code>z = d + δ·x + e</code> (in standard-deviation terms δ = corr(x,z)·s_z/s_x). Controls should block backdoor paths, not be added indiscriminately: controlling a mediator removes part of the effect, while controlling a collider creates bias. Linearity, independence, equal variance and correct form are still assumed; blocking can hold nuisance factors constant (NIST 5.3.3.2).</p>
+<h2>Results</h2>
+<p>Simple regression: b = 0.45 (SE 0.075, t = 6.00, 95% interval 0.30 to 0.60), R² = 0.34.</p>
+<p>Multiple regression: b = 0.10 (SE 0.062, t = 1.61, p ≈ 0.11, 95% interval -0.02 to 0.22), c = 0.146 (SE 0.0156, t = 9.36), R² = 0.71. In both regressions the response is the fund&#39;s monthly excess return in percentage points; b is priced per one standard deviation of x and c per one percentage point of z.</p>
+<p><code>corr(x,z) = 0.60</code> gives δ = 0.60 × 4.00 / 1.00 = 2.40, so the omitted-variable bias c × δ = 0.146 × 2.40 = 0.35, exactly the gap between 0.45 and 0.10. After adding z, x&#39;s coefficient falls from 0.45 to 0.10 and is no longer significant. One reasonable reading is that most of the simple association reflects market exposure rather than an independent sentiment effect. But &quot;reasonable&quot; is not &quot;proven&quot;.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-att-title fig-att-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-att-title">Slope of x on y before and after controlling for the market</title>
+    <desc id="fig-att-desc">The horizontal axis is the standardized sentiment index x from -2.2 to 2.2; the vertical axis is fund monthly excess return in percentage points from -0.5 to 2.0. A solid line is the simple regression with intercept 0.70 and slope 0.45; a dashed line is the fit after controlling for market excess return z held at its mean, with intercept 0.6197 and slope 0.10. Dotted guide lines mark x = 0 and y = 0.</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="60" y1="30" x2="60" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="220" y1="30" x2="220" y2="180" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="60" y1="150" x2="380" y2="150" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="60" y1="167.4" x2="380" y2="48.6" stroke="var(--accent)" stroke-width="2.5"></line>
+    <line x1="60" y1="126" x2="380" y2="99.6" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="7 4"></line>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="22">y (pp per month; range −0.5 to 2.0)</text>
+      <text x="180" y="42" fill="var(--accent)">simple: ŷ = 0.70 + 0.45x</text>
+      <text x="228" y="92" fill="var(--gold)">with z controlled: ŷ = 0.6197 + 0.10x</text>
+      <text x="62" y="198">x = −2.2</text>
+      <text x="214" y="198">0</text>
+      <text x="352" y="198">+2.2</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: two lines from the same teaching data - a simple-regression slope of 0.45 and a slope of 0.10 once market excess return z is controlled and fixed at its mean of 0.55%. The controlled line's intercept is 0.70 − 0.146 × 0.55 = 0.6197. Only the lines implied by the coefficients in the text are drawn; the 72 monthly observations are not given, so no scatter appears. Numbers are teaching assumptions.</figcaption>
+</figure>
+
+<p>Figure 1 shows that the slope changes after the control; Figure 2 draws why as a backdoor path: z affects both x and y, so without controlling it the x–y association absorbs market exposure; with z controlled, the slope falls from 0.45 to 0.10.</p>
+<h2>Diagram: the backdoor path</h2>
+<figure id="figure-backdoor-dag">
+  <svg role="img" aria-labelledby="fig-dag-title-en fig-dag-desc-en" viewBox="0 0 380 300" width="100%">
+    <title id="fig-dag-title-en">Market return z affects both sentiment x and fund return y</title>
+    <desc id="fig-dag-desc-en">Three nodes: market return z at the top, standardized sentiment x at the lower left, and monthly fund excess return y at the lower right. Two gold dashed arrows run from z to x and from z to y, forming the backdoor path x from z to y; a solid arrow runs from x to y. After controlling z, the x coefficient falls from 0.45 to 0.10.</desc>
+    <defs>
+      <marker id="fig-dag-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--gold)"/></marker>
+      <marker id="fig-dag-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+    </defs>
+    <g font-family="inherit">
+      <rect x="140" y="44" width="100" height="46" rx="9" fill="var(--surface-2)" stroke="var(--gold)"/>
+      <rect x="10" y="160" width="110" height="46" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <rect x="260" y="160" width="110" height="46" rx="9" fill="var(--surface-2)" stroke="var(--accent)"/>
+      <g text-anchor="middle">
+        <text x="190" y="64" font-size="11.8" font-weight="650" fill="var(--text)">Market z</text>
+        <text x="190" y="80" font-size="9.8" fill="var(--secondary)">affects both</text>
+        <text x="65" y="180" font-size="11.8" font-weight="650" fill="var(--text)">Sentiment x</text>
+        <text x="65" y="196" font-size="9.8" fill="var(--secondary)">standardized</text>
+        <text x="315" y="180" font-size="11.8" font-weight="650" fill="var(--text)">Fund return y</text>
+        <text x="315" y="196" font-size="9.8" fill="var(--secondary)">monthly excess</text>
+      </g>
+      <line x1="150" y1="90" x2="85" y2="156" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#fig-dag-gold)"/>
+      <line x1="230" y1="90" x2="295" y2="156" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#fig-dag-gold)"/>
+      <line x1="120" y1="183" x2="254" y2="183" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#fig-dag-accent)"/>
+      <text x="190" y="142" font-size="10.2" font-weight="650" fill="var(--gold)" text-anchor="middle">backdoor path</text>
+      <text x="10" y="244" font-size="11.2" fill="var(--accent)">After controlling z: x coefficient 0.45 → 0.10</text>
+      <text x="10" y="266" font-size="10.2" fill="var(--muted)">Gold dashed = backdoor path; controlling z blocks it.</text>
+      <text x="10" y="286" font-size="10.2" fill="var(--secondary)">Mediators take away the effect; colliders add bias.</text>
+    </g>
+  </svg>
+  <figcaption>Figure 2: z affects both x and y, creating the backdoor path x ← z → y; controlling z blocks it, and the x coefficient falls from 0.45 to 0.10. The arrows are a teaching structure, not proven causation; the numbers are teaching assumptions.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<p>The figures below are also hypothetical; they show which checks to run and cannot be derived from the setting above.</p>
+<ul>
+<li>Two lags of z: x coefficient 0.08 (SE 0.10), still insignificant.</li>
+<li>HAC standard errors: x SE about 0.10, same conclusion.</li>
+<li>Two halves give x coefficients of 0.12 and 0.07, both insignificant, with wider intervals.</li>
+<li>Alternative sentiment measure: 0.11 (SE 0.09).</li>
+<li>If z is a mediator, controlling it understates the total effect; if it is a consequence of x or a collider, controlling it creates bias. Data alone cannot fully distinguish these structures; institutional knowledge and the timing of the variables are needed.</li>
+</ul>
+<h2>Limitations</h2>
+<p>Observational design cannot prove causation: when units cannot be assigned at random, the groups differ in more than the explanatory variable, and random assignment is what spreads potential differences evenly so that an experiment isolates the treatment effect (OpenStax 1.4). Mediator, collider and backdoor path are ordinary causal-inference terms used as this article&#39;s own methodological statement; the three registered sources cover the definition of confounding, random assignment and blocking, not these two kinds of mis-control. z may be mismeasured; size, style and fees may remain uncontrolled; functional form may be wrong; 72 months cover a limited environment. More controls are not always better; bad controls create bias. Numbers are hypothetical.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Set out the time order, definitions and units of y, x and z.</li>
+<li>Run the simple regression; record the coefficient, SE and R².</li>
+<li>Plot x–z and y–z; assess whether z affects both.</li>
+<li>Add z; compare the change in the coefficient and report the auxiliary δ and the direction of the bias.</li>
+<li>Check robust SEs, subsamples and alternative measures.</li>
+<li>State the confounders that cannot be excluded.</li>
+</ol>
+<pre><code class="language-text">short: y ~ x
+long:  y ~ x + z
+aux:   z ~ x          # δ = slope on x in this auxiliary regression
+bias ≈ coef(x in long) * δ
+       = omitted-variable bias, relative to the short-regression slope
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>The simple association is 0.45; after z it is 0.10 and insignificant. This supports confounding by market exposure but does not prove x has no causal effect or that z is the only confounder. It is a conditional association, not a causal effect.</p>
+<!-- kp-supplement:start -->
+<h2>Knowledge-point review</h2>
+<h3>causal graphs</h3>
+<p><strong>Definition</strong>: A causal graph uses nodes and arrows to represent causal relations, often a directed acyclic graph (DAG).</p>
+<p><strong>Mechanism</strong>: DAGs identify confounders, colliders and mediators and guide control choice; backdoor and frontdoor criteria assess identification.</p>
+<p><strong>Example</strong>: For example, education affects income and ability affects both, so ability is a confounder to control; controlling post-graduation occupation, a mediator, blocks part of the effect.</p>
+<p><strong>Boundary</strong>: A causal graph is not fact; arrow direction rests on domain knowledge and assumptions, unobserved variables and feedback limit identification, and a wrong graph leads to wrong controls.</p>
+<h3>confounding</h3>
+<p><strong>Definition</strong>: Confounding is a third variable affecting both treatment and outcome, mixing non-causal association into the observed relation.</p>
+<p><strong>Mechanism</strong>: It creates spurious or exaggerated effects; randomisation, matching, regression controls and instruments mitigate it but require knowing confounders.</p>
+<p><strong>Example</strong>: For example, ice-cream sales correlate with drowning, but weather affects both and is a confounder.</p>
+<p><strong>Boundary</strong>: Confounding is not correlation itself; unobserved confounding is hard to control, controlling colliders or mediators adds bias, matching can miss variables, and causal claims need design.</p>
+<h3>randomised experiments</h3>
+<p><strong>Definition</strong>: A randomised experiment assigns treatment randomly, making treated and control groups comparable in expectation, the gold standard for causal identification.</p>
+<p><strong>Mechanism</strong>: Randomisation removes observed and unobserved confounding and identifies average treatment effects; sample size, compliance and external validity matter.</p>
+<p><strong>Example</strong>: For example, randomly giving half of patients a drug and half a placebo compares outcomes.</p>
+<p><strong>Boundary</strong>: Randomisation is not magic; non-compliance, attrition, ethics and cost limit experiments, it ensures internal validity only, and results in one sample may not generalise.</p>
+<h3>natural experiments</h3>
+<p><strong>Definition</strong>: A natural experiment uses policy changes, geographic borders or accidental events that create quasi-random variation to identify causality.</p>
+<p><strong>Mechanism</strong>: It relies on exogenous shocks and comparability; policy thresholds, weather, disasters and institutional changes are used, but exogeneity must be tested.</p>
+<p><strong>Example</strong>: For example, one region raises the minimum wage while a neighbour does not, allowing employment comparison.</p>
+<p><strong>Boundary</strong>: A natural experiment is not a true experiment; exogeneity is contested, treatment coincides with other policies, migration and anticipation contaminate controls, and conclusions depend on institutions and period.</p>
+<h3>instrumental variables</h3>
+<p><strong>Definition</strong>: An instrumental variable correlates with treatment but not directly with the outcome error, isolating the causal effect of treatment.</p>
+<p><strong>Mechanism</strong>: It needs relevance and exclusion restriction, estimated by two-stage least squares.</p>
+<p><strong>Example</strong>: For example, distance or policy changes instrument for years of schooling to estimate returns to education.</p>
+<p><strong>Boundary</strong>: Instruments are not any correlated variable; weak instruments, exclusion failure and local effects mislead, exogeneity cannot be fully tested, and the estimate is local to a subpopulation.</p>
+<h3>difference-in-differences and regression discontinuity</h3>
+<p><strong>Definition</strong>: Difference-in-differences compares treated and control groups before and after, and regression discontinuity uses near-random differences around a threshold.</p>
+<p><strong>Mechanism</strong>: DID relies on parallel trends, RD on continuity and no manipulation near the cutoff; both need placebo and robustness checks.</p>
+<p><strong>Example</strong>: For example, a city policy is compared with similar cities before and after, and college admission compares scores around a cutoff.</p>
+<p><strong>Boundary</strong>: Methods are not automatically causal; parallel trends can fail, cutoffs can be manipulated or confounded, windows and functional form matter, and spillovers contaminate controls.</p>
+<!-- kp-supplement:end -->
+
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Introduction to Linear Regression (RES-013).</li>
+<li>Related reading: Hypothesis Testing and Practical Significance (RES-012), Introduction to Linear Regression (RES-013), Causality and Identification (RES-015).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Control Variables and Confounding: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Control Variables and Confounding — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Control Variables and Confounding: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Control variables</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> are used to…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Control variable</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">s are used to</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">block confoundin</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">g paths, not to</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">include every…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Sample size</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">n | 72 | | Mean</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">/ standard…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 3: Control Variables and Confounding — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Control Variables and Confounding: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Control Variables and Confounding: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Observational design cannot</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">prove causation: when units</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">cannot be assigned at</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">random, the groups differ…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical 72-month</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">sample: fund monthly excess</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">return y, a standardized</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">investor-sentiment index x…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Control Variables and Confounding — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Control Variables and Confounding: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Control Variables and Confounding: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Control variables</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">are used to block…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Observational design</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">cannot prove…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical 72-month sample:</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">fund monthly excess return y, a…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 5: Control Variables and Confounding — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>How does a control differ from a confounder?</li>
+<li>Why does controlling a mediator change the target effect?</li>
+<li>What if z is a collider and is controlled?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>A confounder affects both the treatment and the outcome and forms a third path that has to be blocked, in the design or in the regression; a control is a variable included for that purpose, not simply every variable that happens to be available.</li>
+<li>A mediator lies on the causal chain from treatment to outcome, so controlling it takes away part of what belongs in the total effect; what is estimated is a direct effect rather than the total effect.</li>
+<li>Controlling a collider opens a path that was closed and can introduce selection bias, moving the coefficient away from the target.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.2 Data, Sampling, and Variation in Data and Sampling.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling">https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling</a> (accessed 2026-10-30)</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.4 Experimental Design and Ethics.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics">https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics</a> (accessed 2026-10-30)</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.3.3.2 Randomized block designs.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm">https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Reproduce the omitted-variable bias 0.146 × 2.40 = 0.35 and explain the fall from 0.45 to 0.10 after control</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Distinguish the control strategies for confounders, mediators and colliders and the risk each carries</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Reproduce the omitted-variable bias 0.146 × 2.40 = 0.35 and explain the fall from 0.45 to 0.10 after control</li><li>Distinguish the control strategies for confounders, mediators and colliders and the risk each carries</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/hypothesis-testing-and-practical-significance/">RES-012 · Hypothesis Testing and Practical Significance</a> </li><li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li><li> <a href="/en/learn/causality-and-identification/">RES-015 · Causality and Identification</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.2 Data, Sampling, and Variation in Data and Sampling</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Confounding occurs when the effects of multiple factors on a response cannot be separated; a relationship between two variables does not mean that one causes the other.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.4 Experimental Design and Ethics</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Lurking variables can cloud a study; random assignment spreads potential differences roughly equally across groups; a control group and placebo help isolate a treatment effect; an experiment can support a cause-and-effect conclusion.</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.3.3.2 Randomized block designs</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: Blocking controls nuisance factors by holding them constant or restricting them to homogeneous blocks, thereby reducing experimental error.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/control-variables-and-confounding/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

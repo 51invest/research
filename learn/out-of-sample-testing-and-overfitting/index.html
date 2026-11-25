@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>样本外与过拟合 · 巫妖投资</title><meta name="description" content="在 180 个月搜索 500 组参数，最佳样本内 Sharpe 0.831，样本外降到 0.072；把样本外重复用于挑选后，报告值升到 1.131，同一组合在最终 60 个月降到 0.489。"><link rel="canonical" href="https://research.51invest.com/learn/out-of-sample-testing-and-overfitting/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/out-of-sample-testing-and-overfitting/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/out-of-sample-testing-and-overfitting/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/out-of-sample-testing-and-overfitting/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/out-of-sample-testing-and-overfitting/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">样本外与过拟合</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">样本外与过拟合</h1> <p class="article-summary">在 180 个月搜索 500 组参数，最佳样本内 Sharpe 0.831，样本外降到 0.072；把样本外重复用于挑选后，报告值升到 1.131，同一组合在最终 60 个月降到 0.489。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M11 · 回测与验证</strong></div> <div class="meta-item"><span>层级</span><strong>进阶</strong></div> <div class="meta-item"><span>阅读</span><strong>6 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>用一条 300 个月的模拟收益序列，在前 180 个月搜索 500 组参数，中间 60 个月为第一段样本外，最后 60 个月为最终留出期。最佳样本内结果在样本外还剩多少？若分析师反复用中间 60 个月挑选模型，报告值会怎样变化？数据由种子 20261036 生成，不是真实市场数据。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总样本</td>
+<td align="right">300 个月</td>
+</tr>
+<tr>
+<td>频率与单位</td>
+<td align="right">月度收益；Sharpe 无量纲</td>
+</tr>
+<tr>
+<td>搜索期</td>
+<td align="right">前 180 个月</td>
+</tr>
+<tr>
+<td>第一段样本外</td>
+<td align="right">中间 60 个月</td>
+</tr>
+<tr>
+<td>最终留出期</td>
+<td align="right">最后 60 个月</td>
+</tr>
+<tr>
+<td>参数组合</td>
+<td align="right">500 组</td>
+</tr>
+<tr>
+<td>最佳样本内 Sharpe</td>
+<td align="right">0.831</td>
+</tr>
+<tr>
+<td>该组合第一段样本外 Sharpe</td>
+<td align="right">0.072</td>
+</tr>
+<tr>
+<td>样本内前 10 名平均样本外 Sharpe</td>
+<td align="right">-0.002</td>
+</tr>
+<tr>
+<td>样本内与样本外 Sharpe 相关</td>
+<td align="right">-0.061</td>
+</tr>
+<tr>
+<td>20 次样本外挑选后的最佳 Sharpe</td>
+<td align="right">1.131</td>
+</tr>
+<tr>
+<td>1.131 组合最终 60 个月 Sharpe</td>
+<td align="right">0.489</td>
+</tr>
+<tr>
+<td>许可</td>
+<td align="right">模拟数据，无外部许可</td>
+</tr>
+</tbody></table>
+<h2>方法与假设</h2>
+<p>策略是同一信号的 500 组参数组合（回看期与持有期）。样本内取 Sharpe 最高的组合；第一段样本外只评估一次。另做模拟：假设分析师在中间 60 个月里反复挑选 20 次，报告其中最好的 Sharpe，最后用从未参与选择的 60 个月检验。Sharpe 按月度均值除以标准差再乘 √12，未扣成本。第一段样本外不参与第一次选择；反复用它做 20 次挑选时，它事实上变成选择数据。过拟合指模型把样本内噪声当成信号。NIST/SEMATECH 提醒，单一拟合统计量不能证明模型充分；Chicco 和 Jurman（2022）也强调，测试集不能反复使用，否则会导致过拟合并使结果失效[2]。</p>
+<h2>结果</h2>
+<p>最佳样本内 Sharpe 0.831，第一段样本外 0.072；样本内前 10 名平均样本外 -0.002；样本内外相关 -0.061。20 次样本外挑选后，报告的最佳 Sharpe 为 1.131；该组合在从未参与选择的最终 60 个月为 0.489，报告值缩水约 57%</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-oos-title fig-oos-desc" viewBox="0 0 420 230" width="100%">
+    <title id="fig-oos-title">样本内与样本外的 Sharpe 落差</title>
+    <desc id="fig-oos-desc">上方一条水平带把三百个月分成三段：搜索期一百八十个月、第一段样本外六十个月、最终留出六十个月，每段按每月一点零六六七像素绘制。下方三根以零线为基准的柱，每单位 Sharpe 八十像素：最佳样本内 0.831（高六十六点五），其样本外 0.072（十四点四），样本内前十名的平均样本外负零点零零二（向下零点一六）。</desc>
+    <rect x="60" y="45" width="192" height="14" fill="var(--accent)" opacity="0.8"></rect>
+    <rect x="252" y="45" width="64" height="14" fill="var(--gold)" opacity="0.8"></rect>
+    <rect x="316" y="45" width="64" height="14" fill="var(--accent)" opacity="0.35"></rect>
+    <line x1="60" y1="190" x2="380" y2="190" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="100" y="123.5" width="52" height="66.5" fill="var(--accent)" opacity="0.85"></rect>
+    <rect x="200" y="184.2" width="52" height="5.8" fill="var(--gold)" opacity="0.9"></rect>
+    <rect x="300" y="190" width="52" height="0.16" fill="var(--muted)" opacity="0.8"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">样本划分（每月 1.0667 像素）与 Sharpe（每单位 80 像素，零线基准）</text>
+      <text x="64" y="40">搜索期 180 月</text>
+      <text x="240" y="40">样本外 60 月</text>
+      <text x="322" y="40">留出 60 月</text>
+      <text x="106" y="119">0.831</text>
+      <text x="206" y="181">0.072</text>
+      <text x="306" y="206">−0.002</text>
+      <text x="94" y="222">最佳样本内</text>
+      <text x="196" y="222">它的样本外</text>
+      <text x="292" y="222">前十平均样本外</text>
+    </g>
+  </svg>
+  <figcaption>图 1：300 个月的划分（180 搜索 / 60 样本外 / 60 最终留出，每月 1.0667 像素）与 500 组参数搜索后的三个 Sharpe（零线基准，每单位 80 像素）：最佳组合样本内 0.831、其样本外 0.072，样本内前十名的平均样本外 −0.002；样本内与样本外 Sharpe 的相关只有 -0.061。落差即过拟合的量级，数值为教学模拟。</figcaption>
+</figure>
+
+<h2>图解：两次缩水</h2>
+<figure id="figure-oos-cliff">
+  <svg role="img" aria-labelledby="fig-oos-cliff-title fig-oos-cliff-desc" viewBox="0 0 380 300" width="100%">
+    <title id="fig-oos-cliff-title">样本内最佳、第一次样本外、反复挑选后的报告值与最终留出</title>
+    <desc id="fig-oos-cliff-desc">左边：样本内 0.831 到第一次样本外 0.072，缩水 0.759；右边：同一段样本外挑二十次后的报告值 1.131，到从未参与选择的最终留出 0.489，缩水 0.642。纵轴从零到一点二。</desc>
+    <text x="20" y="22" font-size="11" font-weight="650" fill="var(--text)" font-family="inherit">两次缩水：−0.759 与 −0.642</text>
+    <text x="20" y="43" font-size="9.2" fill="var(--muted)" font-family="inherit">左边只评估一次；右边在同一段样本外挑了 20 次</text>
+    <g stroke="var(--border)" stroke-width="0.8" stroke-dasharray="3 4">
+      <line x1="40" y1="240" x2="340" y2="240"/>
+      <line x1="40" y1="183.3" x2="340" y2="183.3"/>
+      <line x1="40" y1="126.7" x2="340" y2="126.7"/>
+    </g>
+    <g fill="var(--muted)" font-size="8.5" text-anchor="end" font-family="inherit">
+      <text x="34" y="244">0</text>
+      <text x="34" y="187">0.4</text>
+      <text x="34" y="131">0.8</text>
+    </g>
+    <line x1="190" y1="60" x2="190" y2="244" stroke="var(--border)" stroke-width="1"/>
+    <circle cx="100" cy="122.3" r="4" fill="var(--accent)"/>
+    <circle cx="100" cy="229.8" r="4" fill="var(--muted)"/>
+    <line x1="100" y1="128" x2="100" y2="224" stroke="var(--down)" stroke-width="1.3"/>
+    <path d="M100 224 L96 216 M100 224 L104 216" fill="none" stroke="var(--down)" stroke-width="1.3"/>
+    <circle cx="290" cy="79.8" r="4" fill="var(--gold)"/>
+    <circle cx="290" cy="170.7" r="4" fill="var(--accent)"/>
+    <line x1="290" y1="86" x2="290" y2="165" stroke="var(--down)" stroke-width="1.3"/>
+    <path d="M290 165 L286 157 M290 165 L294 157" fill="none" stroke="var(--down)" stroke-width="1.3"/>
+    <text x="100" y="112" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.831</text>
+    <text x="100" y="100" font-size="8.6" fill="var(--muted)" text-anchor="middle" font-family="inherit">样本内最佳</text>
+    <text x="110" y="234" font-size="9.5" font-weight="650" fill="var(--text)" font-family="inherit">0.072</text>
+    <text x="110" y="258" font-size="8.6" fill="var(--muted)" font-family="inherit">第一次样本外</text>
+    <text x="290" y="70" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">1.131</text>
+    <text x="290" y="56" font-size="8.6" fill="var(--muted)" text-anchor="middle" font-family="inherit">挑 20 次后的报告值</text>
+    <text x="290" y="184" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.489</text>
+    <text x="290" y="198" font-size="8.6" fill="var(--muted)" text-anchor="middle" font-family="inherit">最终留出</text>
+    <text x="110" y="180" font-size="8.8" fill="var(--down)" font-family="inherit">−0.759</text>
+    <text x="300" y="130" font-size="8.8" fill="var(--down)" font-family="inherit">−0.642</text>
+    <text x="20" y="282" font-size="9" fill="var(--muted)" font-family="inherit">1.131 是同一段 60 个月里挑 20 次的最大值；最终留出只评估一次。</text>
+  </svg>
+  <figcaption>图 2：左边是只做一次样本外评估：样本内最佳 0.831 降到 0.072，缩水 0.759。右边是把同一段 60 个月反复用于挑选 20 次后，报告值升到 1.131，但从未参与选择的最后 60 个月只有 0.489，缩水 0.642。两段都是同一模拟中的教学数字，不是可实现业绩。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<ul>
+<li>本脚本只跑 180/60/60 这一种切分：换切分或换种子会改变数值，而“在 500 组里取样本内最大值必然高估”这一点由选择机制决定，不依赖某次抽样。要把 150/75/75 等切分也写成结论，必须先扩展脚本参数并实跑，本文未做，因此不作该断言。</li>
+<li>本文未扣交易成本，也没有给出各参数组合的换手率；方向上成本随换手累积，扣减后净 Sharpe 下降，持有期越短的组合降得越多，量化测算见幸存者偏差与交易成本主文（RES-021）。</li>
+</ul>
+<h2>局限</h2>
+<p>只有一条模拟序列，不能代表真实资产；参数网格、切分点和策略族都是人为设定。Sharpe 未附标准误，最终 60 个月也可能偶然偏高或偏低。未计成本、容量和制度变化。多次使用同一段样本外数据，会使它事实上变成样本内；真正的最终留出期只能使用一次。OpenStax 指出，超出观测范围的外推即使能算出数值也不可靠；60 个月留出期也不能外推到更长持有期。样本外与交叉验证的适用条件：一是必须留有从未参与选择的评估预算，二是时间序列要按时间先后切分，否则折内会泄漏未来信息，三是每一折只用于一次评估——反复用同一折挑选参数时，该折事实上并入训练集。其局限也与此同源：单次样本外估计本身带抽样噪声，本文未附标准误；留出期越短越不可靠，样本外区间之外的表现不能由它推断。相关系数按全部 500 组计算（只取样本内前十时为 0.089），换口径数值会变，但“样本内排名几乎不预测样本外表现”这一点两口径一致。结论不支持任何真实策略的收益预测。</p>
+<h2>复现</h2>
+<ol>
+<li>用种子 20261036 生成 300 个月收益。</li>
+<li>枚举 500 组回看期与持有期参数。</li>
+<li>前 180 个月按 Sharpe 选最佳，中间 60 个月评估一次。</li>
+<li>模拟 20 次样本外再挑选，记录最佳 Sharpe。</li>
+<li>最后 60 个月评估同一组合并报告结果。</li>
+</ol>
+<p>node scripts/simulate-out-of-sample-overfitting.mjs --check</p>
+<pre><code class="language-text">seed = 20261036
+months = 300; search = 180; oos = 60; final = 60
+grid = 500; best_is_sharpe = 0.831; best_oos_sharpe = 0.072
+top10_oos_mean = -0.002; corr_is_oos = -0.061
+best_after_20_oos_picks = 1.131; final_sharpe = 0.489
+</code></pre>
+<h2>结论强度</h2>
+<p>样本内最佳值是 500 次比较的最大值，包含选择偏差；样本外表现并不延续。重复使用样本外会带回选择偏差。结论支持“先留出最终样本、只评估一次”，不支持把 0.831 或 1.131 当作可实现业绩；最终留出的 0.489 也只是单次抽样结果。</p>
+<h2>关联</h2>
+<ul>
+<li>必需先修：回测与前视偏差（RES-020）。</li>
+<li>相关与推荐阅读：滚动分析与结构变化（RES-018）、回测与前视偏差（RES-020）、多重检验与数据窥探（RES-023）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">样本外与过拟合：机制链</title>
+    <desc id="fig-batch-chain-desc">样本外与过拟合 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">样本外与过拟合：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">在 180 个月搜索</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">500 组参数，最佳样本…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">在 180 个月搜索</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">500 组参数，最佳样</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">本内 Sharpe</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">0.831，样本外降到</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">0.072；把样本外重…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：用一条</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">300 个月的模拟收益…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：用一条</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">300 个月的模拟收</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">益序列，在前 180</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个月搜索 500</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">组参数，中间 60…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 总样本 | 300</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个月 | | 频率与单</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">位 | 月度收益；Sha…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 3：样本外与过拟合的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">样本外与过拟合：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">样本外与过拟合：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">只有一条模拟序列，不能代表真实资</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">产；参数网格、切分点和策略族都是</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">人为设定。Sharpe</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">未附标准误，最终 60…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：回测与前视偏差（RES-02</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">0）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：样本外与过拟合的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">样本外与过拟合：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">样本外与过拟合：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">在 180 个月搜索 500</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">组参数，最佳样本内…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">只有一条模拟序列，不能代</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">表真实资产；参数网格、切…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：回测与前视偏差（RES-020）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 5：样本外与过拟合的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>为什么最佳样本内 Sharpe 会高估能力？</li>
+<li>样本外只评估一次有什么用？</li>
+<li>20 次样本外挑选后为什么 1.131 不可信？</li>
+<li>过拟合只发生在参数很多时吗？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>从 500 个含噪声的估计中取最大值，正噪声容易被选中，结果高于真实能力。</li>
+<li>避免样本外也参与选择，保留一段相对独立的检验数据。</li>
+<li>1.131 是在同一段样本外窗口上 20 次挑选后的最大值；该组合在最终留出期只有 0.489，报告值缩水约六成，说明再挑选抬高的是报告数字；留出值本身仍带抽样噪声，不能把它当成新的“真实常数”。</li>
+<li>不是；反复看同一数据、改规则、选样本区间，也会把噪声当成信号。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “4.4.4 How can I tell if a model fits my data?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm">https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm</a>（访问日期：2026-10-30）</li>
+<li>Chicco, Davide, and Giuseppe Jurman. “The ABC recommendations for validation of supervised machine learning results in biomedical sciences.” <em>Frontiers in Big Data</em> 5 (2022): 979465. CC BY 4.0. <a href="https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full">https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full</a>（访问日期：2026-10-30）</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “12.5 Prediction.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction">https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能解释样本内 0.831 降到样本外 0.072 的落差为何是过拟合的量度</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能说明把同一段样本外重复用于挑选如何把报告值抬到 1.131，而最终留出期为 0.489</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能解释样本内 0.831 降到样本外 0.072 的落差为何是过拟合的量度</li><li>能说明把同一段样本外重复用于挑选如何把报告值抬到 1.131，而最终留出期为 0.489</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/backtesting-and-look-ahead-bias/">RES-020 · 回测与前视偏差</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/rolling-analysis-and-structural-change/">RES-018 · 滚动分析与结构变化</a> </li><li> <a href="/learn/backtesting-and-look-ahead-bias/">RES-020 · 回测与前视偏差</a> </li><li> <a href="/learn/multiple-testing-and-data-snooping/">RES-023 · 多重检验与数据窥探</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 4.4.4 How can I tell if a model fits my data?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：高 R² 不保证模型拟合良好；单一拟合统计量不足以验证模型，残差分析提供拟合充分性的信息。</p> </div><div class="source"> <a href="https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2022.979465/full" rel="noopener noreferrer" target="_blank">The ABC recommendations for validation of supervised machine learning results in biomedical sciences</a> <p>Davide Chicco; Giuseppe Jurman · Frontiers in Big Data, 5, 979465</p> <p>访问：2026-10-30 · 许可：CC BY 4.0</p> <p>支持论点：测试集不能反复使用；反复使用会导致过拟合并使结果失效。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/12-5-prediction" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 12.5 Prediction</a> <p>OpenStax · OpenStax, Rice University</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：在观测范围内预测是内插；超出范围为外推，即使方程能算出数值也不可靠。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/out-of-sample-testing-and-overfitting/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

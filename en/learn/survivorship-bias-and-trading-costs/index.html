@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Survivorship Bias and Trading Costs · 51Invest</title><meta name="description" content="In a simulated 500-fund, 120-month universe, keeping only surviving funds lifts annualized return from 5.7% to 6.6%; a high-turnover strategy earns 9.4% gross but 7.96% after 30 bp one-way costs, only 0.22 percentage points above the low-turnover version."><link rel="canonical" href="https://research.51invest.com/en/learn/survivorship-bias-and-trading-costs/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/survivorship-bias-and-trading-costs/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/survivorship-bias-and-trading-costs/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/survivorship-bias-and-trading-costs/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/survivorship-bias-and-trading-costs/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Survivorship Bias and Trading Costs</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Survivorship Bias and Trading Costs</h1> <p class="article-summary">In a simulated 500-fund, 120-month universe, keeping only surviving funds lifts annualized return from 5.7% to 6.6%; a high-turnover strategy earns 9.4% gross but 7.96% after 30 bp one-way costs, only 0.22 percentage points above the low-turnover version.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M11 · 回测与验证</strong></div> <div class="meta-item"><span>Level</span><strong>Advanced</strong></div> <div class="meta-item"><span>Read</span><strong>4 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>Using 500 simulated funds over 120 months and, separately, two turnover versions of a stock signal, this article asks two questions: how much does keeping only funds still present at the end raise the average annualized return? After deducting a one-way trading cost of 30 basis points, does the high-turnover version still beat the low-turnover version? The data are generated with seed 20261035 and are a teaching simulation, not real funds or stocks.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Funds at start</td>
+<td align="right">500</td>
+</tr>
+<tr>
+<td>Surviving at end</td>
+<td align="right">311 (62.2%)</td>
+</tr>
+<tr>
+<td>Frequency and unit</td>
+<td align="right">monthly returns; annualized percent</td>
+</tr>
+<tr>
+<td>Survivor average annualized</td>
+<td align="right">6.6%</td>
+</tr>
+<tr>
+<td>Full-sample average annualized</td>
+<td align="right">5.7%</td>
+</tr>
+<tr>
+<td>Survivorship gap</td>
+<td align="right">0.9 percentage points</td>
+</tr>
+<tr>
+<td>High-turnover strategy, annual one-way turnover</td>
+<td align="right">480%</td>
+</tr>
+<tr>
+<td>High-turnover gross return</td>
+<td align="right">9.4%</td>
+</tr>
+<tr>
+<td>High-turnover cost (30 bp)</td>
+<td align="right">1.44%</td>
+</tr>
+<tr>
+<td>High-turnover net return</td>
+<td align="right">7.96%</td>
+</tr>
+<tr>
+<td>Low-turnover strategy, annual one-way turnover</td>
+<td align="right">120%</td>
+</tr>
+<tr>
+<td>Low-turnover gross return</td>
+<td align="right">8.1%</td>
+</tr>
+<tr>
+<td>Low-turnover cost (30 bp)</td>
+<td align="right">0.36%</td>
+</tr>
+<tr>
+<td>Low-turnover net return</td>
+<td align="right">7.74%</td>
+</tr>
+<tr>
+<td>License</td>
+<td align="right">simulated data, no external license</td>
+</tr>
+</tbody></table>
+<h2>Method and assumptions</h2>
+<p>Funds are generated monthly, with exit probability negatively related to recent returns: poor performers are more likely to close or merge. The generative process is <strong>a teaching model this article defines</strong>, produced by one run of the in-repo script <code>scripts/simulate-survivorship.mjs</code> (mulberry32 pseudo-random numbers with a Box-Muller normal, seed 20261035): each fund earns μ = 0.5% plus a σ = 4% normal shock every month; once a fund is 24 months old it exits each month with probability <code>clamp(0.006 − 0.00025 × trailing-12-month annualised return (%), 0.0002, 0.02)</code>; the performance window is the last 60 months, annualised as the arithmetic mean of monthly returns times 12, with no geometric compounding. Survivorship bias means counting only units still in the sample at the end and ignoring those that exited; it is a form of sampling bias, in which some members of the population are less likely to be included than others (OpenStax, 1.2). Elton et al. (1996) estimate this bias using fund merger terms, and Barber and Odean (2000) document the net-return penalty of frequent trading; the example simulates both mechanisms. A separate simulation uses two turnover versions of a stock signal. Trading costs are annual one-way turnover times one-way cost; the one-way cost is fixed at 30 basis points and excludes market impact, borrowing fees, taxes and cash drag. The component-by-component split of those costs is in the main article Trade Execution and Slippage (INV-022). Net return is gross return minus cost taken arithmetically, without geometric compounding.</p>
+<h2>Results</h2>
+<p>Survivor-only funds earn 6.6% annualized versus 5.7% for the full sample, a gap of 0.9 percentage points. High turnover earns 9.4% gross, pays 1.44% in costs and nets 7.96%; low turnover earns 8.1% gross, pays 0.36% and nets 7.74%. The gross gap is 1.3 percentage points, but the net gap is only 0.22 percentage points.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-surv-title fig-surv-desc" viewBox="0 0 420 230" width="100%">
+    <title id="fig-surv-title">Two sources of overstatement: survivorship and costs</title>
+    <desc id="fig-surv-desc">Two clusters of zero-based bars at fifteen pixels per percentage point. Left: surviving funds average 6.6% a year (99 pixels) against the full sample of 500 funds at 5.7% (85.5), a gap of 0.9 points. Right: the high-turnover strategy's gross return of 9.4% (141 pixels) against 7.96% after 30 basis points of costs (119.4), a gap of 1.44 points.</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="90" y="81" width="52" height="99" fill="var(--accent)" opacity="0.85"></rect>
+    <rect x="152" y="94.5" width="52" height="85.5" fill="var(--accent)" opacity="0.5"></rect>
+    <rect x="250" y="39" width="52" height="141" fill="var(--gold)" opacity="0.85"></rect>
+    <rect x="312" y="60.6" width="52" height="119.4" fill="var(--gold)" opacity="0.55"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">Annualised return (%, zero baseline, 15 px per point)</text>
+      <text x="96" y="77">6.6</text>
+      <text x="158" y="90.5">5.7</text>
+      <text x="256" y="35">9.4</text>
+      <text x="318" y="56">7.96</text>
+      <text x="70" y="200">311 survivors</text>
+      <text x="136" y="200">all 500 funds</text>
+      <text x="228" y="214">gross, high turnover</text>
+      <text x="292" y="200">after 1.44% costs</text>
+      <text x="60" y="227" font-size="10">left gap 0.9 points: delisted funds excluded; right gap: 480% turnover × 30 bp</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: two overstatements and their size (teaching assumptions). Surviving funds average 6.6% against 5.7% for the full sample - only 311 of 500 funds remain (62.2%) - so 0.9 percentage points come from liquidated or merged funds dropping out of the statistics; the high-turnover strategy earns 9.4% gross but 7.96% after costs, a 1.44-point gap equal to 480% one-way turnover times 30 basis points. Bars start at zero at 15 pixels per percentage point.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<ul>
+<li>At a 50 bp one-way cost, high turnover pays 2.40% and nets 7.00%, while low turnover pays 0.60% and nets 7.50%; high turnover now lags by 0.50 percentage points.</li>
+<li>At 20 bp, high turnover nets 8.44% and low turnover nets 7.86%, so high turnover leads by 0.58 percentage points.</li>
+<li>Setting net returns equal, 9.4 - 4.8c = 8.1 - 1.2c gives c ≈ 0.361%, a break-even one-way cost of about 36 bp.</li>
+<li>A different survival definition changes the gap, but its direction stays the same as long as exits are related to returns (rerun with <code>node scripts/simulate-survivorship.mjs &lt;seed&gt; &lt;funds&gt; &lt;months&gt;</code>; <code>--check</code> compares the script against the printed figures).</li>
+</ul>
+<h2>Limitations</h2>
+<p>The simulated funds and stocks are not a real market; costs and turnover are fixed, and market impact, liquidity, borrowing fees, taxes and capacity are omitted. Simulated exits are driven only by recent performance, while real liquidations and mergers can be unrelated to performance, and real data also show backfilling and category changes. Returns and costs are point estimates without confidence intervals. The evidence supports &quot;keep exiting units and deduct costs in a backtest&quot;, not any forecast of a real strategy&#39;s return.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Run <code>node scripts/simulate-survivorship.mjs</code>: it generates 120 monthly returns and exit states for 500 funds with seed 20261035, the exit probability tied to the trailing twelve-month return as in the model above.</li>
+<li>Compute average annualized returns for survivors and for the full sample.</li>
+<li>Generate the two turnover versions of the same signal and compute gross returns.</li>
+<li>Deduct annual one-way turnover times one-way cost to obtain net returns.</li>
+<li>Report the survival rate, cost assumptions and all results.</li>
+</ol>
+<pre><code class="language-text">seed = 20261035
+funds = 500; months = 120; survivors = 311  # 62.2%
+mu_month = 0.5%; sigma_month = 4%; exit = clamp(0.006 - 0.00025*trailing12_pct, 0.0002, 0.02)
+survivor_mean = 6.6%; full_mean = 5.7%; bias = 0.9 pp
+high: turnover 480%, gross 9.4%, cost 30 bp, net 7.96%
+low:  turnover 120%, gross 8.1%, cost 30 bp, net 7.74%
+net = gross - turnover_fraction * one_way_cost
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>Both gaps are simulated; they show the direction and magnitude of two biases, not real performance. The evidence supports keeping exiting units, reporting turnover and deducting costs in a backtest; it does not support treating gross returns as achievable.</p>
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Backtesting and Look-Ahead Bias (RES-020).</li>
+<li>Related reading: Missing Data, Outliers and Sample Selection (RES-007), A Reproducible Research Workflow (RES-008), Backtesting and Look-Ahead Bias (RES-020).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Survivorship Bias and Trading Costs: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Survivorship Bias and Trading Costs — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Survivorship Bias and Trading Costs: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">In a simulated</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">500-fund, 120-mon…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">In a simulated</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">500-fund,</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">120-month</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">universe,</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">keeping only…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Funds at</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">start | 500 | |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Surviving at…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Survivorship Bias and Trading Costs — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Survivorship Bias and Trading Costs: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Survivorship Bias and Trading Costs: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulated funds and</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">stocks are not a real</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">market; costs and turnover</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">are fixed, and market…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Using 500 simulated funds</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">over 120 months and,</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">separately, two turnover</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">versions of a stock signal…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Survivorship Bias and Trading Costs — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Survivorship Bias and Trading Costs: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Survivorship Bias and Trading Costs: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">In a simulated</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">500-fund, 120-month…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulated funds</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">and stocks are not a…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Using 500 simulated funds over</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">120 months and, separately, two…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Survivorship Bias and Trading Costs — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>If 311 of 500 funds survive, what is the survival rate?</li>
+<li>With 480% annual one-way turnover and a 30 bp one-way cost, what is the annual cost?</li>
+<li>Why can a high-turnover strategy earn more gross but less net?</li>
+<li>What does a survivor-only report lead readers to overestimate?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>311 ÷ 500 = 62.2%.</li>
+<li>4.8 × 0.30% = 1.44%.</li>
+<li>Costs rise with turnover; here the 1.3-percentage-point gross advantage is offset by 1.08 percentage points of extra cost.</li>
+<li>Average returns and the probability that a strategy survives; exiting funds are excluded, leaving mostly better performers.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Elton, Edwin J., Martin J. Gruber, and Christopher R. Blake. “Survivorship Bias and Mutual Fund Performance.” <em>Review of Financial Studies</em> 9, no. 4 (1996): 1097–1120. License unknown. <a href="https://ideas.repec.org/a/oup/rfinst/v9y1996i4p1097-1120.html">https://ideas.repec.org/a/oup/rfinst/v9y1996i4p1097-1120.html</a> (accessed 2026-10-30)</li>
+<li>Barber, Brad M., and Terrance Odean. “Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors.” <em>Journal of Finance</em> 55, no. 2 (2000): 773–806. License unknown. <a href="https://ideas.repec.org/a/bla/jfinan/v55y2000i2p773-806.html">https://ideas.repec.org/a/bla/jfinan/v55y2000i2p773-806.html</a> (accessed 2026-10-30)</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “1.2 Data, Sampling, and Variation in Data and Sampling.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling">https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Reproduce the 1.9-point survivorship gap from 7.8% over the 320 survivors against 5.9% for all 500 funds</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Recompute the 1.44% cost from 480% one-way turnover at 30 basis points and compare gross with net</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Reproduce the 1.9-point survivorship gap from 7.8% over the 320 survivors against 5.9% for all 500 funds</li><li>Recompute the 1.44% cost from 480% one-way turnover at 30 basis points and compare gross with net</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/backtesting-and-look-ahead-bias/">RES-020 · Backtesting and Look-Ahead Bias</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/missing-data-outliers-and-sample-selection/">RES-007 · Missing Data, Outliers and Sample Selection</a> </li><li> <a href="/en/learn/reproducible-research-workflow/">RES-008 · A Reproducible Research Workflow</a> </li><li> <a href="/en/learn/backtesting-and-look-ahead-bias/">RES-020 · Backtesting and Look-Ahead Bias</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://ideas.repec.org/a/oup/rfinst/v9y1996i4p1097-1120.html" rel="noopener noreferrer" target="_blank">Survivorship Bias and Mutual Fund Performance</a> <p>Edwin J. Elton; Martin J. Gruber; Christopher R. Blake · Review of Financial Studies, 9(4), 1097-1120</p> <p>Accessed: 2026-10-30 · License: RePEc index record; cite the indexed item and link, no reproduction</p> <p>Supports: Estimates survivorship bias from a fund sample starting in 1976 using merger terms; bias estimates vary with horizon and model, so surviving-fund returns alone are insufficient.</p> </div><div class="source"> <a href="https://ideas.repec.org/a/bla/jfinan/v55y2000i2p773-806.html" rel="noopener noreferrer" target="_blank">Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors</a> <p>Brad M. Barber; Terrance Odean · Journal of Finance, 55(2), 773-806</p> <p>Accessed: 2026-10-30 · License: RePEc index record; cite the indexed item and link, no reproduction</p> <p>Supports: Households that traded most earned 11.4% a year while the market returned 17.9%, so frequent trading is associated with lower net returns.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.2 Data, Sampling, and Variation in Data and Sampling</a> <p>OpenStax · OpenStax, Rice University</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: A sampling bias is created when some members of the population are less likely to be chosen than others.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/survivorship-bias-and-trading-costs/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

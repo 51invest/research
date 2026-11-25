@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Causality and Identification · 51Invest</title><meta name="description" content="Causal identification is not a significant regression; it maps observed data to a counterfactual through design or assumptions. Random experiments provide a benchmark, while observational methods each carry their own conditions."><link rel="canonical" href="https://research.51invest.com/en/learn/causality-and-identification/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/causality-and-identification/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/causality-and-identification/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/causality-and-identification/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/causality-and-identification/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Causality and Identification</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Causality and Identification</h1> <p class="article-summary">Causal identification is not a significant regression; it maps observed data to a counterfactual through design or assumptions. Random experiments provide a benchmark, while observational methods each carry their own conditions.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M07 · 因果推断</strong></div> <div class="meta-item"><span>Level</span><strong>Systematic</strong></div> <div class="meta-item"><span>Read</span><strong>5 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>A hypothetical 12-month experiment with 100 teams: 50 randomly assigned to a research checklist, 50 working as usual. Does the checklist raise monthly excess return? Why does randomization support causation, and why is a comparison by adoption insufficient? Numbers are hypothetical.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Teams</td>
+<td align="right">100 (50/50)</td>
+</tr>
+<tr>
+<td>Unit of analysis</td>
+<td align="right">team-months: 100 × 12 = 1,200 observations</td>
+</tr>
+<tr>
+<td>Clustering level</td>
+<td align="right">team (100 clusters)</td>
+</tr>
+<tr>
+<td>Treatment mean</td>
+<td align="right">1.30% per month</td>
+</tr>
+<tr>
+<td>Control mean</td>
+<td align="right">0.80% per month</td>
+</tr>
+<tr>
+<td>Difference (ITT)</td>
+<td align="right">0.50 percentage points</td>
+</tr>
+<tr>
+<td>Conventional SE</td>
+<td align="right">0.20</td>
+</tr>
+<tr>
+<td>Cluster-robust SE</td>
+<td align="right">0.28</td>
+</tr>
+<tr>
+<td>Treatment teams not using checklist</td>
+<td align="right">8 / 50</td>
+</tr>
+<tr>
+<td>Control teams adopting</td>
+<td align="right">5 / 50</td>
+</tr>
+<tr>
+<td>Adopter mean</td>
+<td align="right">1.26% per month (47 teams)</td>
+</tr>
+<tr>
+<td>Non-adopter mean</td>
+<td align="right">0.86% per month (53 teams)</td>
+</tr>
+<tr>
+<td>Observational (adopters - non-adopters)</td>
+<td align="right">0.40 → adjusted 0.10 (SE 0.25)</td>
+</tr>
+</tbody></table>
+<p>Data are hypothetical; the outcome is monthly excess return in percentage points. The figures fit together: adopters are the 42 treated teams that used the checklist plus the 5 control teams that adopted it, i.e. 47 teams, against 53 non-adopters. With adopter and non-adopter means of 1.262% and 0.862% (shown rounded in the table), the weighted overall mean is <code>(47×1.262 + 53×0.862)/100 = 1.05%</code>, the same as the <code>(50×1.30 + 50×0.80)/100 = 1.05%</code> implied by the two arms. The unit of analysis is the team-month, and the 12 months within a team are correlated, so the estimates are clustered by team rather than treated as 1,200 independent observations.</p>
+<h2>Method and assumptions</h2>
+<p>Each team has two potential outcomes: Y(1) with the checklist and Y(0) without it. Only one of Y(1) and Y(0) is observed—the fundamental problem. Random assignment makes treatment independent of potential outcomes, so the mean difference identifies the average treatment effect (ATE). Assumptions: random assignment, no interference (SUTVA) and no differential attrition. With noncompliance, ITT identifies the effect of assignment; LATE also requires monotonicity and exclusion. Grouping by adoption creates selection bias; adjustment identifies only a conditional association without ignorability. Experiments change factors and observe responses to study cause and effect (NIST 5.1.1); randomization determines run order (NIST 5.3.3.1) and balances potential differences (OpenStax 1.4).</p>
+<h2>Results</h2>
+<p>ITT = 1.30 - 0.80 = 0.50 percentage points. Treating the 1,200 team-month observations as independent gives SE 0.20, t = 2.50 (df = 1,198), p ≈ 0.012 and a 95% interval of 0.11 to 0.89. Clustering by team (100 clusters, df = 99) gives SE 0.28, t = 1.79, p ≈ 0.08 and an interval of -0.06 to 1.06. The point estimate is unchanged, but outcomes in different months of the same team are correlated, so the independent-observation assumption understates the uncertainty and the conventional significance is not robust.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-causal-title fig-causal-desc" viewBox="0 0 440 230" width="100%">
+    <title id="fig-causal-title">Three estimates with 95% intervals</title>
+    <desc id="fig-causal-desc">Horizontal interval plot. ITT with conventional SE: estimate 0.50, interval 0.11 to 0.89. ITT with cluster-robust SE: estimate 0.50, interval minus 0.06 to 1.06. Observational estimate after adjustment: 0.10, interval minus 0.39 to 0.59. A vertical dashed line marks a zero effect.</desc>
+    <line x1="240" y1="40" x2="240" y2="188" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="150" y1="195" x2="420" y2="195" stroke="var(--border)" stroke-width="2"></line>
+    <g stroke="var(--accent)" stroke-width="2">
+      <line x1="255" y1="60" x2="365" y2="60"></line>
+      <line x1="255" y1="54" x2="255" y2="66"></line>
+      <line x1="365" y1="54" x2="365" y2="66"></line>
+      <line x1="232" y1="110" x2="388" y2="110"></line>
+      <line x1="232" y1="104" x2="232" y2="116"></line>
+      <line x1="388" y1="104" x2="388" y2="116"></line>
+      <line x1="185" y1="160" x2="323" y2="160" opacity="0.7"></line>
+      <line x1="185" y1="154" x2="185" y2="166" opacity="0.7"></line>
+      <line x1="323" y1="154" x2="323" y2="166" opacity="0.7"></line>
+    </g>
+    <g fill="var(--gold)">
+      <circle cx="310" cy="60" r="5"></circle>
+      <circle cx="310" cy="110" r="5"></circle>
+      <circle cx="254" cy="160" r="5"></circle>
+    </g>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="8" y="64">ITT, conventional SE</text>
+      <text x="8" y="114">ITT, cluster SE</text>
+      <text x="8" y="164">Adjusted observational</text>
+      <text x="184" y="215">-0.4</text>
+      <text x="236" y="215">0</text>
+      <text x="296" y="215">0.4</text>
+      <text x="352" y="215">0.8</text>
+      <text x="408" y="215">1.2</text>
+      <text x="205" y="226">Monthly excess return (pp)</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: the three estimates and their 95% intervals, in monthly excess return percentage points, for the hypothetical sample of 100 teams over 12 months. The two ITT rows share a point estimate and differ only in how the standard error is computed; the observational estimate is a different quantity. The dashed line marks zero, and the figure does not represent a real experiment.</figcaption>
+</figure>
+
+<p>Noncompliance: 8/50 treatment teams did not use the checklist; 5/50 control teams adopted it; the compliance difference is 0.84 - 0.10 = 0.74, so LATE ≈ 0.50 / 0.74 = 0.68 percentage points, under monotonicity and exclusion.</p>
+<p>Observational comparison: adopters 1.26%, non-adopters 0.86%, naive difference 0.40; that difference mixes in the selection of who was willing to adopt the checklist and is not the same quantity as the ITT of 0.50. After adjustment it is 0.10 (SE 0.25, interval -0.39 to 0.59). Selection bias can be large and adjustment is not causation.</p>
+<h2>Robustness</h2>
+<p>The figures below are also hypothetical; they show which checks to run and cannot be derived from the setting above.</p>
+<ul>
+<li>Baseline balance: standardized differences in size and past returns are below 0.1; a single randomization need not deliver exact balance.</li>
+<li>Cluster SE of 0.28 across 100 team clusters; treating team-months as independent overstates precision.</li>
+<li>Attrition: 6 treatment and 3 control teams are missing during the window; the available-case ITT is 0.46 (SE 0.22); outcome-related attrition still biases.</li>
+<li>Placebo: the pre-period 12-month return difference is 0.05 (SE 0.18), near zero.</li>
+<li>A Sharpe-ratio outcome has the same direction; external validity is limited to one institution and a 12-month window.</li>
+</ul>
+<h2>Limitations</h2>
+<p>Randomized experiments face small samples, within-team correlation, incomplete compliance, attrition, Hawthorne effects and external validity. Difference-in-differences, instrumental variables and regression discontinuity have their own assumptions and identification is not automatic: difference-in-differences needs the two groups to have moved alike before treatment in the absence of it, so any concurrent change at the treatment date contaminates the difference; an instrument must correlate with the treatment and affect the outcome only through it, and a weak instrument or a breach of the exclusion restriction invalidates the estimate; regression discontinuity identifies only a local effect at the threshold, and it fails if units can manipulate the assignment variable so that the two sides are not comparable. These three summaries are this article&#39;s own methodological statement; the three registered sources do not cover them. Significance is not causation; causal claims rest on design assumptions, not p-values. The charts and data snapshots on this site show co-movement and correlation: they are associational evidence and do not by themselves constitute causal evidence. Numbers are hypothetical and cannot be used as strategy advice.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Define treatment, control, outcome and time window.</li>
+<li>Check randomization balance and compliance rates.</li>
+<li>Compute ITT with standard errors clustered by the assignment unit.</li>
+<li>Report noncompliance and attrition; compute LATE where needed and state its assumptions.</li>
+<li>Run placebo and subsample checks.</li>
+<li>Distinguish ITT, LATE and the observational association.</li>
+</ol>
+<pre><code class="language-text">ITT = mean(Y | assigned=1) - mean(Y | assigned=0)
+LATE = ITT / (compliance_treated - compliance_control)
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>Random assignment supports a causal reading of the 0.50 point ITT, but the clustered interval crosses zero; LATE ≈ 0.68 depends on compliance assumptions. The observational 0.40 falls to 0.10 after adjustment, showing large selection bias. This is ITT evidence for a finite population and a single window, not a universal law.</p>
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Control Variables and Confounding (RES-014).</li>
+<li>Related reading: Introduction to Linear Regression (RES-013), Control Variables and Confounding (RES-014), Trends, Nonstationarity and Spurious Regression (RES-016).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Causality and Identification: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Causality and Identification — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Causality and Identification: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Causal identifica</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">tion is not a…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Causal identific</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ation is not a</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">significant</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">regression; it</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">maps observed…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Teams | 100</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">(50/50) | |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Unit of analysis…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Causality and Identification — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Causality and Identification: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Causality and Identification: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Randomized experiments face</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">small samples, within-team</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">correlation, incomplete</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">compliance, attrition…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical 12-month</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">experiment with 100 teams:</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">50 randomly assigned to a</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">research checklist, 50…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Causality and Identification — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Causality and Identification: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Causality and Identification: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Causal identification</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> is not a significant…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Randomized experiment</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">s face small…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">A hypothetical 12-month</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">experiment with 100 teams: 50…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Causality and Identification — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>Why does random assignment support causal identification?</li>
+<li>What is the difference between ITT and LATE?</li>
+<li>What does a larger cluster-robust SE imply?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>Random assignment makes treatment independent of potential outcomes, so group differences cannot reflect pre-treatment selection.</li>
+<li>ITT is the assignment effect and includes noncompliance; LATE is the complier effect and requires monotonicity and exclusion.</li>
+<li>Outcomes are correlated within teams; ignoring this understates the SE and overstates significance.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.1.1 What is experimental design?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm">https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm</a> (accessed 2026-10-30)</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.3.3.1 Completely randomized designs.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm">https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm</a> (accessed 2026-10-30)</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.4 Experimental Design and Ethics.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics">https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Explain why random assignment supports a causal reading, and separate assignment from complier effects using ITT and LATE</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Use the 0.40 adopter-versus-non-adopter gap to show why selection is not the experimental result</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Explain why random assignment supports a causal reading, and separate assignment from complier effects using ITT and LATE</li><li>Use the 0.40 adopter-versus-non-adopter gap to show why selection is not the experimental result</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/control-variables-and-confounding/">RES-014 · Control Variables and Confounding</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/linear-regression-introduction/">RES-013 · Introduction to Linear Regression</a> </li><li> <a href="/en/learn/control-variables-and-confounding/">RES-014 · Control Variables and Confounding</a> </li><li> <a href="/en/learn/trends-nonstationarity-and-spurious-regression/">RES-016 · Trends, Nonstationarity and Spurious Regression</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.1.1 What is experimental design?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: Experiments study factor effects by changing process factors and observing responses, with the goal of establishing cause-and-effect relationships; models can include main effects and interactions.</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.3.3.1 Completely randomized designs</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: In a completely randomized design the run sequence is determined randomly; balance requires the same number of replications at each factor level to maximize sensitivity.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.4 Experimental Design and Ethics</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Random assignment spreads potential differences roughly equally across groups; a control group and placebo help isolate a treatment effect; an experiment can support a cause-and-effect conclusion.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/causality-and-identification/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

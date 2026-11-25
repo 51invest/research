@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Data Units and Statistical Definitions · 51Invest</title><meta name="description" content="Similar labels can hide different denominators, units, frequencies and seasonal adjustments; check definitions before comparing, and never fill missing values with zero."><link rel="canonical" href="https://research.51invest.com/en/learn/data-units-and-definitions/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/data-units-and-definitions/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/data-units-and-definitions/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/data-units-and-definitions/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/data-units-and-definitions/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Data Units and Statistical Definitions</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Data Units and Statistical Definitions</h1> <p class="article-summary">Similar labels can hide different denominators, units, frequencies and seasonal adjustments; check definitions before comparing, and never fill missing values with zero.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M04 · 数据口径</strong></div> <div class="meta-item"><span>Level</span><strong>Foundation</strong></div> <div class="meta-item"><span>Read</span><strong>9 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>Why can two numbers both called “unemployment” or “inflation” fail to be comparable? Data are not pure numbers detached from definitions. Units, denominators, frequency, seasonal adjustment, revisions, geography and price bases change meaning. This article provides a pre-comparison checklist and uses unemployment, price indices, GDP and debt to illustrate common errors.</p>
+<h2>Data and definitions</h2>
+<h3>Units and denominators</h3>
+<ul>
+<li><strong>Levels:</strong> persons, currency amounts, index points.</li>
+<li><strong>Rates:</strong> unemployment, interest, growth; the denominator must be stated.</li>
+<li><strong>Indices:</strong> set to 100 at a base period; the level has no direct economic unit.</li>
+<li><strong>Stocks:</strong> balances at a point in time, such as debt or assets.</li>
+<li><strong>Flows:</strong> amounts over a period, such as GDP, income or investment.</li>
+</ul>
+<p>Suppose 8.5 million people are unemployed and the labor force is 170 million. The unemployment rate is <code>8.5 / 170 = 5.0%</code>. That is a share of the labor force, not of the total population. Dividing 8.5 million by a population of 340 million gives about 2.5%, but that is a different indicator and should not be called the unemployment rate.</p>
+<p>If a price index rises from 120 to 125, the increase is <code>125/120 - 1 ≈ 4.17%</code>, not 5 percentage points and not 5%. The difference of 5 is an index-point change; only a growth-rate conversion gives a percentage change.</p>
+<p>GDP is an annual or quarterly flow, while government debt is a stock at a point in time. “Debt rose by 2 trillion this year” (currency unstated in the quote; assume US dollars and an annual flow) must distinguish new borrowing during the year from the change in the outstanding balance. A debt-to-GDP ratio must state the period and definitions of both numerator and denominator.</p>
+<p>The variable, population and sample conventions come from OpenStax: data are the values of variables, a population is the set of objects studied, a sample is a subset of the population, and variables are qualitative (categorical) or quantitative (numerical) [1].</p>
+<h2>Frequency, seasonal adjustment and revisions</h2>
+<ul>
+<li><strong>Frequency:</strong> monthly, quarterly and annual values are not interchangeable; interpolating a quarterly value to monthly does not create new information.</li>
+<li><strong>Seasonal adjustment:</strong> adjusted series remove recurring calendar and seasonal variation to reveal trends [3]; unadjusted series retain seasonal movement. Do not mix them, and do not treat a seasonally adjusted monthly change as an annual rate.</li>
+<li><strong>Revisions:</strong> first releases may be revised. Record the data vintage, access time and release date. Using the latest revision in a historical backtest can introduce look-ahead bias.</li>
+<li><strong>Missing versus zero:</strong> missing means unknown and must not be filled with zero; zero can be a real observation. Missing values, discontinued series, non-disclosure and true zeros are different states.</li>
+<li><strong>Nominal versus real:</strong> nominal values are not adjusted for prices; real values use a price index or deflator. If nominal wages rise 5% and CPI rises 3%, real wages rise by about <code>1.05/1.03 - 1 ≈ 1.94%</code>, not 2 percentage points.</li>
+<li><strong>Currency direction:</strong> <code>USD/JPY</code> means yen per dollar, while <code>JPY/USD</code> means dollars per yen; they are reciprocals. Record the quote direction, date and source.</li>
+<li><strong>Geography and institutions:</strong> borders, coverage, seasonal-adjustment methods and definitions change; cross-country comparisons cannot rely on labels alone.</li>
+</ul>
+<p>What the ONS page states is that seasonal adjustment removes systematic calendar-related variation associated with the time of year so that consecutive periods can be compared [3] (verbatim in source 3&#39;s registration). The rule that adjusted and unadjusted series must not be mixed comes from this site&#39;s terminology register entry TERM-SEASONAL-ADJUSTMENT (seasonal adjustment; its disambiguation states the prohibition on mixing adjusted and unadjusted series). It is this site&#39;s own convention, not a sentence from the ONS page; the same applies to reading a seasonally adjusted monthly change as a year-on-year rate.</p>
+<h2>Examples</h2>
+<p>The four calculations used in this article (hypothetical figures, computed on the definitions stated here): the unemployment rate takes the labor force as denominator, <code>8.5 / 170 = 5.0%</code>, while <code>8.5 / 340 = 2.5%</code> using the population is a different indicator; index points are not percentages, so a CPI move from 120 to 125 is <code>125 / 120 - 1 = 4.17%</code>, not 5 percentage points; a seasonally adjusted index moving from 1.03 to 1.05 is a <code>1.05 / 1.03 - 1 = 1.94%</code> month-on-month change; and annualising a monthly 0.3% gives <code>0.3% x 12 = 3.6%</code> on a simple basis but <code>(1.003)^12 - 1 = 3.66%</code> compounded - both are arithmetically correct, so the text must say which one it uses. These are this article&#39;s own calculations and are not taken from any registered source.</p>
+<table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Problem</th>
+<th>Better statement</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>“Unemployment is 5%, so 5% of the population is unemployed”</td>
+<td>Wrong denominator</td>
+<td>5% of the labor force</td>
+</tr>
+<tr>
+<td>“CPI rose from 120 to 125, so inflation is 5%”</td>
+<td>Index points treated as percent</td>
+<td>About 4.17%</td>
+</tr>
+<tr>
+<td>“Debt increased by 2 trillion this year” (currency unstated)</td>
+<td>Stock and flow mixed</td>
+<td>State whether this is the balance change or new borrowing</td>
+</tr>
+<tr>
+<td>“Seasonally adjusted monthly rise of 0.3% means 3.6% for the year”</td>
+<td>Mechanical annualization</td>
+<td>State the adjustment and use a year-over-year or explicit annualization method</td>
+</tr>
+<tr>
+<td>“Fill missing values with zero”</td>
+<td>Unknown treated as a real value</td>
+<td>Keep missing and document the rule</td>
+</tr>
+</tbody></table>
+<figure>
+  <svg role="img" aria-labelledby="fig-unit-title fig-unit-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-unit-title">Index points are not percentage points</title>
+    <desc id="fig-unit-desc">Two zero-based bars at twenty-four pixels per percentage point. The left bar is the mistaken reading of a CPI move from 120 to 125 as 5 percent, 120 pixels tall; the right bar is the correct 4.17 percent, about 100.1 pixels. They differ by 0.83 percentage points.</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <rect x="120" y="60" width="80" height="120" fill="var(--gold)" opacity="0.9"></rect>
+    <rect x="250" y="79.9" width="80" height="100.1" fill="var(--accent)" opacity="0.85"></rect>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">Inflation (%, zero baseline, 24 px per point)</text>
+      <text x="140" y="56">5.00</text>
+      <text x="270" y="76">4.17</text>
+      <text x="96" y="200">mistake: points as %</text>
+      <text x="228" y="200">correct: 125 ÷ 120 − 1</text>
+      <text x="60" y="36" font-size="10">same class of error: "5% unemployment" is of the labour force, not population</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: two readings of the same CPI move (120 → 125) - treating the 5 index points as 5% (wrong) against 125 ÷ 120 − 1 = 4.17% (right), on a zero baseline at 24 pixels per percentage point. A 0.83-point gap is enough to change policy and real-return conclusions in a low-inflation year; the note below lists a comparable denominator error. Numbers are teaching assumptions.</figcaption>
+</figure>
+
+<h2>Robustness and failure conditions</h2>
+<ul>
+<li>Splicing series after a definition change can turn a measurement change into an apparent economic change.</li>
+<li>Comparing index levels without checking the base and weighting method can produce wrong growth rates.</li>
+<li>Mixing first releases with later revisions can create look-ahead bias and non-reproducible results.</li>
+<li>Ignoring seasonal, working-day and leap-year effects can turn calendar effects into trends.</li>
+<li>Currency, unit and rounding errors amplify cross-country comparison errors.</li>
+<li>Selection, survivorship and missing-data mechanisms can make descriptive statistics unrepresentative.</li>
+</ul>
+<h2>Reproduction checklist</h2>
+<ol>
+<li>Record the source, series code, definition and denominator.</li>
+<li>State units, currency, price base and scale.</li>
+<li>Confirm frequency, observation period, release date and access time.</li>
+<li>Check seasonal adjustment, working-day adjustment and annualization.</li>
+<li>Distinguish nominal from real, stock from flow, and level from growth rate.</li>
+<li>Verify geography, institutional definitions and revision vintage.</li>
+<li>Mark missing values, zeros, discontinued series and estimates.</li>
+<li>Preserve raw data and transformations so others can reproduce the result.</li>
+</ol>
+<p>Stating units explicitly is what makes numbers comparable: the International System of Units defines measurement through seven base units, as described by the NIST Physical Measurement Laboratory [2].</p>
+<h2>Strength of conclusions</h2>
+<p>Only after these checks can two numbers be described as comparable in a stated sense. Consistent definitions support descriptive comparison; they do not establish causation, predictive power or policy effects. If definitions differ, adjust them or state the limitation rather than treating the difference as an economic finding.</p>
+<!-- kp-supplement:start -->
+<h2>Knowledge-point review</h2>
+<h3>units</h3>
+<p><strong>Definition</strong>: Units are standards of measurement such as yuan, tonnes, kilowatt-hours, percentages and index points, defining meaning and comparability.</p>
+<p><strong>Mechanism</strong>: Conversion, dimensions and pricing basis affect calculations; mixed units cause order-of-magnitude errors, and real versus nominal and total versus per-capita must differ.</p>
+<p><strong>Example</strong>: For example, treating 100 million yuan as 10,000 yuan inflates a thousandfold, and treating a percentage as a decimal changes results.</p>
+<p><strong>Boundary</strong>: Units are not labels; hidden units, FX and index bases mislead, missing axis labels cause misreads, and dimensional checks belong before calculation.</p>
+<h3>currencies</h3>
+<p><strong>Definition</strong>: A currency is the unit of denomination, and data in different currencies must be converted or FX-adjusted for comparison.</p>
+<p><strong>Mechanism</strong>: Exchange rates, timing and nominal versus real values matter; local currency, dollar and SDR bases differ and conversion adds volatility.</p>
+<p><strong>Example</strong>: For example, comparing GDP at market rates or PPP gives very different results.</p>
+<p><strong>Boundary</strong>: Currency is not simple conversion; FX timing, inflation and controls bias results, PPP does not suit all comparisons, and cross-border data need source and date.</p>
+<h3>stocks and flows</h3>
+<p><strong>Definition</strong>: A stock is a quantity at a point in time, and a flow is a change over a period; flows accumulate into stocks, and stock change equals inflow minus outflow.</p>
+<p><strong>Mechanism</strong>: GDP and income are flows, while debt, assets and population are stocks; ratios such as debt/GDP mix stock and flow and need horizon and valuation care.</p>
+<p><strong>Example</strong>: For example, annual investment is a flow and the accumulated capital stock is a point value; a deficit is a flow and debt a stock.</p>
+<p><strong>Boundary</strong>: Stocks and flows must not be mixed; treating a flow as a stock misjudges scale, revaluation, FX and depreciation break simple accumulation, and ratios need numerator and denominator definitions.</p>
+<h3>data frequency</h3>
+<p><strong>Definition</strong>: Frequency is the observation interval, such as daily, monthly, quarterly or annual, affecting volatility, sample size and comparability.</p>
+<p><strong>Mechanism</strong>: High-frequency data have more observations but noise and microstructure bias, low-frequency data are smooth but hide turns, and mixed frequencies need alignment or models.</p>
+<p><strong>Example</strong>: For example, daily return volatility exceeds annualised monthly volatility, and quarterly GDP is smoother than monthly indicators.</p>
+<p><strong>Boundary</strong>: Higher frequency is not always better; daily data have weekend and holiday gaps, low-frequency data are revised, and conversion adds interpolation and aggregation error, so direct comparison fails.</p>
+<h3>seasonal adjustment</h3>
+<p><strong>Definition</strong>: Seasonal adjustment removes seasonal factors such as weather, holidays and production cycles to reveal trend and cycle.</p>
+<p><strong>Mechanism</strong>: Methods such as X-13ARIMA-SEATS estimate seasonal factors; adjusted data suit month-on-month analysis, while raw data suit year-on-year or specific work.</p>
+<p><strong>Example</strong>: For example, retail swings around Spring Festival, and adjusted data show the underlying trend better.</p>
+<p><strong>Boundary</strong>: Adjustment is not deleting reality; methods, samples and revisions change results, adjusted data can be misread as levels, and abnormal seasons and structural change break factors.</p>
+<h3>release dates and timing</h3>
+<p><strong>Definition</strong>: Release date is when data first become public, determining when markets can see information, often with calendars and embargoes.</p>
+<p><strong>Mechanism</strong>: Data have preliminary, revised and final values, and release timing differs from the reference period; reactions depend on surprises and revisions.</p>
+<p><strong>Example</strong>: For example, GDP advance estimates come weeks after the quarter and are revised later, and traders watch timing, not just the number.</p>
+<p><strong>Boundary</strong>: Release date is not the data date; time zones, delays and leaks create information advantage, preliminary values are noisy, and using final values in backtests causes look-ahead bias.</p>
+<h3>data revisions</h3>
+<p><strong>Definition</strong>: Revisions update published data with new information, method changes or rebasing.</p>
+<p><strong>Mechanism</strong>: Revisions affect history, growth rates and model parameters; preliminary and final values can differ greatly and revisions can be systematic.</p>
+<p><strong>Example</strong>: For example, an initial employment estimate later revised down sharply, changing the cyclical read.</p>
+<p><strong>Boundary</strong>: Revisions are not just error fixes; method changes and rebasing create breaks, real-time and final data differ, and backtests should use data available then, not the final vintage.</p>
+<h3>missing data and outliers</h3>
+<p><strong>Definition</strong>: Missing data are absent observations, and outliers are values far from the distribution or mechanism, due to error, extreme events or structural change.</p>
+<p><strong>Mechanism</strong>: Missingness can be random, conditional or non-random; outliers may be errors or real extremes, handled by deletion, imputation, trimming or robust statistics.</p>
+<p><strong>Example</strong>: For example, survey nonresponse and sensor failures create missing data, while crisis returns are real tails, not errors.</p>
+<p><strong>Boundary</strong>: Missing and outliers must not be deleted blindly; deletion biases samples, imputation invents information, outliers can be the key signal, and handling needs mechanisms and sensitivity.</p>
+<!-- kp-supplement:end -->
+
+<h2>Related</h2>
+<ul>
+<li>Related reading (this article sets no required prerequisites): Stocks and Flows (RES-002), Frequency and Time Alignment (RES-003), Seasonal Adjustment and Revisions (RES-004).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Data Units and Statistical Definitions: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Data Units and Statistical Definitions — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Units and Statistical Definitions: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Similar labels</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">can hide differen…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Similar labels</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">can hide differe</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">nt denominators,</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> units, frequenc</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ies and seasonal…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data and definitions</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data and definiti</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">ons: ### Units…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Data and definit</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ions: ### Units</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">and denominators</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> Levels: persons</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">, currency…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data and definitions</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Units and denomin</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">ators Levels…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Units and</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">denominators</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Levels: persons,</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> currency</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">amounts, index…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Data Units and Statistical Definitions — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Data Units and Statistical Definitions: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Units and Statistical Definitions: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Splicing series after a</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">definition change can turn</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">a measurement change into</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">an apparent economic change.…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Why can two numbers both</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">called “unemployment” or</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">“inflation” fail to be</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">comparable?…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Data Units and Statistical Definitions — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Data Units and Statistical Definitions: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Data Units and Statistical Definitions: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Similar labels can</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">hide different…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Splicing series</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">after a definition…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Why can two numbers both called</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">“unemployment” or “inflation”…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Data Units and Statistical Definitions — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li><strong>Index growth.</strong> A price index rises from 120 to 125. What is the growth rate, and why is “5%” wrong?</li>
+<li><strong>Denominator.</strong> Unemployment is 8.5 million, the labor force is 170 million and the population is 340 million. What is the unemployment rate, and why not divide by population?</li>
+<li><strong>Missing and zero.</strong> A monthly series is not published for one month. What happens if it is filled with zero, and how should it be recorded?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>The growth rate is <code>125/120 - 1 ≈ 4.17%</code>. The 5 is an index-point difference; index levels are not percentages and cannot be treated as a growth rate.</li>
+<li>The rate is <code>8.5 / 170 = 5.0%</code>; the denominator is the labor force, not the total population. Dividing by population gives a different indicator, not the unemployment rate.</li>
+<li>Filling zero turns “unknown” into “nothing happened,” biasing means, growth rates and correlations. Keep the value missing, record why it was not published, and state the treatment in the analysis.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.1 Definitions of Statistics, Probability, and Key Terms.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-1-definitions-of-statistics-probability-and-key-terms">https://openstax.org/books/introductory-statistics-2e/pages/1-1-definitions-of-statistics-probability-and-key-terms</a> (accessed 2026-10-30)</li>
+<li>National Institute of Standards and Technology. “SI Units.” <a href="https://www.nist.gov/pml/owm/metric-si/si-units">https://www.nist.gov/pml/owm/metric-si/si-units</a> (accessed 2026-10-30)</li>
+<li>Office for National Statistics. “Seasonal adjustment.” Open Government Licence v3.0. <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment">https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Distinguish levels, rates, indices, stocks and flows, and explain how units and denominators change meaning.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Check frequency, seasonal adjustment, revisions, nominal versus real values, geography and currency before comparing series.</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Distinguish levels, rates, indices, stocks and flows, and explain how units and denominators change meaning.</li><li>Check frequency, seasonal adjustment, revisions, nominal versus real values, geography and currency before comparing series.</li><li>Distinguish missing values from true zeros and maintain a checkable definition record for comparisons.</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <p class="muted"> None. </p> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/stocks-and-flows/">RES-002 · Stocks and Flows</a> </li><li> <a href="/en/learn/frequency-and-time-alignment/">RES-003 · Frequency and Time Alignment</a> </li><li> <a href="/en/learn/seasonal-adjustment-and-revisions/">RES-004 · Seasonal Adjustment and Revisions</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-1-definitions-of-statistics-probability-and-key-terms" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.1 Definitions of Statistics, Probability, and Key Terms</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Data are values of variables; a population is the collection of interest, a sample is a subset, and variables are qualitative or quantitative.</p> </div><div class="source"> <a href="https://www.nist.gov/pml/owm/metric-si/si-units" rel="noopener noreferrer" target="_blank">SI Units</a> <p>National Institute of Standards and Technology · NIST Physical Measurement Laboratory</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain)</p> <p>Supports: The International System of Units defines measurement through seven base units; stating units is a precondition for comparable values.</p> </div><div class="source"> <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment" rel="noopener noreferrer" target="_blank">Seasonal adjustment</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>Accessed: 2026-11-04 · License: Open Government Licence v3.0</p> <p>Supports: Seasonal adjustment removes recurring calendar and seasonal variation to reveal trends; adjusted and unadjusted series should not be mixed. Verbatim from the page retrieved 2026-11-04: &quot;The purpose of seasonal adjustment is to remove systematic calendar-related variation associated with the time of the year, that is, seasonal effects. This facilitates comparisons between consecutive time periods.&quot; This sentence states only that seasonal adjustment removes systematic calendar-related variation and facilitates comparison between consecutive periods; it does not prohibit mixing adjusted and unadjusted series.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/data-units-and-definitions/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

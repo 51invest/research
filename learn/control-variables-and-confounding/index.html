@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>控制变量与混杂 · 巫妖投资</title><meta name="description" content="控制变量用于阻断混杂路径，而不是把所有可得变量都放进回归；简单相关在调整混杂后会减弱，但调整本身也可能引入新偏差。"><link rel="canonical" href="https://research.51invest.com/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/control-variables-and-confounding/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/control-variables-and-confounding/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/control-variables-and-confounding/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">控制变量与混杂</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">控制变量与混杂</h1> <p class="article-summary">控制变量用于阻断混杂路径，而不是把所有可得变量都放进回归；简单相关在调整混杂后会减弱，但调整本身也可能引入新偏差。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M07 · 因果推断</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 14 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>一个假设的 72 个月样本：基金月度超额收益 y、标准化投资者情绪指数 x、市场月度超额收益 z。简单回归显示 x 与 y 正相关。问题：加入 z 后，x 的系数还剩多少？z 是混杂变量、中介变量还是其他结构？本文说明控制变量的选择逻辑和证据边界。所有数值为教学假设，不是真实市场数据。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>样本量 n</td>
+<td align="right">72</td>
+</tr>
+<tr>
+<td>y 均值 / 标准差</td>
+<td align="right">0.70% / 0.77 百分点</td>
+</tr>
+<tr>
+<td>x 均值 / 标准差</td>
+<td align="right">0 / 1.00</td>
+</tr>
+<tr>
+<td>z 均值 / 标准差</td>
+<td align="right">0.55% / 4.00 百分点</td>
+</tr>
+<tr>
+<td>x 与 z 的相关</td>
+<td align="right">0.60</td>
+</tr>
+<tr>
+<td>简单回归 x 斜率</td>
+<td align="right">0.45（SE 0.075）</td>
+</tr>
+<tr>
+<td>多元回归 x 斜率</td>
+<td align="right">0.10（SE 0.062）</td>
+</tr>
+<tr>
+<td>多元回归 z 斜率</td>
+<td align="right">0.146（SE 0.0156）</td>
+</tr>
+<tr>
+<td>R²</td>
+<td align="right">0.34 → 0.71</td>
+</tr>
+</tbody></table>
+<p>x 为标准化情绪指数（无量纲），z 为市场超额收益；数据为假设的月度观测，非真实数据。这组数字来自一个可复算的设定：真实模型为 <code>y = 0.10·x + 0.146·z + u</code>，其中 <code>u</code> 的标准差 0.41 百分点，<code>corr(x,z)=0.60</code>；由此得 <code>y</code> 的标准差 0.77 百分点，<code>R²=0.71</code>。把 <code>y</code> 单独对 <code>x</code> 回归会得到斜率 <code>0.10 + 0.146 × 2.40 = 0.45</code>，这正是&quot;遗漏混杂&quot;后的偏误量。标准误用总体近似式给出：简单回归 <code>SE(b)=s_e/(s_x·√(n-2))</code>，多元回归 <code>SE=s_e/(s_x·√(n-3)·√(1-corr(x,z)²))</code>；表内数值已四舍五入，用抽样数据复算会有约 0.01 的出入。</p>
+<h2>方法与假设</h2>
+<p>简单回归为 y = a + b x；多元回归为 y = a + b x + c z。混杂指多个因素对结果的影响无法分开；两个变量之间有关联，并不意味着一个导致另一个（OpenStax 1.2）。若 z 同时影响 x 和 y，且不是 x 的结果，则 z 是混杂变量，遗漏它会使 b 有偏。遗漏变量偏差近似为 c × δ，其中 c 是多元回归里 z 的系数，δ 是把混杂对被解释变量回归、即 <code>z = d + δ·x + e</code> 得到的斜率（在标准差口径下 δ = corr(x,z)·s_z/s_x）。控制变量应阻断后门路径，而不是任意加入：控制中介变量会拿走部分目标效应，控制对撞变量会引入新偏差。线性、独立、同方差和正确函数形式仍是前提。设计实验时，区组也可以把干扰因素控制住（NIST 5.3.3.2）。</p>
+<h2>结果</h2>
+<p>简单回归：b = 0.45（SE 0.075，t = 6.00，95% 区间 0.30 至 0.60），R² = 0.34。</p>
+<p>多元回归：b = 0.10（SE 0.062，t = 1.61，p ≈ 0.11，95% 区间 -0.02 至 0.22），c = 0.146（SE 0.0156，t = 9.36），R² = 0.71。两个回归的被解释变量都是基金月度超额收益（百分点）；b 按 x 每 1 个标准差计价，c 按 z 每 1 个百分点计价。</p>
+<p><code>corr(x,z)=0.60</code> 给出 δ = 0.60 × 4.00 / 1.00 = 2.40，于是遗漏变量偏差 c × δ = 0.146 × 2.40 = 0.35，恰为 0.45 - 0.10 的差异。加入 z 后，x 的关联从 0.45 降到 0.10 且不再显著。一个合理读法是：简单回归中的大部分关联来自市场暴露，而不是情绪独立的效应。但“合理”不等于“已证明”。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-att-title fig-att-desc" viewBox="0 0 420 215" width="100%">
+    <title id="fig-att-title">控制前后 x 对 y 的斜率</title>
+    <desc id="fig-att-desc">横轴为标准化情绪指数 x，范围负二点二到二点二；纵轴为基金月度超额收益（每月百分点，范围负零点五到二）。实线为简单回归，截距零点七零、斜率零点四五；虚线为控制市场收益 z 并取其均值后的拟合线，截距零点六一九七、斜率零点一零。两条虚线分别标出 x 等于零与 y 等于零。</desc>
+    <line x1="60" y1="180" x2="380" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="60" y1="30" x2="60" y2="180" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="220" y1="30" x2="220" y2="180" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="60" y1="150" x2="380" y2="150" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="60" y1="167.4" x2="380" y2="48.6" stroke="var(--accent)" stroke-width="2.5"></line>
+    <line x1="60" y1="126" x2="380" y2="99.6" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="7 4"></line>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="22">y（百分点 / 月，范围 −0.5 至 2.0）</text>
+      <text x="196" y="42" fill="var(--accent)">简单回归 ŷ = 0.70 + 0.45x</text>
+      <text x="236" y="92" fill="var(--gold)">控制 z 后 ŷ = 0.6197 + 0.10x</text>
+      <text x="64" y="198">x = −2.2</text>
+      <text x="214" y="198">0</text>
+      <text x="356" y="198">+2.2</text>
+    </g>
+  </svg>
+  <figcaption>图 1：同一份教学数据上的两条线——简单回归斜率 0.45，控制市场收益 z（固定在其均值 0.55%）后斜率 0.10。控制线的截距 0.70 − 0.146 × 0.55 = 0.6197。图中只画由正文系数唯一确定的直线，没有散点，因为 72 个月的观测值未给出。数值为教学假设。</figcaption>
+</figure>
+
+<p>图 1 的两条线说明控制前后斜率变了；图 2 把“为什么”画成一条后门路径：z 同时影响 x 和 y，不控制它，x 与 y 的关联会混入市场暴露；控制 z 后，斜率从 0.45 降到 0.10。</p>
+<h2>图解：后门路径</h2>
+<figure id="figure-backdoor-dag">
+  <svg role="img" aria-labelledby="fig-dag-title fig-dag-desc" viewBox="0 0 380 300" width="100%">
+    <title id="fig-dag-title">市场收益 z 同时影响情绪 x 与基金收益 y</title>
+    <desc id="fig-dag-desc">三个节点：上方市场收益 z，左下标准化情绪 x，右下基金月度超额收益 y。z 有两条金色虚线箭头分别指向 x 和 y，形成后门路径 x 从 z 到 y；x 到 y 有一条实线箭头。控制 z 后，x 的系数从 0.45 降到 0.10。</desc>
+    <defs>
+      <marker id="fig-dag-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--gold)"/></marker>
+      <marker id="fig-dag-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+    </defs>
+    <g font-family="inherit">
+      <rect x="140" y="44" width="100" height="46" rx="9" fill="var(--surface-2)" stroke="var(--gold)"/>
+      <rect x="10" y="160" width="110" height="46" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <rect x="260" y="160" width="110" height="46" rx="9" fill="var(--surface-2)" stroke="var(--accent)"/>
+      <g text-anchor="middle">
+        <text x="190" y="64" font-size="11.8" font-weight="650" fill="var(--text)">市场收益 z</text>
+        <text x="190" y="80" font-size="9.8" fill="var(--secondary)">同时影响 x 与 y</text>
+        <text x="65" y="180" font-size="11.8" font-weight="650" fill="var(--text)">情绪 x</text>
+        <text x="65" y="196" font-size="9.8" fill="var(--secondary)">标准化指数</text>
+        <text x="315" y="180" font-size="11.8" font-weight="650" fill="var(--text)">基金收益 y</text>
+        <text x="315" y="196" font-size="9.8" fill="var(--secondary)">月度超额收益</text>
+      </g>
+      <line x1="150" y1="90" x2="85" y2="156" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#fig-dag-gold)"/>
+      <line x1="230" y1="90" x2="295" y2="156" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#fig-dag-gold)"/>
+      <line x1="120" y1="183" x2="254" y2="183" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#fig-dag-accent)"/>
+      <text x="190" y="142" font-size="10.2" font-weight="650" fill="var(--gold)" text-anchor="middle">后门路径</text>
+      <text x="10" y="244" font-size="11.2" fill="var(--accent)">控制 z 后：x 的系数 0.45 → 0.10</text>
+      <text x="10" y="266" font-size="10.2" fill="var(--muted)">金色虚线 = 后门路径；控制 z 阻断它。</text>
+      <text x="10" y="286" font-size="10.2" fill="var(--secondary)">控制中介变量会拿走目标效应；控制对撞变量会引入新偏差。</text>
+    </g>
+  </svg>
+  <figcaption>图 2：z 同时影响 x 和 y，形成后门路径 x ← z → y；控制 z 阻断这条路径，x 的系数从 0.45 降到 0.10。图中箭头是用于说明的假设结构，不是已证明的因果；数值为教学假设。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>下列各项的数值同样是教学假设，用于说明该做哪些检查，不能由上文的设定推出。</p>
+<ul>
+<li>加入 z 的两期滞后，x 系数 0.08（SE 0.10），仍不显著。</li>
+<li>使用 HAC 稳健标准误，x 的 SE 约 0.10，结论不变。</li>
+<li>前后两半样本的 x 系数为 0.12 和 0.07，均不显著，区间变宽。</li>
+<li>改用另一种情绪指标，x 系数 0.11（SE 0.09）。</li>
+<li>若 z 是 x 的中介，控制 z 会低估总效应；若 z 是 x 的结果或对撞变量，控制反而引入偏差。仅凭数据无法完全区分这些结构，需要制度知识和时间顺序。</li>
+</ul>
+<h2>局限</h2>
+<p>观察性设计不能证明因果：不能随机分配时，组间除了解释变量还会有其他差异；随机分配把潜在差异大致均衡地分到各组，实验才能把处理效应与这些因素分开（OpenStax 1.4）。中介、对撞与后门路径按因果推断的通行术语使用，属于本文自己的方法学表述；本文登记的三条来源只覆盖混杂定义、随机分配与区组设计，不覆盖这两类错误控制。z 可能有测量误差，也可能遗漏规模、风格、费用等其他混杂；函数形式可能错误；72 个月只覆盖有限市场环境。控制变量不是越多越好，错误控制会制造偏差。本文数值为假设，不能据此评价真实基金或策略。</p>
+<h2>复现</h2>
+<ol>
+<li>明确 y、x、z 的时间顺序、定义和单位。</li>
+<li>先跑简单回归，记录系数、SE 和 R²。</li>
+<li>画 x 与 z、y 与 z 的散点图，判断 z 是否同时影响两者。</li>
+<li>加入 z，比较系数变化；报告辅助回归 δ 和偏差方向。</li>
+<li>做稳健标准误、子样本和替代口径检查。</li>
+<li>明确写出不能排除的混杂。</li>
+</ol>
+<pre><code class="language-text">short: y ~ x
+long:  y ~ x + z
+aux:   z ~ x          # δ = 辅助回归中 x 的斜率
+bias ≈ coef(x in long) * δ
+       = 遗漏变量偏差（相对 short 中 x 的斜率）
+</code></pre>
+<h2>结论强度</h2>
+<p>样本中 x 与 y 的简单关联为 0.45；控制市场收益 z 后降到 0.10 且不显著。这支持“简单关联大部分由市场暴露混杂”的解释，但不证明 x 没有因果作用，也不证明 z 是唯一混杂。结论是条件关联，不是因果效应。</p>
+<!-- kp-supplement:start -->
+<h2>知识点精读</h2>
+<h3>因果图</h3>
+<p><strong>定义</strong>：因果图是用节点和箭头表示变量间因果关系的图，常见有向无环图（DAG）。</p>
+<p><strong>机制</strong>：DAG 帮助识别混杂、碰撞和中介，指导控制变量选择；后门准则和前端准则可判断可识别性。</p>
+<p><strong>例子</strong>：例如教育→收入，能力→教育和收入，能力是混杂，需控制；若控制毕业后职业这一中介，会挡住部分效应。</p>
+<p><strong>边界</strong>：因果图不是事实；箭头方向依赖领域知识和假设，未观测变量和反馈回路会限制识别，图错了控制策略也会错。</p>
+<h3>混杂</h3>
+<p><strong>定义</strong>：混杂是第三变量同时影响处理和治疗结果，使观察到的关联混入非因果成分。</p>
+<p><strong>机制</strong>：混杂造成虚假或夸大的效应；随机化、匹配、回归控制和工具变量可缓解，但需知道混杂因素。</p>
+<p><strong>例子</strong>：例如冰淇淋销量与溺水相关，天气同时影响两者，天气是混杂。</p>
+<p><strong>边界</strong>：混杂不是相关本身；未观测混杂难以控制，控制碰撞或中介会引入新偏差，匹配也可能遗漏重要变量，因果解释需设计支持。</p>
+<h3>随机实验</h3>
+<p><strong>定义</strong>：随机实验把处理随机分配给对象，使处理组和对照组在期望上可比，是因果识别的黄金标准。</p>
+<p><strong>机制</strong>：随机化消除可观测和不可观测混杂，平均处理效应可识别；样本量、依从性和外部有效性影响结论。</p>
+<p><strong>例子</strong>：例如随机一半患者用新药、一半用安慰剂，比较结果差异。</p>
+<p><strong>边界</strong>：随机不是万能；不依从、 attrition、伦理和成本限制实验，随机化只保证内部有效，特定样本的结论未必适用其他人群。</p>
+<h3>自然实验</h3>
+<p><strong>定义</strong>：自然实验是利用政策变化、地理边界或偶然事件造成的近似随机差异识别因果。</p>
+<p><strong>机制</strong>：自然实验依赖外生冲击和可比性；政策断点、天气、灾害和制度变化常被使用，但需检验冲击是否真的外生。</p>
+<p><strong>例子</strong>：例如某地提高最低工资、邻地不变，可比较就业变化。</p>
+<p><strong>边界</strong>：自然实验不是真实验；外生性常受质疑，处理和政策同时变化，迁移和预期会污染对照，结论依赖具体制度和时期。</p>
+<h3>工具变量</h3>
+<p><strong>定义</strong>：工具变量是与处理相关、但与结果误差不直接相关的变量，用于分离处理的因果效应。</p>
+<p><strong>机制</strong>：工具变量需满足相关性（与处理相关）和外生性（只通过处理影响结果）；两阶段最小二乘常用。</p>
+<p><strong>例子</strong>：例如用距离或政策变化作为教育年限的工具，估计教育对收入的效应。</p>
+<p><strong>边界</strong>：工具变量不是随便找相关变量；弱工具、排除限制失败和局部效应会误导，外生性无法完全检验，估计的是特定人群的局部效应。</p>
+<h3>双重差分和断点</h3>
+<p><strong>定义</strong>：双重差分比较处理组和对照组在处理前后的变化，断点回归利用阈值两侧的近似随机差异。</p>
+<p><strong>机制</strong>：DID 依赖平行趋势假设，断点依赖阈值附近连续性和无操纵；两者都需检验安慰剂和稳健性。</p>
+<p><strong>例子</strong>：例如某市实施政策，比较该市与相似城市前后变化；高考分数线附近比较录取结果。</p>
+<p><strong>边界</strong>：方法不是自动因果；平行趋势可能不成立，断点两侧可能有操纵和混淆，样本窗口和函数形式影响结果，政策外溢也会污染对照。</p>
+<!-- kp-supplement:end -->
+
+<h2>关联</h2>
+<ul>
+<li>必需先修：线性回归入门（RES-013）。</li>
+<li>相关与推荐阅读：假设检验与实际意义（RES-012）、线性回归入门（RES-013）、因果关系与识别（RES-015）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">控制变量与混杂：机制链</title>
+    <desc id="fig-batch-chain-desc">控制变量与混杂 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量与混杂：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量用于阻断混杂</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">路径，而不是把所有可…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量用于阻断混</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">杂路径，而不是把所</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">有可得变量都放进回</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">归；简单相关在调整</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">混杂后会减弱，但调…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一个假设的</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start"> 72 个月样本：基金月…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：一个假设</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">的 72 个月样本：基</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">金月度超额收益</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">y、标准化投资者情</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">绪指数 x、市场月…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 样本量 n | 72</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | y 均值 /</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">标准差 | 0.70%…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 3：控制变量与混杂的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">控制变量与混杂：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量与混杂：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">观察性设计不能证明因果：不能随机</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">分配时，组间除了解释变量还会有其</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">他差异；随机分配把潜在差异大致均</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">衡地分到各组，实验才能把处理效应…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：控制变量与混杂的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">控制变量与混杂：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量与混杂：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">控制变量用于阻断混杂路径</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">，而不是把所有可得变量都…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">观察性设计不能证明因果：</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">不能随机分配时，组间除了…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：线性回归入门（RES-013）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 5：控制变量与混杂的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>控制变量与混杂变量有什么区别？</li>
+<li>为什么控制中介变量会改变目标效应？</li>
+<li>如果 z 是对撞变量，控制它会怎样？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>混杂变量同时影响处理与结果，是需要在设计中或回归中阻断的第三条路径；控制变量是为此目的加入模型的变量，不是任何可得变量。</li>
+<li>中介位于处理到结果的因果链条上；控制它会拿走一部分本应计入总效应的变化，估计的是直接效应而非总效应。</li>
+<li>控制对撞变量会打开原本关闭的路径，可能引入选择偏差，使系数偏离目标。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.2 Data, Sampling, and Variation in Data and Sampling.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling">https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.4 Experimental Design and Ethics.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics">https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.3.3.2 Randomized block designs.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm">https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能用 c × δ 复算遗漏变量偏差 0.146 × 2.40 = 0.35，并解释 0.45 与控制后 0.10 的差别</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能区分混杂、中介与对撞变量对应的控制策略及其风险</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能用 c × δ 复算遗漏变量偏差 0.146 × 2.40 = 0.35，并解释 0.45 与控制后 0.10 的差别</li><li>能区分混杂、中介与对撞变量对应的控制策略及其风险</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/hypothesis-testing-and-practical-significance/">RES-012 · 假设检验与实际意义</a> </li><li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li><li> <a href="/learn/causality-and-identification/">RES-015 · 因果关系与识别</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.2 Data, Sampling, and Variation in Data and Sampling</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：混杂指多个因素对响应的影响无法分开；两个变量之间存在关系并不意味着一个导致另一个。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.4 Experimental Design and Ethics</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：潜变量会干扰研究；随机分配使潜在差异大致均衡地分布到各组；对照组和安慰剂有助于分离处理效应；实验可以支持因果结论。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.3.3.2 Randomized block designs</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：区组通过把干扰因素保持恒定或限制在齐性区组内来控制干扰因素，从而降低实验误差。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/control-variables-and-confounding/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

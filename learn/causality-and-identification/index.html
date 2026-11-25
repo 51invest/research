@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>因果关系与识别 · 巫妖投资</title><meta name="description" content="因果识别靠的是用设计或假设，把观察数据映射到反事实；回归跑出显著结果并不够。随机实验提供基准，观察性方法各有不可替代的条件。"><link rel="canonical" href="https://research.51invest.com/learn/causality-and-identification/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/causality-and-identification/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/causality-and-identification/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/causality-and-identification/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/causality-and-identification/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">因果关系与识别</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">因果关系与识别</h1> <p class="article-summary">因果识别靠的是用设计或假设，把观察数据映射到反事实；回归跑出显著结果并不够。随机实验提供基准，观察性方法各有不可替代的条件。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M07 · 因果推断</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>5 分钟 · 12 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>假设 100 个投资团队、12 个月实验：50 个被随机分配使用结构化研究清单（处理），50 个照常（对照）。清单是否提高月度超额收益？随机化为何支持因果解释？按“是否采用”比较为何不够？数值均为教学假设。</p>
+<h2>数据</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>团队数</td>
+<td align="right">100（处理 50 / 对照 50）</td>
+</tr>
+<tr>
+<td>分析单位</td>
+<td align="right">团队-月：100 × 12 = 1,200 条观测</td>
+</tr>
+<tr>
+<td>聚类层</td>
+<td align="right">团队（100 个簇）</td>
+</tr>
+<tr>
+<td>处理组均值</td>
+<td align="right">1.30% / 月</td>
+</tr>
+<tr>
+<td>对照组均值</td>
+<td align="right">0.80% / 月</td>
+</tr>
+<tr>
+<td>差值（ITT）</td>
+<td align="right">0.50 百分点</td>
+</tr>
+<tr>
+<td>常规标准误</td>
+<td align="right">0.20</td>
+</tr>
+<tr>
+<td>聚类稳健标准误</td>
+<td align="right">0.28</td>
+</tr>
+<tr>
+<td>处理组未使用清单</td>
+<td align="right">8 / 50</td>
+</tr>
+<tr>
+<td>对照组采用清单</td>
+<td align="right">5 / 50</td>
+</tr>
+<tr>
+<td>采用者均值</td>
+<td align="right">1.26% / 月（47 队）</td>
+</tr>
+<tr>
+<td>未采用者均值</td>
+<td align="right">0.86% / 月（53 队）</td>
+</tr>
+<tr>
+<td>观察性比较（采用者-未采用者）</td>
+<td align="right">0.40 → 调整后 0.10（SE 0.25）</td>
+</tr>
+</tbody></table>
+<p>数据为假设观测；结果单位为月度超额收益百分点。各数字互相咬合：采用者为处理组 42 队加对照组 5 队，共 47 队，未采用者 53 队；取采用者均值 1.262%、未采用者均值 0.862%（表中按两位小数显示），加权总均值 <code>(47×1.262 + 53×0.862)/100 = 1.05%</code>，与两臂均值给出的 <code>(50×1.30 + 50×0.80)/100 = 1.05%</code> 一致。分析单位是团队-月，同一团队的 12 个月彼此相关，因此按团队聚类，而不是把 1,200 条观测当作独立样本。</p>
+<h2>方法与假设</h2>
+<p>每个团队有两个潜在结果：Y(1)（使用清单）和 Y(0)（不使用），个体效应为 Y(1) - Y(0)，但只能观察到一个，这是因果推断的根本问题。随机分配使处理独立于潜在结果，组间均值差因此识别平均处理效应（ATE）。关键假设：随机分配、无干扰（SUTVA）、无差异性流失。存在不依从时，ITT 识别分配效应；LATE 还需单调性和排除限制。按“是否采用”分组会产生选择偏差；调整可观测变量只能识别条件关联，除非满足可忽略性。实验通过改变因素并观察响应研究因果（NIST 5.1.1），随机化确定运行顺序（NIST 5.3.3.1），随机分配均衡潜在差异（OpenStax 1.4）。</p>
+<h2>结果</h2>
+<p>ITT = 1.30 - 0.80 = 0.50 百分点。把 1,200 条团队-月观测当作独立样本时 SE 0.20，t = 2.50（df = 1,198），p ≈ 0.012，95% 区间 0.11 至 0.89。按团队聚类（100 个簇，自由度取 99）后 SE 0.28，t = 1.79，p ≈ 0.08，区间 -0.06 至 1.06。点估计不变，但同一团队不同月份的结果相关，独立观测假设低估了不确定性，常规显著性不稳健。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-causal-title fig-causal-desc" viewBox="0 0 440 230" width="100%">
+    <title id="fig-causal-title">三种估计及其 95% 区间</title>
+    <desc id="fig-causal-desc">横向区间图。ITT 常规标准误点估计 0.50，区间 0.11 至 0.89；ITT 聚类标准误点估计 0.50，区间负零点零六至 1.06；调整后观察性估计 0.10，区间负零点三九至零点五九。竖线为零效应。</desc>
+    <line x1="240" y1="40" x2="240" y2="188" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"></line>
+    <line x1="150" y1="195" x2="420" y2="195" stroke="var(--border)" stroke-width="2"></line>
+    <g stroke="var(--accent)" stroke-width="2">
+      <line x1="255" y1="60" x2="365" y2="60"></line>
+      <line x1="255" y1="54" x2="255" y2="66"></line>
+      <line x1="365" y1="54" x2="365" y2="66"></line>
+      <line x1="232" y1="110" x2="388" y2="110"></line>
+      <line x1="232" y1="104" x2="232" y2="116"></line>
+      <line x1="388" y1="104" x2="388" y2="116"></line>
+      <line x1="185" y1="160" x2="323" y2="160" opacity="0.7"></line>
+      <line x1="185" y1="154" x2="185" y2="166" opacity="0.7"></line>
+      <line x1="323" y1="154" x2="323" y2="166" opacity="0.7"></line>
+    </g>
+    <g fill="var(--gold)">
+      <circle cx="310" cy="60" r="5"></circle>
+      <circle cx="310" cy="110" r="5"></circle>
+      <circle cx="254" cy="160" r="5"></circle>
+    </g>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="8" y="64">ITT 常规 SE</text>
+      <text x="8" y="114">ITT 聚类 SE</text>
+      <text x="8" y="164">观察性调整后</text>
+      <text x="184" y="215">-0.4</text>
+      <text x="236" y="215">0</text>
+      <text x="296" y="215">0.4</text>
+      <text x="352" y="215">0.8</text>
+      <text x="408" y="215">1.2</text>
+      <text x="215" y="226">月度超额收益（百分点）</text>
+    </g>
+  </svg>
+  <figcaption>图 1：三种估计与 95% 区间，单位为月度超额收益百分点；样本为假设的 100 个团队、12 个月。两行 ITT 的点估计相同，差别只在标准误口径；观察性估计是另一个量。竖线为零效应，图不代表真实实验结果。</figcaption>
+</figure>
+
+<p>不依从：处理组 8/50 未用，对照组 5/50 采用；依从率差 0.84 - 0.10 = 0.74，LATE ≈ 0.50 / 0.74 = 0.68 百分点，依赖单调性和排除限制。</p>
+<p>观察性比较：采用者 1.26%、未采用者 0.86%，朴素差 0.40；这个差混入了&quot;谁更愿意采用清单&quot;的选择效应，与 ITT 的 0.50 不是同一个量。调整后 0.10（SE 0.25，区间 -0.39 至 0.59）。选择偏差可能很大，调整不等于因果。</p>
+<h2>稳健性</h2>
+<p>下列数值同为教学假设，用来说明该做哪些检查，不能由上文的设定推出。</p>
+<ul>
+<li>基线平衡：规模、过去收益的标准化差小于 0.1；一次随机化不保证完全平衡。</li>
+<li>聚类标准误 0.28（100 个团队簇）；把团队-月当独立观测会高估精度。</li>
+<li>流失：处理组 6 队、对照组 3 队在期间内缺失；可用样本 ITT 0.46（SE 0.22）；若流失与结果相关，仍有偏。</li>
+<li>安慰剂：分配前 12 个月收益差 0.05（SE 0.18），接近零。</li>
+<li>夏普比率等替代口径方向相同；外部有效性受一个机构、12 个月限制。</li>
+</ul>
+<h2>局限</h2>
+<p>随机实验也有局限：样本小、团队内相关、依从不完全、流失、霍桑效应和外部有效性。双重差分、工具变量、断点回归各有假设，识别不是自动的：双重差分要求处理前两组在没有处理时走势相同，处理时点上的其他同时变化会污染差分；工具变量要求工具与处理相关、且只通过处理影响结果，弱工具或违反排他性都会使估计失效；断点回归只识别断点附近的局部效应，若个体能操纵分配变量使断点两侧不可比，则不成立。这三条概括是本文自身的方法学说明，本文登记的三条来源不覆盖它们。显著不等于因果；因果结论依赖设计假设，而非 p 值。本站的图表与数据快照展示的是共动与相关，属于关联证据，本身不构成因果证据。数值为假设，不能作为策略建议。</p>
+<h2>复现</h2>
+<ol>
+<li>写明处理、对照、结果和时间窗。</li>
+<li>检查随机化平衡和依从率。</li>
+<li>计算 ITT 和按分配单位聚类的标准误。</li>
+<li>报告不依从与流失；需要时计算 LATE 并写明假设。</li>
+<li>做安慰剂和子样本检查。</li>
+<li>区分 ITT、LATE 和观察性关联。</li>
+</ol>
+<pre><code class="language-text">ITT = mean(Y | assigned=1) - mean(Y | assigned=0)
+LATE = ITT / (compliance_treated - compliance_control)
+</code></pre>
+<h2>结论强度</h2>
+<p>随机分配支持“清单分配使月度收益高 0.50 个百分点”的因果解释，但聚类区间跨 0，精度不足；LATE 约 0.68 依赖依从假设。观察性 0.40 调整后降到 0.10，说明选择偏差可能很大。这是有限总体、有限期间的 ITT 证据，不是普遍规律。</p>
+<h2>关联</h2>
+<ul>
+<li>必需先修：控制变量与混杂（RES-014）。</li>
+<li>相关与推荐阅读：线性回归入门（RES-013）、控制变量与混杂（RES-014）、趋势非平稳与伪回归（RES-016）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">因果关系与识别：机制链</title>
+    <desc id="fig-batch-chain-desc">因果关系与识别 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">因果关系与识别：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">因果识别靠的是用设计</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">或假设，把观察数据映…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">因果识别靠的是用设</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">计或假设，把观察数</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">据映射到反事实；回</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">归跑出显著结果并不</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">够。随机实验提供基…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：假设 100</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">个投资团队、12…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：假设</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">100 个投资团队、1</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">2 个月实验：50</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">个被随机分配使用结</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">构化研究清单（处理…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 | |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">--- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 项目 | 数值 |</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: |</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| 团队数 |</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">100（处理 50 /</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">区分 50） | |…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：因果关系与识别的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">因果关系与识别：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">因果关系与识别：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">随机实验也有局限：样本小、团队内</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关、依从不完全、流失、霍桑效应</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">和外部有效性。双重差分、工具变量</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">、断点回归各有假设，识别不是自动…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：控制变量与混杂（RES-01</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">4）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：因果关系与识别的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">因果关系与识别：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">因果关系与识别：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">因果识别靠的是用设计或假</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">设，把观察数据映射到反事…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">随机实验也有局限：样本小</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">、团队内相关、依从不完全…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：控制变量与混杂（RES-014）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：因果关系与识别的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>为什么随机分配能支持因果识别？</li>
+<li>ITT 与 LATE 有什么区别？</li>
+<li>聚类标准误变大说明什么？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>随机分配使处理与潜在结果独立，组间差异不能由处理前选择或混杂解释。</li>
+<li>ITT 是分配效应，包含不依从；LATE 是依从者效应，需单调性和排除限制。</li>
+<li>团队内结果相关，独立同分布不成立；忽略会低估标准误、夸大显著性。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.1.1 What is experimental design?” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm">https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm</a>（访问日期：2026-10-30）</li>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “5.3.3.1 Completely randomized designs.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm">https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm</a>（访问日期：2026-10-30）</li>
+<li>Illowsky, Barbara, and Susan Dean. <em>Introductory Statistics 2e</em>, “1.4 Experimental Design and Ethics.” OpenStax. CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics">https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能说明随机分配为何支持因果解释，并用 ITT 与 LATE 区分分配效应与依从者效应</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能用采用者与未采用者均值得出的 0.40 解释选择偏差为何不等于实验结果</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能说明随机分配为何支持因果解释，并用 ITT 与 LATE 区分分配效应与依从者效应</li><li>能用采用者与未采用者均值得出的 0.40 解释选择偏差为何不等于实验结果</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/control-variables-and-confounding/">RES-014 · 控制变量与混杂</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li><li> <a href="/learn/control-variables-and-confounding/">RES-014 · 控制变量与混杂</a> </li><li> <a href="/learn/trends-nonstationarity-and-spurious-regression/">RES-016 · 趋势非平稳与伪回归</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section1/pri11.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.1.1 What is experimental design?</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：实验通过改变过程因素并观察响应来研究因素效应，目标是建立因果联系；模型可包含主效应和交互作用。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 5.3.3.1 Completely randomized designs</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：完全随机设计通过随机化确定试验运行顺序；平衡要求每个因素水平的重复次数相同，以提高灵敏度。</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 1.4 Experimental Design and Ethics</a> <p>Barbara Illowsky; Susan Dean · OpenStax</p> <p>访问：2026-10-30 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：随机分配使潜在差异大致均衡地分布到各组；对照组和安慰剂有助于分离处理效应；实验可以支持因果结论。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/causality-and-identification/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

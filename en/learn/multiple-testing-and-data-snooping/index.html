@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="en" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Multiple Testing and Data Snooping · 51Invest</title><meta name="description" content="Among 60 simulated rules with no predictive power, 4 look significant at the 5% level; under a Bonferroni threshold of 0.000833 none survive, while the chance of at least one false positive is 95.4%."><link rel="canonical" href="https://research.51invest.com/en/learn/multiple-testing-and-data-snooping/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/multiple-testing-and-data-snooping/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/multiple-testing-and-data-snooping/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/multiple-testing-and-data-snooping/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/en/" data-main-home aria-label="51Invest"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">51Invest</span> <span class="brand-caption">WUYAO INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="Knowledge stations"> <a class="nav-link" href="https://51invest.com/en/" data-main-home> Home </a> <a class="nav-link" href="https://economics.51invest.com/en/"> Economics </a><a class="nav-link" href="https://finance.51invest.com/en/"> Finance </a><a class="nav-link" href="https://markets.51invest.com/en/"> Markets </a><a class="nav-link" href="https://invest.51invest.com/en/"> Investing </a><a class="nav-link" href="https://history.51invest.com/en/"> History </a><a class="nav-link active" href="/en/" aria-current="page"> Research </a> <a class="nav-link" href="https://51invest.com/en/contents/"> Content map </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/learn/multiple-testing-and-data-snooping/" hreflang="zh-CN" lang="zh-CN" data-language-link="zh" aria-label="Switch to Chinese" title="Switch to Chinese"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="Theme: System" title="Theme: System" data-label-auto="Theme: System" data-label-light="Theme: Light" data-label-dark="Theme: Dark"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">System</span> <span class="theme-text" data-theme-text="light">Light</span> <span class="theme-text" data-theme-text="dark">Dark</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/en/" data-main-home>Home</a> <span class="sep">/</span> <a href="/en/">Research</a> <span class="sep">/</span> <span aria-current="page">Multiple Testing and Data Snooping</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">Research</span> <h1 class="article-title">Multiple Testing and Data Snooping</h1> <p class="article-summary">Among 60 simulated rules with no predictive power, 4 look significant at the 5% level; under a Bonferroni threshold of 0.000833 none survive, while the chance of at least one false positive is 95.4%.</p>  <div class="meta-grid"> <div class="meta-item"><span>Module</span><strong>RES-M03 · 统计推断</strong></div> <div class="meta-item"><span>Level</span><strong>Advanced</strong></div> <div class="meta-item"><span>Read</span><strong>7 min · 12 sections</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> This article has an interactive demo <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>Research question</h2>
+<p>If 60 trading rules have no true predictive power, what is the probability that at least one looks &quot;significant&quot; at the 5% level? What threshold does a Bonferroni correction imply? In one simulated dataset of 240 months, how many rules are misclassified? The data are generated with seed 20261037 and are a teaching simulation, not real strategies.</p>
+<h2>Data</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Candidate rules</td>
+<td align="right">60</td>
+</tr>
+<tr>
+<td>Sample</td>
+<td align="right">240 months</td>
+</tr>
+<tr>
+<td>Frequency and unit</td>
+<td align="right">monthly returns; p-values are probabilities</td>
+</tr>
+<tr>
+<td>True predictive power</td>
+<td align="right">none (simulated null)</td>
+</tr>
+<tr>
+<td>Single-test level</td>
+<td align="right">5%</td>
+</tr>
+<tr>
+<td>Expected false positives</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>Probability of at least one false positive</td>
+<td align="right">95.4% (under independence)</td>
+</tr>
+<tr>
+<td>Rules with p&lt;0.05 in the simulation</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td>Smallest p-value</td>
+<td align="right">0.001185</td>
+</tr>
+<tr>
+<td>Bonferroni threshold</td>
+<td align="right">0.000833</td>
+</tr>
+<tr>
+<td>Rules significant after correction</td>
+<td align="right">Bonferroni 0, Holm 0</td>
+</tr>
+<tr>
+<td>Benjamini–Hochberg discoveries at q=5%</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>Reproduction script</td>
+<td align="right"><code>scripts/simulate-multiple-testing.mjs</code></td>
+</tr>
+<tr>
+<td>License</td>
+<td align="right">simulated data, no external license</td>
+</tr>
+</tbody></table>
+<h2>Method and assumptions</h2>
+<p>Each rule gets a one-sample test of the mean on 240 monthly returns, with the null hypothesis that mean return is zero. A p-value is the probability of a result at least as extreme when the null is true; its definition and common misreadings are covered in the main article Hypothesis Testing and Practical Significance (RES-012). Alpha is the probability of rejecting the null when the null is true, that is, the probability of a Type I error (OpenStax, 9.2); this article uses α = 0.05 as the rejection threshold for every rule. With m independent tests, the probability of at least one false rejection is 1-(1-α)^m, which is the family-wise error rate (FWER, written as fwer in the reproduction block below). The Bonferroni inequality says that building each of g comparisons at a 1-α/g confidence level keeps the overall confidence coefficient at 1-α or higher (NIST/SEMATECH, 7.4.6.3); applied to hypothesis tests, the same inequality means setting each test&#39;s threshold to α/m so that the overall Type I error rate does not exceed α. Data snooping means trying many rules and reporting only the best result while hiding the number of attempts. How it differs from look-ahead bias and overfitting is set out in the main articles Backtesting and Look-Ahead Bias (RES-020) and Out-of-Sample Testing and Overfitting (RES-022). Sullivan, Timmermann and White (1999) apply White&#39;s Reality Check bootstrap to 26 technical trading rules over 100 years of daily Dow Jones data and quantify data-snooping bias across the full rule universe[2]. Every simulated figure in this article comes from <code>scripts/simulate-multiple-testing.mjs</code>: mulberry32 seeded random numbers, Box–Muller normal returns, a one-sample two-sided t-test of each rule&#39;s 240 monthly returns (df = 239, p-value from the incomplete beta function), with the Holm and Benjamini–Hochberg decisions implemented in the same script; re-running the same seed reproduces the same numbers.</p>
+<h2>Results</h2>
+<p>With 60 tests at α=0.05, the expected number of false positives is 3 and the probability of at least one is 1 - 0.95^60 = 95.4%. The run with seed 20261037 returns 4 rules with p-values below 0.05 and a smallest p of 0.001185; the Bonferroni threshold is 0.05/60 = 0.000833 and the first Holm step uses the same threshold, so neither procedure lets any rule through. Benjamini–Hochberg at q=5% yields 2 discoveries.</p>
+<p>The rule with the smallest p can be checked line by line: over 240 months its mean return is -0.21187 (return units) with a standard deviation of 1.00007, so the standard error of the mean is <code>1.00007 / √240 = 0.064554</code>, <code>t = -0.21187 / 0.064554 = -3.282</code>, and the two-sided p-value at df = 239 is 0.001185. It is &quot;significant&quot; although the true effect is zero - the direct consequence of making 60 comparisons.</p>
+<p>Repeating the whole experiment 200 times (seeds 20261037 onward) gives a mean of 3.03 rules with p&lt;0.05 per run, a standard deviation of 1.91, a range of 0 to 10, and at least one false positive in 94% of the runs, against the theoretical 95.4%.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-p-title fig-p-desc" viewBox="0 0 420 190" width="100%">
+    <title id="fig-p-title">The five smallest p-values against the Bonferroni threshold</title>
+    <desc id="fig-p-desc">A horizontal scale from 0 to 0.08. Five observed points sit at 0.001185, 0.001215, 0.015293, 0.043303 and 0.076635. A dashed vertical line marks the Bonferroni threshold of 0.000833 and a solid line the single-test level of 0.05. The threshold lies to the left of every point.</desc>
+    <line x1="60" y1="120" x2="380" y2="120" stroke="var(--border)" stroke-width="2"></line>
+    <line x1="63.3" y1="55" x2="63.3" y2="140" stroke="var(--gold)" stroke-width="2" stroke-dasharray="5 3"></line>
+    <line x1="260" y1="55" x2="260" y2="140" stroke="var(--muted)" stroke-width="1.5"></line>
+    <g fill="var(--accent)">
+      <circle cx="64.7" cy="120" r="5"></circle>
+      <circle cx="64.9" cy="120" r="5"></circle>
+      <circle cx="121.2" cy="120" r="5"></circle>
+      <circle cx="233.2" cy="120" r="5"></circle>
+      <circle cx="366.5" cy="120" r="5"></circle>
+    </g>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">p-value (0 to 0.08; 40 px per 0.01)</text>
+      <text x="66" y="48">Bonferroni 0.000833</text>
+      <text x="212" y="48">single-test level 0.05</text>
+      <text x="60" y="160">0</text>
+      <text x="256" y="160">0.05</text>
+      <text x="366" y="160">0.08</text>
+      <text x="120" y="100">0.0153</text>
+      <text x="230" y="100">0.0433</text>
+      <text x="344" y="100">0.0766</text>
+      <text x="60" y="180">0.001185 and 0.001215 (nearly coincident)</text>
+    </g>
+  </svg>
+  <figcaption>Figure 1: the five smallest p-values from the seed-20261037 run (the script's smallestFivePValues output) plotted with the Bonferroni threshold on one scale at 40 pixels per 0.01. The threshold line sits left of every point, so zero rules survive correction; four points lie left of the 0.05 line and one to its right, which is why four of the sixty rules are “nominally significant”. The other 55 rules run up to a largest p of 0.981638, outside this window.; sample: the article’s own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Robustness</h2>
+<ul>
+<li>If the 60 tests are correlated, the 95.4% independence figure is only approximate; Bonferroni still controls the family-wise error rate, but is conservative.</li>
+<li>Raising the candidate set to 200 rules lowers the threshold to <code>0.05/200 = 0.00025</code> and raises the expected number of false positives to <code>200 × 0.05 = 10</code>; the same figures can be produced with <code>node scripts/simulate-multiple-testing.mjs 20261037 200 240</code>.</li>
+<li>Calibration check: <code>node scripts/simulate-multiple-testing.mjs --check</code> re-runs 5,000 zero-effect rules and returns 5.16% with p&lt;0.05, a mean p of 0.5011 and shares below 0.25/0.5/0.75 of 0.252/0.497/0.748, matching the uniform p-values the null predicts; <code>--selftest</code> compares the p-value function against known t quantiles (t=1.96, df=239 gives 0.0512).</li>
+<li>Holm controls the same family-wise error rate as Bonferroni and is generally more powerful; Benjamini–Hochberg targets the false discovery rate instead, which is a different quantity. Both decisions are computed by our own script and are stated as this article&#39;s methodological description; the three registered sources do not cover Holm or BH. Neither exempts the author from reporting all attempts and the selection process.</li>
+<li>A different sample changes the p-values; one significant result is not the same as a reproducible one.</li>
+</ul>
+<h2>Limitations</h2>
+<p>The simulated rules are independent and near-normal, while real strategies are correlated and non-normal; the test covers one rule family. Trading costs, data revisions and publication bias are omitted, and effect sizes and confidence intervals are not reported. Bonferroni controls an error rate, not the probability that each conclusion is true; false positives remain possible after correction. The evidence does not establish the validity of any real rule.</p>
+<h2>Reproduction</h2>
+<ol>
+<li>Run <code>node scripts/simulate-multiple-testing.mjs</code> to generate 60 rules of zero-mean returns over 240 months with seed 20261037 and compute a t statistic and two-sided p-value for each.</li>
+<li>Read from the output the count of p&lt;0.05 rules, the smallest p, the expected false positives and the Bonferroni/Holm/BH decisions.</li>
+<li>Use <code>--selftest</code> to check the p-value function, <code>--check</code> for the uniformity check and <code>--repeat 200</code> for the sampling distribution of the hit count.</li>
+<li>Change the rule count or the number of months (positional arguments <code>seed rules months</code>) and see whether the conclusion flips.</li>
+<li>Report the number of attempts, the correlation structure and all p-values, not only the smallest.</li>
+</ol>
+<pre><code class="language-text">node scripts/simulate-multiple-testing.mjs          # seed rules months = 20261037 60 240
+expected_false = 60 * 0.05 = 3
+fwer = 1 - 0.95^60 = 0.9539
+bonferroni = 0.05 / 60 = 0.000833
+min_p = 0.001185 (mean -0.21187, sd 1.00007, se 0.064554, t -3.282)
+naive_sig = 4; bonferroni_sig = 0; holm_sig = 0; bh_discoveries(q=0.05) = 2
+--repeat 200 -&gt; mean_hits 3.03, sd 1.91, range 0..10, share_with_hit 0.94
+--check      -&gt; 5000 rules: share p&lt;0.05 = 0.0516, mean p = 0.5011
+</code></pre>
+<h2>Strength of conclusions</h2>
+<p>The 4 &quot;significant&quot; results are consistent with zero predictive power and are a product of multiple comparisons; the Bonferroni threshold removes all of them. The evidence supports pre-registering hypotheses, reporting the number of attempts and applying a multiple-testing correction; it does not support treating one significant result as proof that a strategy works.</p>
+<p>Distinguish two error controls. <strong>FWER</strong> (family-wise error rate) controls the probability of at least one false rejection; Bonferroni and Holm belong here and are conservative. <strong>FDR</strong> (false discovery rate) controls the share of false results among those declared significant; Benjamini-Hochberg belongs here and has more power with many tests. The BH procedure finds 2 results at q=5%, but that does not make them true; FDR tolerates a share of false discoveries and suits exploratory work, not single-strategy decisions.</p>
+<p>The <strong>garden of forking paths</strong> is subtler than 60 explicit rules: the researcher never records all attempts and reports only the final &quot;significant&quot; rule. The fix is not a post-hoc threshold but a prior statement of hypotheses, sample, rule family and stopping rule; if that is impossible, label the result exploratory and replicate on an independent sample. Multiple-testing correction handles known attempts, not unreported ones[1][2].</p>
+<h2>Related</h2>
+<ul>
+<li>Required prerequisite: Hypothesis Testing and Practical Significance (RES-012), Out-of-Sample Testing and Overfitting (RES-022).</li>
+<li>Related reading: Hypothesis Testing and Practical Significance (RES-012), Backtesting and Look-Ahead Bias (RES-020), Out-of-Sample Testing and Overfitting (RES-022).</li>
+</ul>
+<h2>Figures in plain language</h2>
+<p>The three figures below check the mechanism, boundary and comparison in this article; labels come from its own sections, not new data.</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">Multiple Testing and Data Snooping: mechanism chain</title>
+    <desc id="fig-batch-chain-desc">Multiple Testing and Data Snooping — three-step structure: problem, mechanism, judgment. Labels come from the article's sections, not new data.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Multiple Testing and Data Snooping: mechanism chain</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Labels come from the article's sections; all three steps matter.</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Problem</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Among 60 simulate</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">d rules with no…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Among 60 simulat</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">ed rules with</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">no predictive</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">power, 4 look</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">significant at…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reproduction</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Reproduction: 1.</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Data</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value |</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">| --- | ---: | |…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| Item | Value</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | --- | ---:</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">| | Candidate</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">rules | 60 | |</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Sample | 240…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Reading order: test the problem, then the mechanism, then whether the judgment overreaches.</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">If a middle step lacks evidence, later conclusions are hypotheses, not facts.</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Structural illustration, not a new data chart; sample is the article's own argument.</text>
+  </svg>
+  <figcaption>Figure 2: Multiple Testing and Data Snooping — mechanism chain: problem, mechanism, judgment. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">Multiple Testing and Data Snooping: boundary</title>
+    <desc id="fig-batch-boundary-desc">Separates conditions where the claim holds from those where it fails; a local example is not universal.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Multiple Testing and Data Snooping: when does it hold?</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">Check the conditions before the conclusion</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">If conditions, definitions or samples change, recompute the conclusion</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Holds</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulated rules are</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">independent and near-normal,</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start"> while real strategies are</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">correlated and non-normal…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Fails / rewrite</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">If 60 trading rules have no</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">true predictive power, what</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">is the probability that at</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">least one looks &quot;significant…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">Boundary illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 3: Multiple Testing and Data Snooping — boundary: when the claim holds, and when it fails. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">Multiple Testing and Data Snooping: object, conditions and common mistakes</title>
+    <desc id="fig-batch-compare-desc">Three rows compare the concept, its conditions and common mistakes; comparison is not equivalence and does not replace a definition.</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Multiple Testing and Data Snooping: object, conditions and common mistakes at a glance</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">This article</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">Commonly confused</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Object</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Among 60 simulated</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">rules with no…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Adjacent concepts / common claims</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Conditions</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">The simulated rules</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">are independent and…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">If 60 trading rules have no</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">true predictive power, what is…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">Check</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Define first, then compare; never judge</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">labels only</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">Correlation is not causation; a local case is not universal</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">Comparison illustration; sample is the article's own argument; units as stated in the text.</text>
+  </svg>
+  <figcaption>Figure 4: Multiple Testing and Data Snooping — comparison of object, conditions and common mistakes. Sample: the article's own argument; units as stated in the text.</figcaption>
+</figure>
+
+<h2>Exercises</h2>
+<ol>
+<li>With 60 independent tests at α=0.05, what is the expected number of false positives?</li>
+<li>What is the probability of at least one false positive?</li>
+<li>The smallest p is 0.001185 and the Bonferroni threshold is 0.000833. Is it significant?</li>
+<li>Why does data snooping inflate backtest results?</li>
+<li>What do FWER and FDR each control, and which suits exploratory research?</li>
+<li>What is the garden of forking paths, and why is it harder than 60 explicit rules?</li>
+</ol>
+<details>
+<summary>Suggested answers</summary>
+
+<ol>
+<li>60 × 0.05 = 3.</li>
+<li>1 - 0.95^60 = 95.4%.</li>
+<li>No; 0.001185 &gt; 0.000833, and the first Holm step uses the same threshold, so it is rejected there too.</li>
+<li>Because only the best attempt is reported while the number of attempts stays hidden, so the reported maximum is easily a chance high.</li>
+<li>FWER controls the probability of at least one false rejection (Bonferroni, Holm; conservative); FDR controls the share of false results among discoveries (BH; more power with many tests, better for exploratory work).</li>
+<li>The garden of forking paths means the researcher never records all attempts and reports only the final significant rule; correction handles known attempts, not unreported ones.</li>
+</ol>
+</details>
+
+<h2>Sources</h2>
+<ol>
+<li>NIST/SEMATECH. <em>e-Handbook of Statistical Methods</em>, “7.4.6.3 Bonferroni&#39;s method.” U.S. Government work (public domain). <a href="https://www.itl.nist.gov/div898/handbook/prc/section4/prc463.htm">https://www.itl.nist.gov/div898/handbook/prc/section4/prc463.htm</a> (accessed 2026-10-30)</li>
+<li>Sullivan, Ryan, Allan Timmermann, and Halbert White. “Data-Snooping, Technical Trading Rule Performance, and the Bootstrap.” <em>Journal of Finance</em> 54, no. 5 (1999): 1647–1691. License unknown. <a href="https://ideas.repec.org/a/bla/jfinan/v54y1999i5p1647-1691.html">https://ideas.repec.org/a/bla/jfinan/v54y1999i5p1647-1691.html</a> (accessed 2026-10-30)</li>
+<li>OpenStax. <em>Introductory Statistics 2e</em>, “9.2 Outcomes and the Type I and Type II Errors.” CC BY-NC-SA 4.0. <a href="https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors">https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors</a> (accessed 2026-10-30)</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="en" aria-labelledby="demo-check-title" data-check-done="All three are covered: the core of this article is in place." data-check-pending="One item is still open: go back to the matching section and retell it with a number or counterexample." data-check-count="Ticked"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">Worked demo</p> <button class="demo-reset" type="button" data-demo-reset>Reset</button> </div> <h2 id="demo-check-title">Read-through check: can you say three things?</h2> <p class="demo-intro">No recitation needed. Tick each sentence below and see whether you can explain the mechanism, one worked example and one boundary in your own words.</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>Compute the 3 expected false positives and the 1 - 0.95^60 = 95.4% family error rate, and reproduce the 0.000833 Bonferroni threshold</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>Distinguish what Bonferroni, Holm and BH control and why the number of attempts must be reported</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>Name one condition under which the article’s conclusion does not hold</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> Ticked 0 / 3
+</p> </div> <p class="demo-footnote">The numbers are teaching assumptions that show relationships, not forecasts or investment advice.</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> This article has passed the current publication gate. Factual, calculation and translation revisions update both language versions together. </p> <p> <a class="button secondary" href="/en/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>Back to station </a> </p> </div> <aside class="article-aside" aria-label="Article information"> <section class="aside-card"> <h2>Learning objectives</h2> <ul> <li>Compute the 3 expected false positives and the 1 - 0.95^60 = 95.4% family error rate, and reproduce the 0.000833 Bonferroni threshold</li><li>Distinguish what Bonferroni, Holm and BH control and why the number of attempts must be reported</li> </ul> </section> <section class="aside-card"> <h2>Required prerequisites</h2> <ul> <li> <a href="/en/learn/hypothesis-testing-and-practical-significance/">RES-012 · Hypothesis Testing and Practical Significance</a> </li><li> <a href="/en/learn/out-of-sample-testing-and-overfitting/">RES-022 · Out-of-Sample Testing and Overfitting</a> </li> </ul> </section> <section class="aside-card"> <h2>Recommended reading</h2> <ul> <li> <a href="/en/learn/hypothesis-testing-and-practical-significance/">RES-012 · Hypothesis Testing and Practical Significance</a> </li><li> <a href="/en/learn/backtesting-and-look-ahead-bias/">RES-020 · Backtesting and Look-Ahead Bias</a> </li><li> <a href="/en/learn/out-of-sample-testing-and-overfitting/">RES-022 · Out-of-Sample Testing and Overfitting</a> </li> </ul> </section> <section class="aside-card"> <h2>AI review record</h2> <p class="muted"> There is no human sign-off; these states come from the AI-only editorial review. </p> <ul> <li> Facts and calculations : AI review passed </li><li> Subject : AI review passed </li><li> English : AI review passed </li><li> Page : AI review passed </li> </ul> </section> <section class="aside-card"> <h2>Sources</h2> <div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/prc/section4/prc463.htm" rel="noopener noreferrer" target="_blank">e-Handbook of Statistical Methods, 7.4.6.3 Bonferroni&#39;s method</a> <p>NIST/SEMATECH · National Institute of Standards and Technology</p> <p>Accessed: 2026-10-30 · License: U.S. Government work (public domain), 17 U.S.C. §105</p> <p>Supports: For g comparisons, Bonferroni&#39;s method uses 1−α/g per interval so that the overall confidence coefficient is at least 1−α.</p> </div><div class="source"> <a href="https://ideas.repec.org/a/bla/jfinan/v54y1999i5p1647-1691.html" rel="noopener noreferrer" target="_blank">Data-Snooping, Technical Trading Rule Performance, and the Bootstrap</a> <p>Ryan Sullivan; Allan Timmermann; Halbert White · Journal of Finance, 54(5), 1647-1691</p> <p>Accessed: 2026-10-30 · License: RePEc index record; cite the indexed item and link, no reproduction</p> <p>Supports: Uses White&#39;s Reality Check bootstrap to evaluate 26 technical trading rules over 100 years of daily Dow Jones data and quantify data-snooping bias across the full rule universe.</p> </div><div class="source"> <a href="https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors" rel="noopener noreferrer" target="_blank">Introductory Statistics 2e, 9.2 Outcomes and the Type I and Type II Errors</a> <p>OpenStax · OpenStax, Rice University</p> <p>Accessed: 2026-10-30 · License: CC BY-NC-SA 4.0</p> <p>Supports: Alpha is the probability of rejecting the null hypothesis when it is true, i.e. the probability of a Type I error.</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">A free, non-commercial knowledge site. Sources and definitions are labelled; nothing here is investment advice.</p> </div> </div> <nav class="footer-links" aria-label="Knowledge stations"> <a href="https://51invest.com/en/" data-main-home>Home</a> <a href="https://51invest.com/en/contents/">Content map</a> <a href="/en/glossary/">Glossary</a> <a href="/en/search/">Search</a> <a href="https://51invest.com/en/charts/" data-main-link>Charts</a> <a href="https://51invest.com/en/sources/" data-main-link>Data &amp; licences</a> <a href="/en/">Station home</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="Knowledge stations"> <a class="mobile-link" href="https://51invest.com/en/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>Home</span> </a> <a class="mobile-link" href="https://51invest.com/en/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>Knowledge stations</span> </a> <a class="mobile-link active" href="/en/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>Station home</span> </a> <a class="mobile-link" href="/learn/multiple-testing-and-data-snooping/" data-language-link="zh"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>中文</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

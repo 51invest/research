@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>多源测量的三角验证：卫星、文本与行政数据 · 巫妖投资</title><meta name="description" content="单一数据源都有盲区：卫星看不到地下经济，文本有选择性偏差，行政数据有申报激励。三角验证不是“多找几个来源”，而是用独立误差结构互相校验，估计真实值的区间。"><link rel="canonical" href="https://research.51invest.com/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/triangulation-satellite-text-administrative-data/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/triangulation-satellite-text-administrative-data/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/triangulation-satellite-text-administrative-data/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">多源测量的三角验证：卫星、文本与行政数据</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">多源测量的三角验证：卫星、文本与行政数据</h1> <p class="article-summary">单一数据源都有盲区：卫星看不到地下经济，文本有选择性偏差，行政数据有申报激励。三角验证不是“多找几个来源”，而是用独立误差结构互相校验，估计真实值的区间。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M13 · 另类数据与复杂系统</strong></div> <div class="meta-item"><span>层级</span><strong>系统</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 15 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题与定义</h2>
+<p><strong>三角验证</strong>是用多个独立来源测量同一现象，通过误差结构互补来缩小不确定性。它不等于“多找几个来源”，而是要求来源之间的误差<strong>不相关</strong>。</p>
+<p>三类来源的盲区：<strong>卫星</strong>（夜间灯光、作物遥感）覆盖广、频率高，但看不到地下经济、服务活动和收入分配；<strong>文本</strong>（新闻、合同、社交媒体）信息丰富，但有选择性和平台偏差；<strong>行政数据</strong>（税务、社保、登记）覆盖特定人群，但受申报激励和口径变化影响。</p>
+<p>三角验证的核心是：如果三个来源都指向同一区间，结论更可信；如果分歧大，要解释分歧，而不是简单平均[1][2]。</p>
+<h2>数据与算例</h2>
+<p>假设要估计某地区经济活动增长率。卫星灯光估计 4%，文本情绪估计 6%，税务登记估计 3%。三者差异大，不能直接平均为 4.3%。</p>
+<p>先查误差：灯光可能受电力普及和价格影响；文本可能受媒体报道偏向；税务登记可能漏掉非正规部门。若灯光与税务覆盖同一正规部门，二者误差相关，不能算独立验证。</p>
+<p>若三者独立且分别给出 3%—6% 区间，可以用区间交集和加权中位数报告 4%—5%，并说明不确定性。三角验证的目标不是精确点估计，而是可信区间。以上数字均为教学假设。</p>
+<h2>输入与假设</h2>
+<p>三角验证需要三类输入：卫星影像（夜间灯光、NDVI、建筑轮廓）、文本语料（新闻、合同、社交平台）和行政记录（税务、社保、工商登记）。每条输入都要带地理编码、时间戳、单位、覆盖范围和采集口径；先把行政区划、企业标识和个人标识对齐，再谈“互相验证”。关键假设有三个：三类来源测量的是同一个经济构造；误差结构彼此独立；报告口径在可比时期内稳定。任何一个假设不成立，三角验证就退化为“多找几个数字”。</p>
+<h2>方法与步骤</h2>
+<p><strong>检查一：独立性。</strong> 来源是否共享同一底层数据、同一采集过程或同一利益相关方？共享越多，验证价值越低。</p>
+<p><strong>检查二：覆盖一致性。</strong> 三个来源是否测量同一 population、同一时期、同一定义？口径不同要先对齐。</p>
+<p><strong>检查三：误差方向。</strong> 每个来源的误差是向上还是向下？若都向上，平均会放大偏差；要分别校正。</p>
+<p>三角验证还要记录数据版本、清洗规则和不确定性；可复现性比“多源”更重要[3][4]。</p>
+<h2>图表</h2>
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-1-title fig-triangulation-satellite-text-administrative-data-1-desc" viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-1-title">从多源到区间</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-1-desc">四步：卫星、文本、行政数据、区间估计。</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">多源三角验证链</text>
+<text x="24" y="54" font-size="11" text-anchor="start">卫星、文本、行政数据、区间估计四步。</text>
+<rect x="14" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="69" y="140" font-size="12" text-anchor="middle">卫星</text>
+<text x="69" y="184" font-size="12" text-anchor="middle" font-weight="700">灯光 4%</text>
+<rect x="136" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="191" y="140" font-size="12" text-anchor="middle">文本</text>
+<text x="191" y="184" font-size="12" text-anchor="middle" font-weight="700">情绪 6%</text>
+<rect x="258" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="313" y="140" font-size="12" text-anchor="middle">行政</text>
+<text x="313" y="184" font-size="12" text-anchor="middle" font-weight="700">登记 3%</text>
+<rect x="380" y="116" width="110" height="88" rx="10" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="1.2"/>
+<text x="435" y="140" font-size="12" text-anchor="middle">区间</text>
+<text x="435" y="184" font-size="12" text-anchor="middle" font-weight="700">4%—5%</text>
+<line x1="125" y1="160" x2="135" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<line x1="247" y1="160" x2="257" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<line x1="369" y1="160" x2="379" y2="160" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+<text x="24" y="246" font-size="11" text-anchor="start">教学示意，不含统计数据。</text>
+</g>
+</svg>
+<figcaption>图 1：从多源到区间；教学示意。</figcaption>
+</figure>
+
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-2-title fig-triangulation-satellite-text-administrative-data-2-desc" viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-2-title">多源估计对比</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-2-desc">三个来源的点估计与总体区间。</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">三个来源的估计与区间</text>
+<text x="24" y="54" font-size="11" text-anchor="start">卫星 4%、文本 6%、行政 3%；区间 3%—6%。</text>
+<line x1="178" y1="64" x2="178" y2="270" stroke="currentColor" stroke-width="1" opacity=".45"/>
+<text x="20" y="97" font-size="12">卫星</text>
+<rect x="178" y="78" width="240" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="95" font-size="12" font-weight="700">4%</text>
+<text x="20" y="145" font-size="12">文本</text>
+<rect x="178" y="126" width="360" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="143" font-size="12" font-weight="700">6%</text>
+<text x="20" y="193" font-size="12">行政</text>
+<rect x="178" y="174" width="180" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="191" font-size="12" font-weight="700">3%</text>
+<text x="20" y="241" font-size="12">上界</text>
+<rect x="178" y="222" width="360" height="24" rx="5" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1"/>
+<text x="554" y="239" font-size="12" font-weight="700">6%</text>
+<text x="24" y="292" font-size="11" text-anchor="start">教学假设；单位：%。</text>
+</g>
+</svg>
+<figcaption>图 2：多源估计对比；教学假设。</figcaption>
+</figure>
+
+<figure>
+<svg role="img" aria-labelledby="fig-triangulation-satellite-text-administrative-data-3-title fig-triangulation-satellite-text-administrative-data-3-desc" viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-triangulation-satellite-text-administrative-data-3-title">多源组合的二维矩阵</title>
+<desc id="fig-triangulation-satellite-text-administrative-data-3-desc">两轴：独立性、覆盖一致性；四象限对应强验证、弱验证、口径冲突和伪验证。</desc>
+<g fill="currentColor">
+<text x="24" y="30" font-size="16" text-anchor="start">独立性与覆盖一致性的四类多源组合</text>
+<text x="24" y="54" font-size="11" text-anchor="start">独立、覆盖一致最可信；共享来源、覆盖不一致最不可信。</text>
+<text x="40" y="68" font-size="11">独立</text>
+<text x="40" y="286" font-size="11">共享来源</text>
+<text x="110" y="314" font-size="11" text-anchor="middle">覆盖不一致</text>
+<text x="500" y="314" font-size="11" text-anchor="middle">覆盖一致</text>
+<rect x="96" y="76" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="108" y="100" font-size="12" text-anchor="start">口径冲突</text>
+<text x="108" y="130" font-size="11" text-anchor="start">独立、覆盖不一致</text>
+<text x="108" y="170" font-size="11" font-weight="700">先对齐</text>
+<rect x="338" y="76" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="350" y="100" font-size="12" text-anchor="start">强验证</text>
+<text x="350" y="130" font-size="11" text-anchor="start">独立、覆盖一致</text>
+<text x="350" y="170" font-size="11" font-weight="700">可信</text>
+<rect x="96" y="190" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="108" y="214" font-size="12" text-anchor="start">伪验证</text>
+<text x="108" y="244" font-size="11" text-anchor="start">共享、覆盖不一致</text>
+<text x="108" y="284" font-size="11" font-weight="700">不可信</text>
+<rect x="338" y="190" width="226" height="104" rx="8" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="1"/>
+<text x="350" y="214" font-size="12" text-anchor="start">弱验证</text>
+<text x="350" y="244" font-size="11" text-anchor="start">共享、覆盖一致</text>
+<text x="350" y="284" font-size="11" font-weight="700">参考</text>
+</g>
+</svg>
+<figcaption>图 3：多源组合的二维矩阵；分类示意。</figcaption>
+</figure>
+
+<p>图 1 把卫星、文本、行政数据和区间估计串成验证链；图 2 比较三个来源的估计与区间；图 3 用“独立性—覆盖一致性”两轴划出四类多源组合。图中数字均为教学假设。</p>
+<h2>失败条件与边界</h2>
+<p><strong>边界一：多源不等于独立。</strong> 如果三个来源都引用同一份统计，它们不是独立验证；要看采集过程。</p>
+<p><strong>边界二：卫星不是万能。</strong> 灯光和遥感能测活动和土地变化，但测不了收入分配、服务质量和制度；要与其他来源结合。</p>
+<p><strong>边界三：文本有叙事偏差。</strong> 新闻和社交媒体受平台、语言和事件影响；不能把热度当成事实。</p>
+<p><strong>误解一：三个来源平均就是三角验证。</strong> 平均会掩盖分歧；要先检查独立性和误差方向。</p>
+<p><strong>误解二：行政数据最准确。</strong> 行政数据覆盖特定人群，漏报和申报激励会导致系统性偏差；它不是真值。</p>
+<h2>结果解读：三角验证、卫星数据与行政数据</h2>
+<p><strong>三角验证不是“多找几个数据源”</strong>，而是用相互独立的测量验证同一构念。卫星影像、文本、行政记录和调查各有误差，且误差来源不同；若三者指向同一结论，可信度更高，若分歧，要解释为什么。</p>
+<p><strong>卫星数据</strong>的优势是覆盖广、频率高、可回溯；劣势是分辨率、云层、算法和地面真值。夜间灯光、作物 NDVI、建筑足迹、船舶 AIS 都需要校准；灯光与经济活动的关系非线性，不能直接当 GDP。</p>
+<p><strong>文本数据</strong>（新闻、财报、社交媒体）能捕捉预期和情绪，但受平台选择、语言、审查和算法影响；词频不等于经济变量，需要人工标注、主题模型和外部验证。</p>
+<p><strong>行政数据</strong>（税务、社保、海关、登记）覆盖全、定义清楚，但可能滞后、口径变化、访问受限；行政记录与调查的定义差异会导致不可比。</p>
+<p><strong>匹配与隐私</strong>：微观匹配需要个体标识，受隐私法限制；差分隐私、聚合和合成数据可以降低风险，但会损失精度。</p>
+<p><strong>三角验证的设计</strong>：先明确构念和误差结构，再选独立数据源；若数据源相关（同一调查衍生），不能算独立验证。</p>
+<p><strong>测量</strong>：覆盖率、频率、误差、口径一致性、匹配率。单一数据源的精度不等于整体可信度。</p>
+<p><strong>常见误用</strong>：把卫星灯光当 GDP、把词频当情绪、把行政数据当无误差、把相关数据源当独立验证。</p>
+<p><strong>最后</strong>，三角验证的价值是“误差不相关”；若误差同源，再多数据也只是重复同一个偏差。</p>
+<h2>复现与检查清单</h2>
+<p>复现清单至少包含：数据版本与下载日期、影像云量和预处理参数、文本抓取关键词与去重规则、行政数据的申报口径和修订版本、地理和时间对齐方法、缺失值处理、区间合成规则，以及不确定性来源。代码要能从原始文件重跑出同一张区间表；若某一步依赖人工判断，写明判断规则和复核人。复现不是追求完全相同的点估计，而是让读者能检查每个来源怎样进入最终区间。</p>
+<h2>多源判读清单</h2>
+<p>拿到一组“多源验证”的结论，先问五项：</p>
+<ol>
+<li><strong>来源真的独立吗？</strong> 共享底层数据、同一采集机构或同一利益相关方，会让“多源”变成同一误差的多次复制。</li>
+<li><strong>测量的是同一个构念吗？</strong> 灯光、文本情绪和税务登记可能分别代理活动、信心和正规部门；口径不对齐，交集没有意义。</li>
+<li><strong>误差方向是否已知？</strong> 每个来源偏高还是偏低、在什么条件下偏；都偏高时平均会放大偏差。</li>
+<li><strong>区间如何合成？</strong> 交集、加权中位数和贝叶斯更新各有假设；要报告不确定性来源和权重。</li>
+<li><strong>能否复现？</strong> 数据版本、清洗规则、地理对齐和代码是否公开；不能复现的多源只是多个故事。</li>
+</ol>
+<p>三角验证的价值在于“独立误差互相校验”，不是“来源数量多”。</p>
+<h2>反证条件</h2>
+<p>三角验证的结论依赖独立性和口径：</p>
+<ol>
+<li><strong>来源共享底层数据。</strong> 若卫星、文本和行政数据都来自同一采集系统或同一机构，误差高度相关，验证价值下降。</li>
+<li><strong>构念不对齐。</strong> 若灯光代理活动、文本代理情绪、税务代理正规部门，三者测的不是同一件事，交集无意义。</li>
+<li><strong>误差方向未知。</strong> 若三个来源都系统性偏高，平均会放大偏差，而不是缩小。</li>
+<li><strong>区间合成假设错误。</strong> 若把独立来源的区间直接平均，忽略权重和相关性，不确定性被低估。</li>
+<li><strong>无法复现。</strong> 若数据版本、清洗规则和代码不公开，多源结论只是多个故事。</li>
+</ol>
+<p><strong>实践含义：</strong> 多源验证要先证独立、再证同构、最后合成区间；来源数量不等于信息量，独立误差才值钱。</p>
+<p><strong>数据附注：</strong> 报告每个来源的缺失率、覆盖率和误差方向；缺失不是随机时，区间合成会偏。</p>
+<p><strong>范围说明：</strong> 按群体报告缺失率和覆盖率；总体缺失率会掩盖小地区和高收入群体的偏差。</p>
+<p><strong>最后：</strong> 按群体报告缺失率；总体缺失率会掩盖小地区和高收入群体的偏差。</p>
+<h2>练习</h2>
+<ol>
+<li><p>说明卫星、文本和行政数据各自的盲区。</p>
+</li>
+<li><p>三个来源估计 4%、6%、3%，可以直接平均吗？</p>
+</li>
+<li><p>若灯光与税务同源，为什么不能算独立验证？</p>
+</li>
+<li><p>如何用区间交集报告结果？</p>
+</li>
+<li><p>三角验证的三个检查是什么？</p>
+</li>
+<li><p>行政数据为什么不是真值？</p>
+</li>
+<li><p>判断：来源越多，结论越可信吗？说明理由。</p>
+</li>
+<li><p>为什么卫星灯光不能直接当作 GDP？</p>
+</li>
+<li><p>三角验证中，什么情况下多个数据源不算独立？</p>
+</li>
+</ol>
+<h2>延伸阅读：卫星、文本与行政数据研究</h2>
+<p><strong>卫星经济学</strong>：Henderson 等用夜间灯光验证 GDP 和城市化；Chen 与 Nordhaus 用灯光校准区域产出；作物 NDVI、船舶 AIS 和建筑足迹被用于贸易、活动和基础设施研究。</p>
+<p><strong>文本即数据</strong>：Gentzkow、Kelly 和 Taddy 综述了文本在经济学中的应用；词频、主题模型和嵌入要配合人工验证，不能直接把“情绪”当变量。</p>
+<p><strong>行政数据</strong>：Chetty 等用税务记录研究流动性、社区和代际流动；行政数据的优势是全样本，劣势是定义、访问和隐私。</p>
+<p><strong>三角验证</strong>：混合方法研究强调“误差独立”和“构念一致”；多源数据要报告区间、分歧和解释，而不是简单平均。</p>
+<p><strong>阅读建议</strong>：先读一篇卫星、一篇文本、一篇行政数据的经典应用，再设计自己的三角验证；重点是误差结构，不是数据数量。</p>
+<h2>本章要点</h2>
+<ul>
+<li>三角验证要求误差独立，不是数据源越多越好。</li>
+<li>卫星数据覆盖广但受分辨率、云层、算法和地面真值限制。</li>
+<li>文本数据受平台、语言、审查和算法影响，词频不等于变量。</li>
+<li>行政数据覆盖全但可能滞后、口径变化、访问受限。</li>
+<li>报告区间、分歧和解释，比简单平均更可信。</li>
+</ul>
+<h2>关联</h2>
+<p>先修 RES-004；对照 RES-010；相邻 RES-031、ECO-025。</p>
+<h2>来源</h2>
+<ol>
+<li>OECD, <em>Data-Driven Innovation: Big Data for Growth and Well-Being</em>. OECD Publishing, 2015, accessed 2026-11-21. <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf">https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf</a></li>
+<li>Klaus Deininger; World Bank, <em>Land Policies for Growth and Poverty Reduction</em>. World Bank, accessed 2026-11-23. <a href="https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content">https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content</a></li>
+<li>Board of Governors of the Federal Reserve System, <em>Survey of Consumer Finances (SCF)</em>. Board of Governors of the Federal Reserve System, accessed 2026-10-30. <a href="https://www.federalreserve.gov/econres/scfindex.htm">https://www.federalreserve.gov/econres/scfindex.htm</a></li>
+<li>Steven A. Greenlaw; David Shapiro; Daniel MacDonald, <em>Principles of Economics 3e, 15.4 Income Inequality: Measurement and Causes</em>. OpenStax, accessed 2026-11-03. <a href="https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes">https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes</a></li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>说明卫星、文本和行政数据各自的误差结构。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>设计三角验证的独立性与覆盖检查。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>说明卫星、文本和行政数据各自的误差结构。</li><li>设计三角验证的独立性与覆盖检查。</li><li>用区间估计而非单点估计报告结果。</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/seasonal-adjustment-and-revisions/">RES-004 · 季调与数据修订</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/covariance-and-correlation/">RES-010 · 协方差与相关性</a> </li><li> <a href="/learn/regression-and-econometrics-coefficients-standard-errors-causality/">RES-031 · 回归与计量：系数、标准误与因果</a> </li><li> <a href="https://economics.51invest.com/learn/games-and-information/">ECO-025 · 博弈与信息</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.oecd-ilibrary.org/content/dam/oecd/en/publications/reports/2015/10/data-driven-innovation_g1g503d8/9789264229358-en.pdf" rel="noopener noreferrer" target="_blank">Data-Driven Innovation: Big Data for Growth and Well-Being</a> <p>OECD · OECD Publishing, 2015</p> <p>访问：2026-11-21 · 许可：© OECD; linked summary only</p> <p>支持论点：支持大数据、数据驱动创新与测量机会。</p> </div><div class="source"> <a href="https://openknowledge.worldbank.org/server/api/core/bitstreams/e2a263a5-307c-563e-b431-51a42583d446/content" rel="noopener noreferrer" target="_blank">Land Policies for Growth and Poverty Reduction</a> <p>Klaus Deininger; World Bank · World Bank</p> <p>访问：2026-11-23 · 许可：World Bank publication; cite-only under World Bank terms of use</p> <p>支持论点：支持土地、产权与地理信息的测量问题。</p> </div><div class="source"> <a href="https://www.federalreserve.gov/econres/scfindex.htm" rel="noopener noreferrer" target="_blank">Survey of Consumer Finances (SCF)</a> <p>Board of Governors of the Federal Reserve System · Board of Governors of the Federal Reserve System</p> <p>访问：2026-10-30 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：支持家庭财富、收入与调查抽样方法。</p> </div><div class="source"> <a href="https://openstax.org/books/principles-economics-3e/pages/15-4-income-inequality-measurement-and-causes" rel="noopener noreferrer" target="_blank">Principles of Economics 3e, 15.4 Income Inequality: Measurement and Causes</a> <p>Steven A. Greenlaw; David Shapiro; Daniel MacDonald · OpenStax</p> <p>访问：2026-11-03 · 许可：CC BY-NC-SA 4.0</p> <p>支持论点：支持收入不平等测量、口径与局限。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/triangulation-satellite-text-administrative-data/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

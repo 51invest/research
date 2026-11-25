@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>矩阵、微积分与数值稳定 · 巫妖投资</title><meta name="description" content="矩阵运算和微积分是量化分析的骨架，但条件数、尺度和浮点误差会让同一个公式给出不同答案。"><link rel="canonical" href="https://research.51invest.com/learn/matrices-calculus-and-numerical-stability/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/matrices-calculus-and-numerical-stability/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/matrices-calculus-and-numerical-stability/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/matrices-calculus-and-numerical-stability/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/matrices-calculus-and-numerical-stability/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">矩阵、微积分与数值稳定</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">矩阵、微积分与数值稳定</h1> <p class="article-summary">矩阵运算和微积分是量化分析的骨架，但条件数、尺度和浮点误差会让同一个公式给出不同答案。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M01 · 数学基础</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>8 分钟 · 22 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>定义</h2>
+<p><strong>矩阵</strong>把线性变换写成行列结构；方阵可逆当且仅当行列式不为零，<strong>条件数</strong>衡量输入的小误差会被放大多少。<strong>特征值</strong>描述矩阵在特定方向上的伸缩。<strong>导数</strong>是局部变化率，<strong>梯度</strong>是多元函数增长最快的方向；<strong>泰勒展开</strong>用一阶、二阶项近似函数。数值稳定指算法在浮点误差下仍给出可信结果。</p>
+<h2>直觉</h2>
+<p>矩阵像一张把多个变量同时摆上桌的表格，解线性方程组就是找一组数让所有方程同时成立。微积分则像放大镜：在很小的范围内，把弯曲的函数看成一条直线，用斜率近似变化。数值稳定是“放大镜不能把噪声放大”：如果矩阵接近奇异，输入的一点点误差会被放大成很大的解误差；如果差分步长太小，浮点舍入又会吃掉有效数字。金融模型里的回归、协方差、组合优化和期权定价，最后都会落到这两件事上。</p>
+<h2>机制</h2>
+<p>解线性方程组时，直接求逆在条件数很大时会把舍入误差放大；LU、QR 或带正则化的最小二乘更稳。回归中的共线性使设计矩阵接近奇异，系数估计方差变大，符号也可能反转。优化中，尺度差异会让梯度下降在某一方向震荡；标准化、预条件和对数变换能改善条件数。泰勒近似只在局部有效，步长太大时二阶项不可忽略。浮点数有有效位数，连续相减会损失精度，应避免用大数减小数[2][3]。</p>
+<h2>例子与计算</h2>
+<p>假设矩阵 A = [[1, 1], [1, 1.0001]]，行列式约 0.0001，条件数约 4 万。若 b 的第二项有 0.0001 的误差，解可能变化约 1 个单位；看起来精确的输入会给出完全不同的系数。再假设函数 f(x)=x² 在 x=10 处用一阶泰勒近似，f(10.1)≈100+20×0.1=102，真实值 102.01，误差 0.01；步长增到 1，近似 120，真实 121，误差 1。标准化前后梯度尺度差 1,000 倍时，学习率对其中一个变量过大、对另一个过小。以上为教学示例。</p>
+<h2>第二个算例：近奇异矩阵与差分步长</h2>
+<p>考虑方程组 x + y = 2，x + 1.01y = 2.01，解为 x = 1、y = 1。若第二个右端只增加 0.001，变成 2.011，方程变为 x + 1.01y = 2.011，解得 y = 1.1、x = 0.9；右端 0.05% 的变化导致解 10% 的变化。矩阵 [[1,1],[1,1.01]] 的条件数约为 400，误差会被放大数百倍。另一个例子：用前向差分估计 f(x) = x² 在 x = 3 的导数，步长 0.01 时 (3.01² − 9)/0.01 = 6.01；步长 1e-8 时，浮点舍入可能让结果偏离 6。步长不是越小越好，需要在截断误差和舍入误差之间取平衡。以上为教学算例。</p>
+<h2>边界与误区</h2>
+<p>第一，可逆不等于良态：行列式很小或条件数很大时，求逆结果不可信。第二，相关系数高不等于必须删除变量，要看经济含义和预测目标。第三，梯度为零只是局部驻点，不保证全局最优；非凸问题还要多起点和约束检查。第四，泰勒近似不是全局公式，远离展开点会失真。第五，提高浮点精度能减少舍入误差，但不能修复病态问题本身。</p>
+<h2>失败模式</h2>
+<p>第一种失败是用正规方程解最小二乘：AᵀA 会把条件数平方，原本 400 的条件数变成 160,000，数值误差急剧放大；应使用 QR 或 SVD。第二种失败是变量量纲差异太大：一个变量以元计、另一个以百万计，矩阵列尺度相差六个数量级，求解器会把小变量当成噪声；应先标准化或缩放。第三种失败是把差分步长设得过小，浮点舍入淹没导数；应使用中心差分、解析导数或自动微分。第四种失败是把线性近似外推到远离展开点的区域，曲率大时误差不可控。第五种失败是忽略浮点精度和并行求和顺序，协方差矩阵可能失去正定性。</p>
+<h2>三问自检</h2>
+<p>第一，矩阵的条件数是多少，是否接近奇异，是否需要 QR/SVD 或正则化？第二，变量是否在同一量纲，是否需要标准化，求和的数值范围是否可控？第三，近似的步长和展开点是否合理，误差是否有解析或数值上界？三问之外，还要把“模型可解”与“结果可信”分开：解出来不等于解对了。</p>
+<h2>相邻概念与反例</h2>
+<p>数值稳定容易和模型正确、算法收敛混淆。模型正确指方程设定符合经济或统计关系；算法收敛指迭代在有限步内停下来；数值稳定指输入的小误差不会被放大成不可信的解。三者不是一回事：一个正确的模型可能因为矩阵近奇异而数值不稳定，一个收敛的算法可能收敛到错误的解。反例是“残差小就是解对”：近奇异方程组的残差可以很小，但解对输入误差极其敏感；此时应看条件数、奇异值和交叉验证，而不是只看残差。另一个反例是“步长越小越精确”：有限差分步长过小会被浮点舍入淹没，误差反而上升。比较数值方法，应同时看误差上界、条件数、计算成本和可复现性。</p>
+<h2>适用边界</h2>
+<p>本文的数值稳定框架适用于矩阵可显式构造、条件数可估计、且误差来源可分离的线性代数和优化问题。若矩阵来自黑箱模拟、维度极高无法求奇异值，或误差主要来自数据而非算法，条件数分析只能提供部分信息。它不适用于把收敛速度当作正确性，也不适用于忽略单位缩放和稀疏结构的通用求解器。使用时先缩放、再看条件数和残差，并用高精度或解析解做小规模校验；小残差不是解正确的证明。</p>
+<p>最后，若模型含不等式约束或非凸目标，条件数只能解释局部误差；应同时检查活跃约束、步长和初始值，并用多起点复算，避免把局部收敛当成全局最优。</p>
+<p>若矩阵含缺失值，先检查插补是否改变条件数；不同插补方案的解应并列报告，并做敏感性分析。</p>
+<p>并保留可复算的中间记录与脚本。</p>
+<h2>关联</h2>
+<ul>
+<li>RES-025 数学基础：本文的相邻主文，先读它再读本补篇。</li>
+<li>RES-006 指数化对数与增长率：本文的相邻主文，先读它再读本补篇。</li>
+<li>RES-009 概率分布与期望方差：本文的相邻主文，先读它再读本补篇。</li>
+<li>RES-013 线性回归入门：本文的相邻主文，先读它再读本补篇。</li>
+</ul>
+<h2>资料说明</h2>
+<p>本文用 NIST Physical Measurement Laboratory、OpenStax, Rice University、Cambridge University Press, 2020 核对定义、制度或统计口径；具体条款、数字与日期以来源原文为准[1][2][3]。</p>
+<h2>研究问题</h2>
+<p>矩阵、微积分和数值方法要回答的是“这个计算在什么条件下可信”。同一个公式，在条件数很差、步长不合适或浮点精度不足时，会给出看起来精确但完全错误的答案。</p>
+<h2>输入</h2>
+<p>输入包括矩阵、向量、函数、参数、步长、迭代上限和精度要求；还要记录单位、量纲、数据范围和缺失值处理。</p>
+<h2>假设</h2>
+<p>假设矩阵可逆或满秩、函数连续可微、步长足够小、浮点误差可控。若条件数接近机器精度倒数，求逆和差分会被舍入误差放大。</p>
+<h2>步骤</h2>
+<p>先做量纲和尺度检查，再看条件数或谱半径，选择直接法或迭代法；对差分要同时试多个步长，观察结果是否稳定，而不是只取一个看起来最好的。</p>
+<h2>结果解读</h2>
+<p>同时报告数值、残差、条件数和误差量级。结果接近零不代表没有误差；若残差很大或对步长敏感，结论只能当近似。</p>
+<h2>失败条件</h2>
+<p>奇异或近奇异矩阵、病态问题、步长过大或过小、迭代不收敛、浮点溢出和下溢、单位不一致，都会让计算失效。</p>
+<h2>复现与验证</h2>
+<p>保留矩阵、脚本、步长和精度设置；用高精度库或解析解对照，至少换一种算法复核。</p>
+<h2>图解</h2>
+<p>下面四张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">矩阵、微积分与数值稳定：机制链</title>
+    <desc id="fig-batch-chain-desc">矩阵、微积分与数值稳定 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵、微积分与数值稳定：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵运算和微积分是量</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">化分析的骨架，但前提…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵运算和微积分是</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">量化分析的骨架，但</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">前提数、尺度和浮点</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">误差会让同一个公式</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">给出不同答案。</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">定义</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">定义：矩阵把线性变换</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">写成行列结构；方阵可…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">定义：矩阵把线性变</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">换写成行列结构；方</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">阵可逆当且仅当行列</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">式不为零，前提数衡</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">量输入的小误差会被…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">例子与计算</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">假设矩阵 A = [,</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">[1, 1.0001]]，行列…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">假设矩阵 A = [,</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">[1, 1.0001]]，行</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">列式约 0.0001，前</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">提数约 4 万。若</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">b 的第二项有…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 1：矩阵、微积分与数值稳定的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">矩阵、微积分与数值稳定：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵、微积分与数值稳定：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第一，可逆不等于良态：行列式很小</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">或条件数很大时，求逆结果不可信。</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第二，相关系数高不等于必须删除变</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">量，要看经济含义和预测目标。第三…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第一，可逆不等于良态：行列式很小</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">或条件数很大时，求逆结果不可信。</text>
+      <text x="188" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第二，相关系数高不等于必须删除变</text>
+      <text x="188" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">量，要看经济含义和预测目标。第三…</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 2：矩阵、微积分与数值稳定的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">矩阵、微积分与数值稳定：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵、微积分与数值稳定：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">矩阵运算和微积分是量化分</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">析的骨架，但前提数、尺度…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第一，可逆不等于良态：行</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">列式很小或前提数很大时…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">第一，可逆不等于良态：行列式很小或前</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">提数很大时，求逆结果不可信。第二，相…</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：矩阵、微积分与数值稳定的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-028-matrices-calculus-and-numerical-stability-example-title fig-028-matrices-calculus-and-numerical-stability-example-desc" viewBox="0 0 460 290" width="100%">
+    <title id="fig-028-matrices-calculus-and-numerical-stability-example-title">算例三行卡：近奇异矩阵：小扰动如何放大</title>
+    <desc id="fig-028-matrices-calculus-and-numerical-stability-example-desc">读图路径：三行分别给出关键数字、单位和算例条件；不是市场数据。</desc>
+    <text x="16" y="24" font-size="12.2" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">算例三行卡</text>
+    <text x="16" y="40" font-size="9.2" fill="var(--muted)" font-family="inherit" text-anchor="start">单位为文中标注；样本为本文教学假设</text>
+    <line x1="12" y1="48" x2="448" y2="48" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="12" y="58" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="76" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">矩阵条件数</text>
+      <text x="448" y="80" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">约 400</text>
+      <text x="24" y="96" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">1% 行差对应的病态程度</text>
+    </g>
+    <g>
+      <rect x="12" y="128" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="146" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">右端扰动</text>
+      <text x="448" y="150" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">0.05%</text>
+      <text x="24" y="166" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">2.010 变为 2.011</text>
+    </g>
+    <g>
+      <rect x="12" y="198" width="436" height="58" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="24" y="216" font-size="10.2" fill="var(--muted)" font-family="inherit" text-anchor="start">解的变化</text>
+      <text x="448" y="220" font-size="17" font-weight="700" fill="var(--accent)" font-family="inherit" text-anchor="end">10%</text>
+      <text x="24" y="236" font-size="9.3" fill="var(--text)" font-family="inherit" text-anchor="start">y 从 1 变到 1.1</text>
+    </g>
+    <line x1="12" y1="266" x2="448" y2="266" stroke="var(--border)" stroke-width="1"/>
+    <text x="16" y="280" font-size="8.8" fill="var(--muted)" font-family="inherit" text-anchor="start">只看数量关系，不构成预测或投资建议</text>
+  </svg>
+  <figcaption>图 4：病态矩阵会把输入的小误差放大成解的大误差。单位为文中标注；样本为本文教学假设，不是市场或统计数据；只用于展示数量关系。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li><strong>概念辨别：</strong> 概念辨别：矩阵可逆与数值可解是一回事吗？</li>
+<li><strong>计算或推理：</strong> 计算：f(x)=x² 在 x=3 处的一阶泰勒近似，预估 f(3.1) 是多少？真实值多少？</li>
+<li><strong>适用条件：</strong> 适用条件：回归中共线性会怎样影响系数和预测？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>不是。可逆只表示行列式不为零；条件数大时，输入小误差会被放大，数值解不可信。</li>
+<li>近似 9 + 6×0.1 = 9.6；真实 9.61，误差 0.01。</li>
+<li>系数方差变大、符号可能反转、单个系数不显著，但整体预测可能仍可用；解释系数时要谨慎。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>National Institute of Standards and Technology. <em>SI Units</em>. NIST Physical Measurement Laboratory. U.S. Government work (public domain), 17 U.S.C. §105. <a href="https://www.nist.gov/pml/owm/metric-si/si-units">https://www.nist.gov/pml/owm/metric-si/si-units</a>（访问日期：2026-11-21）</li>
+<li>OpenStax. <em>Calculus Volume 1, 4.2 Linear Approximations and Differentials</em>. OpenStax, Rice University. CC BY-NC-SA 4.0 (OpenStax Calculus Volume 1). <a href="https://openstax.org/books/calculus-volume-1/pages/4-2-linear-approximations-and-differentials">https://openstax.org/books/calculus-volume-1/pages/4-2-linear-approximations-and-differentials</a>（访问日期：2026-11-21）</li>
+<li>Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong. <em>Mathematics for Machine Learning</em>. Cambridge University Press, 2020. © authors; free PDF, linked summary only. <a href="https://mml-book.github.io/book/mml-book.pdf">https://mml-book.github.io/book/mml-book.pdf</a>（访问日期：2026-11-21）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>解释矩阵可逆性、条件数和特征值在回归与组合优化中的含义。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>用泰勒展开和梯度判断局部近似何时可信。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>解释矩阵可逆性、条件数和特征值在回归与组合优化中的含义。</li><li>用泰勒展开和梯度判断局部近似何时可信。</li><li>识别尺度差异、共线性和浮点误差导致的数值不稳定，并给出修正方案。</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/mathematical-foundations/">RES-025 · 数学基础</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/indexing-logarithms-and-growth-rates/">RES-006 · 指数化对数与增长率</a> </li><li> <a href="/learn/probability-distributions-expectation-and-variance/">RES-009 · 概率分布与期望方差</a> </li><li> <a href="/learn/linear-regression-introduction/">RES-013 · 线性回归入门</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.nist.gov/pml/owm/metric-si/si-units" rel="noopener noreferrer" target="_blank">SI Units</a> <p>National Institute of Standards and Technology · NIST Physical Measurement Laboratory</p> <p>访问：2026-11-21 · 许可：U.S. Government work (public domain), 17 U.S.C. §105</p> <p>支持论点：用于核对“矩阵、微积分与数值稳定”涉及的定义、制度、统计口径或产品条款；正文不把来源未写的内容当作事实，具体数字与日期以来源原文为准。</p> </div><div class="source"> <a href="https://openstax.org/books/calculus-volume-1/pages/4-2-linear-approximations-and-differentials" rel="noopener noreferrer" target="_blank">Calculus Volume 1, 4.2 Linear Approximations and Differentials</a> <p>OpenStax · OpenStax, Rice University</p> <p>访问：2026-11-21 · 许可：CC BY-NC-SA 4.0 (OpenStax Calculus Volume 1)</p> <p>支持论点：用于核对“矩阵、微积分与数值稳定”涉及的定义、制度、统计口径或产品条款；正文不把来源未写的内容当作事实，具体数字与日期以来源原文为准。</p> </div><div class="source"> <a href="https://mml-book.github.io/book/mml-book.pdf" rel="noopener noreferrer" target="_blank">Mathematics for Machine Learning</a> <p>Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong · Cambridge University Press, 2020</p> <p>访问：2026-11-21 · 许可：© authors; free PDF, linked summary only</p> <p>支持论点：用于核对“矩阵、微积分与数值稳定”涉及的定义、制度、统计口径或产品条款；正文不把来源未写的内容当作事实，具体数字与日期以来源原文为准。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/matrices-calculus-and-numerical-stability/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>存量与流量 · 巫妖投资</title><meta name="description" content="存量是某一时点的余额，流量是一段期间的变动；把赤字当债务、把收入当财富，会混淆会计恒等式与因果解释。"><link rel="canonical" href="https://research.51invest.com/learn/stocks-and-flows/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/stocks-and-flows/"><link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/stocks-and-flows/"><link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/stocks-and-flows/"><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><link rel="stylesheet" href="/_astro/Base.CocbJOeh.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link" href="https://51invest.com/contents/"> 内容地图 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/stocks-and-flows/" hreflang="en" lang="en" data-language-link="en" aria-label="切换为英文" title="切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path> </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>  </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>   </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">存量与流量</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">研究</span> <h1 class="article-title">存量与流量</h1> <p class="article-summary">存量是某一时点的余额，流量是一段期间的变动；把赤字当债务、把收入当财富，会混淆会计恒等式与因果解释。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M04 · 数据口径</strong></div> <div class="meta-item"><span>层级</span><strong>入门</strong></div> <div class="meta-item"><span>阅读</span><strong>6 分钟 · 12 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <h2>研究问题</h2>
+<p>同样说“债务增加”，可能指年末余额高于年初，也可能指当年赤字。两者常被写成同一个金额单位，含义却不同：前者是时点存量，后者是期间流量。本文用国民账户的存量—流量恒等式检查债务与赤字、财富与收入的口径，说明何时可以说两者一致，以及哪些差异不能当作经济结论。范围限于记账规则；文中数字均为教学假设，不是观测数据。</p>
+<h2>数据</h2>
+<p>存量是某一时点持有或承担的资产与负债；流量是一段期间内经济价值的创造、转换、交换、转移或消失。存量记入资产负债表，通常在期初和期末编制；流量记入其余账户。存量来自过去流量和其他变化的积累，又被本期流量改变。本文示例均以人民币计价，存量记为亿元、流量记为亿元每年，数值都是教学假设。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>单位</th>
+<th>时点或期间</th>
+<th>示例值（假设）</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>政府债务余额</td>
+<td>期末未偿债务</td>
+<td>亿元</td>
+<td>第 t 年末</td>
+<td>106</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>财政赤字</td>
+<td>当年净借款</td>
+<td>亿元/年</td>
+<td>第 t 年</td>
+<td>8</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>家庭净财富</td>
+<td>期末资产减负债</td>
+<td>亿元</td>
+<td>第 t 年末</td>
+<td>525</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>家庭可支配收入</td>
+<td>当年收入</td>
+<td>亿元/年</td>
+<td>第 t 年</td>
+<td>60</td>
+<td>不适用（教学假设）</td>
+</tr>
+<tr>
+<td>存货</td>
+<td>期末持有存货</td>
+<td>亿元</td>
+<td>第 t 年末</td>
+<td>48</td>
+<td>不适用（教学假设）</td>
+</tr>
+</tbody></table>
+<p>国民账户同时记录流量与存量：资产负债表列示资产、负债与净值，期初到期末的变化来自积累账户中的交易——这是 ONS 的说明[2]。</p>
+<h2>方法与假设</h2>
+<p>基本恒等式是：期初存量 + 本期交易 + 其他物量变化 + 持有损益 = 期末存量。交易包括净借款和投资；其他物量变化包括灾害损毁和资产发现；持有损益来自价格或汇率变化。赤字只是“净借款”这一流量，不是债务存量。本文假设各期口径一致、估值日一致，且流量期间与存量期间首尾衔接；若假设不成立，残差应先核查口径。</p>
+<p>期末存量等于期初存量加上交易与其他变化；联合国口径把存量定义为某一时点的持有量，把流量定义为一段期间内经济价值的创造、转换、交换、转移或消失[1]。</p>
+<h2>结果</h2>
+<p>设期初债务 100，当年净借款 8，重估价 -2，则期末债务 = 100 + 8 - 2 = 106。债务增加 6，而赤字是 8。若同年 GDP 为 210，政府债务余额占 GDP 比重为 <code>106 / 210 ≈ 50.5%</code>。分子是期末存量，分母是同年流量，必须同时说明时点和期间。</p>
+<p>家庭例：期初财富 500，可支配收入 60，消费 45，储蓄 15，持有损益 10，则期末财富 = 500 + 15 + 10 = 525。财富增加 25，储蓄只有 15，差额来自资产价格。把财富增长全归因于储蓄，会把重估价误读成新增积累。</p>
+<p>存货例：期初 40，购入 100，销售成本 95，持有损益 3，则期末 = 40 + 100 - 95 + 3 = 48。期末比期初多 8，但其中 3 来自价格变化。</p>
+<h3>汇总与期末规则</h3>
+<p>汇总存量时，所有单位必须使用同一估值日和估值基础；汇总流量时，所有流量必须属于同一期间和覆盖范围。存量与流量不能直接相加，也不能把不同日期的余额相加当作期间流量。总额与净额、资产总值与净值是不同指标；合并会抵消同一集团内部的债权债务，非合并则保留。期末规则是：本期期末存量等于下期期初存量，不能重复计入；流量按权责发生制记入发生期间，而不是现金收付日期——SNA 2008 逐字写 &quot;In principle, national accounts record actual transactions on an accrual basis, not on a cash basis.&quot;，并补 &quot;Conceptually national accounts follow the same principle as business accounting.&quot;[1]。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-sf-title fig-sf-desc" viewBox="0 0 420 200" width="100%">
+    <title id="fig-sf-title">存量与流量：期初、流量与期末</title>
+    <desc id="fig-sf-desc">中央一个方框表示年末政府债务存量一百零六亿元；左侧流入箭头标注赤字每年加八，右侧流出箭头标注持有损益等每年减二；方框下方写明期初一百、变化加六、期末一百零六。</desc>
+    <rect x="165" y="70" width="130" height="60" fill="var(--accent)" opacity="0.35"></rect>
+    <line x1="70" y1="100" x2="155" y2="100" stroke="var(--muted)" stroke-width="2"></line>
+    <polygon points="155,92 165,100 155,108" fill="var(--muted)"></polygon>
+    <line x1="295" y1="100" x2="380" y2="100" stroke="var(--muted)" stroke-width="2"></line>
+    <polygon points="372,92 380,100 372,108" fill="var(--muted)"></polygon>
+    <g fill="var(--muted)" font-size="11" font-family="inherit">
+      <text x="60" y="20">单位：亿元（教学假设）</text>
+      <text x="176" y="96">债务余额</text>
+      <text x="176" y="112">106（期末）</text>
+      <text x="74" y="88">流量：赤字 +8/年</text>
+      <text x="300" y="88">−2/年（持有损益等）</text>
+      <text x="70" y="160">期初 100 ＋ 8 − 2 = 期末 106，存量变化 +6</text>
+      <text x="70" y="180">存量是时点数，流量是期间数，两者单位同为亿元但不可直接相加</text>
+    </g>
+  </svg>
+  <figcaption>图 1：存量—流量示意：政府债务余额是时点存量（期末 106 亿元），赤字与持有损益是期间流量（+8 与 −2 亿元每年），100 + 8 − 2 = 106。图为教学假设，方框与箭头的尺寸不表示任何比例尺度。</figcaption>
+</figure>
+
+<h2>稳健性</h2>
+<p>改用市值或名义值、总额或净额、合并或非合并、日历年末或财政年末，都会改变存量水平；外币债务折算也会让本币债务在没有新借款时变化。稳健性检查是重算恒等式并保留残差：若“期初 + 流量 + 其他变化 + 重估价”与期末不一致，应检查口径和估值日，而不是把残差硬塞进流量。跨期比较还要核对资产范围和部门边界。</p>
+<h2>局限</h2>
+<p>资产负债表可能漏掉或有负债、养老金缺口和未登记资产；估值日不同、数据修订和统计误差会产生残差。会计恒等式只保证记账一致，不说明债务为何增加，也不能证明政策效果。本文数字为假设，不能当作任何国家或机构的实际数据。</p>
+<h2>复现</h2>
+<p>记录序列代码、估值基础、合并范围、存量时点、流量期间、币种和汇率日期；保存数据版本与取得时间；用同一公式重算并报告残差；把假设情景与观测数据分开标注。</p>
+<h2>结论强度</h2>
+<p>存量—流量关系是会计关系，属于描述性一致性；它约束“什么可以和什么相加”，不提供因果识别。可以据此说赤字 8 与债务增加 6 的差额来自重估价，但不能据此说赤字导致了某种经济结果。</p>
+<p>本文对两类概念的边界沿用 ONS 的定义：流量反映经济价值的创造、转换、交换、转移或消失，资产负债表则是某一时点资产与负债价值的报表[3]。</p>
+<h2>关联</h2>
+<ul>
+<li>必需先修：数据单位与统计口径（RES-001）。</li>
+<li>相关与推荐阅读：频率与时间对齐（RES-003）、季调与数据修订（RES-004）。</li>
+</ul>
+<h2>图解</h2>
+<p>下面三张图分别检查本文的机制、边界与对照；图内文字取自本文小节，不是新数据。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-chain-title fig-batch-chain-desc" viewBox="0 0 340 304" width="100%">
+    <title id="fig-batch-chain-title">存量与流量：机制链</title>
+    <desc id="fig-batch-chain-desc">存量与流量 的三段结构：问题、机制、判断。图内文字取自本文小节，不是新的数据估计。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">存量与流量：机制链</text>
+    <text x="14" y="38" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图内文字取自本文小节；三段缺一不可。</text>
+    <line x1="14" y1="46" x2="326" y2="46" stroke="var(--border)" stroke-width="1"/>
+    <g>
+      <rect x="14" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="22" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">问题</text>
+      <text x="22" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">存量是某一时点的余额</text>
+      <text x="22" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">，流量是一段期间的变…</text>
+      <text x="22" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">存量是某一时点的余</text>
+      <text x="22" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">额，流量是一段期间</text>
+      <text x="22" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">的变动；把赤字当债</text>
+      <text x="22" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">务、把收入当财富，</text>
+      <text x="22" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">会混淆会计恒等式与…</text>
+    </g>
+      <g>
+      <rect x="123" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="131" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">研究问题</text>
+      <text x="131" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：同样说“债</text>
+      <text x="131" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">务增加”，可能指年末…</text>
+      <text x="131" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">研究问题：同样说“</text>
+      <text x="131" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">债务增加”，可能指</text>
+      <text x="131" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">年末余额高于年初，</text>
+      <text x="131" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">也可能指当年赤字。</text>
+      <text x="131" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">两者常被写成同一个…</text>
+    </g>
+      <g>
+      <rect x="232" y="54" width="94" height="180" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text x="240" y="72" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">数据</text>
+      <text x="240" y="90" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">存量是某一时点持有或</text>
+      <text x="240" y="102" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">承担的资产与负债；流…</text>
+      <text x="240" y="124" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">存量是某一时点持有</text>
+      <text x="240" y="141" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">或承担的资产与负债</text>
+      <text x="240" y="158" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">；流量是一段期间内</text>
+      <text x="240" y="175" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">经济价值的创造、转</text>
+      <text x="240" y="192" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">换、交换、转移或消…</text>
+    </g>
+    <line x1="108" y1="144" x2="123" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M120 140 L125 144 L120 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="217" y1="144" x2="232" y2="144" stroke="var(--border)" stroke-width="1.1"/>
+    <path d="M229 140 L234 144 L229 148" fill="none" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="14" y1="250" x2="326" y2="250" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="266" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">读法：先看问题能否成立，再看机制能否连通，最后看判断会不会越界。</text>
+    <text x="14" y="280" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">若中间一步缺证据，后面的结论只能当假设，不能当事实。</text>
+    <text x="14" y="294" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为结构示意，不是新的数据图；样本为本文论证。</text>
+  </svg>
+  <figcaption>图 2：存量与流量的机制链：从问题、机制到判断。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-boundary-title fig-batch-boundary-desc" viewBox="0 0 340 244" width="100%">
+    <title id="fig-batch-boundary-title">存量与流量：适用边界</title>
+    <desc id="fig-batch-boundary-desc">把成立条件与失效条件分开；局部例子不能自动推广到所有情形。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">存量与流量：什么情况下成立？</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <rect x="14" y="44" width="312" height="38" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="170" y="62" font-size="8.8" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="middle">先检查条件，再看结论</text>
+    <text x="170" y="75" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="middle">条件、口径或样本一变，结论可能要重算</text>
+    <line x1="170" y1="82" x2="90" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <line x1="170" y1="82" x2="250" y2="104" stroke="var(--border)" stroke-width="1.1"/>
+    <rect x="14" y="104" width="148" height="100" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+    <text x="24" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">成立</text>
+    <text x="24" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">资产负债表可能漏掉或有负债、养老</text>
+      <text x="24" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">金缺口和未登记资产；估值日不同、</text>
+      <text x="24" y="170" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">数据修订和统计误差会产生残差。会</text>
+      <text x="24" y="186" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">计恒等式只保证记账一致，不说明债…</text>
+    <rect x="178" y="104" width="148" height="100" rx="8" fill="var(--gold)" opacity="0.18" stroke="var(--border)"/>
+    <text x="188" y="122" font-size="8.6" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">不成立 / 需改写</text>
+    <text x="188" y="138" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES</text>
+      <text x="188" y="154" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">-001）。</text>
+    <line x1="14" y1="216" x2="326" y2="216" stroke="var(--border)" stroke-width="1"/>
+    <text x="14" y="232" font-size="8.3" fill="var(--muted)" font-family="inherit" text-anchor="start">图为边界示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 3：存量与流量的边界：哪些条件成立，哪些条件失效。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-batch-compare-title fig-batch-compare-desc" viewBox="0 0 340 252" width="100%">
+    <title id="fig-batch-compare-title">存量与流量：对象、前提与常见误区</title>
+    <desc id="fig-batch-compare-desc">三行比较本文概念、成立条件与常见误区；比较不等于等价，也不能替代定义。</desc>
+    <text x="14" y="22" font-size="10.5" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">存量与流量：一张表看对象、前提与误区</text>
+    <line x1="14" y1="34" x2="326" y2="34" stroke="var(--border)" stroke-width="1"/>
+    <text x="82" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">本篇</text>
+    <text x="200" y="46" font-size="8.4" font-weight="650" fill="var(--text)" font-family="inherit" text-anchor="start">容易混淆</text>
+    <g>
+      <rect x="14" y="52" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="72" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">对象</text>
+      <text x="82" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">存量是某一时点的余额，流</text>
+      <text x="82" y="88" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">量是一段期间的变动；把赤…</text>
+      <text x="200" y="72" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相邻概念/常见说法</text>
+    </g>
+    <g>
+      <rect x="14" y="110" width="312" height="58" fill="var(--surface-2)" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="130" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">前提</text>
+      <text x="82" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">资产负债表可能漏掉或有负</text>
+      <text x="82" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">债、养老金缺口和未登记资…</text>
+      <text x="200" y="130" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">必需先修：数据单位与统计口径（RES-00</text>
+      <text x="200" y="146" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">1）。</text>
+    </g>
+    <g>
+      <rect x="14" y="168" width="312" height="58" fill="transparent" stroke="var(--border)" stroke-width="0.7"/>
+      <text x="22" y="188" font-size="8.4" font-weight="650" fill="var(--muted)" font-family="inherit" text-anchor="start">检查</text>
+      <text x="82" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">先定义，再比较；不能只看</text>
+      <text x="82" y="204" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">名称</text>
+      <text x="200" y="188" font-size="8.4" fill="var(--text)" font-family="inherit" text-anchor="start">相关不等于因果，局部不等于普遍</text>
+    </g>
+    <text x="14" y="244" font-size="8.2" fill="var(--muted)" font-family="inherit" text-anchor="start">图为比较示意；样本为本文论证，单位为文中标注。</text>
+  </svg>
+  <figcaption>图 4：存量与流量的对象、前提与常见误区比较。样本为本文论证，单位为文中标注。</figcaption>
+</figure>
+
+<h2>练习</h2>
+<ol>
+<li>期初债务 100，净借款 8，重估价 -2。期末债务是多少？债务增加多少？为什么不是 8？</li>
+<li>期初财富 500，储蓄 15，持有损益 10。期末财富是多少？财富变化中有多少来自储蓄？</li>
+<li>期末债务 106，同年 GDP 210。政府债务余额占 GDP 比重是多少？分子分母的时点与期间应如何说明？</li>
+</ol>
+<details>
+<summary>参考答案</summary>
+
+<ol>
+<li>期末债务 = 100 + 8 - 2 = 106；增加 6。净借款是 8，但重估价 -2 使余额少增 2。</li>
+<li>期末财富 = 500 + 15 + 10 = 525；储蓄贡献 15，持有损益贡献 10。</li>
+<li><code>106 / 210 ≈ 50.5%</code>。106 是期末存量，210 是同年 GDP 流量；应写明估值日和 GDP 期间。</li>
+</ol>
+</details>
+
+<h2>来源</h2>
+<ol>
+<li>European Commission, International Monetary Fund, Organisation for Economic Co-operation and Development, United Nations and World Bank. <em>System of National Accounts 2008</em>, Chapter 3 and Chapter 13. <a href="https://unstats.un.org/unsd/nationalaccount/docs/SNA2008.pdf">https://unstats.un.org/unsd/nationalaccount/docs/SNA2008.pdf</a>（访问日期：2026-10-30）</li>
+<li>Office for National Statistics. “An introduction to the UK national accounts.” Blue Book 2018. Open Government Licence v3.0. <a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2018/anintroductiontotheuknationalaccounts">https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2018/anintroductiontotheuknationalaccounts</a>（访问日期：2026-10-30）</li>
+<li>Office for National Statistics. “Glossary.” Blue Book 2019. Open Government Licence v3.0. <a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2019/glossary">https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2019/glossary</a>（访问日期：2026-10-30）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能判断给定序列是存量还是流量，并写出其单位与时间属性（如债务余额与年度赤字）</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能用 100+8-2=106 一类恒等式检查存量变化是否等于净流量与其他效应之和</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>        </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能判断给定序列是存量还是流量，并写出其单位与时间属性（如债务余额与年度赤字）</li><li>能用 100+8-2=106 一类恒等式检查存量变化是否等于净流量与其他效应之和</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/data-units-and-definitions/">RES-001 · 数据单位与统计口径</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/frequency-and-time-alignment/">RES-003 · 频率与时间对齐</a> </li><li> <a href="/learn/seasonal-adjustment-and-revisions/">RES-004 · 季调与数据修订</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://unstats.un.org/unsd/nationalaccount/docs/SNA2008.pdf" rel="noopener noreferrer" target="_blank">System of National Accounts 2008, Chapter 2 &quot;Overview&quot; (¶2.56), Chapter 3 &quot;Stocks, flows and accounting rules&quot; and Chapter 13 &quot;The balance sheet&quot;</a> <p>European Commission; International Monetary Fund; Organisation for Economic Co-operation and Development; United Nations; World Bank · United Nations</p> <p>访问：2026-11-03 · 许可：All rights reserved (© 2009 European Communities, IMF, OECD, United Nations, World Bank)</p> <p>支持论点：权责发生制一句由第 2 章承担，逐字（¶2.56）：&quot;In principle, national accounts record actual transactions on an accrual basis, not on a cash basis.&quot; 与 &quot;Conceptually national accounts follow the same principle as business accounting.&quot;，同段先写 &quot;One has thus to distinguish carefully between the point in time at which a transaction and the corresponding cash movement take place.&quot;；登记章节名经目录核对为原题写法 &quot;Chapter 3: Stocks, flows and accounting rules&quot; 与 &quot;Chapter 13: The balance sheet&quot;（另 &quot;Chapter 2: Overview&quot; 为 accrual 句所在章）。存量／流量的定义与期末等于下期期初等规则仍出自第 3 章与第 13 章。取证说明：该 PDF 为双栏排版，pdftotext 的默认模式与 -layout 模式都会把左右栏文字互相插断（实测 &quot;In principle, national accounts record a…&quot; 在这两种输出中均不连续），只有 -raw 模式给出阅读顺序，故引文一律在 -raw 文本中断言连续命中后才登记。</p> </div><div class="source"> <a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2018/anintroductiontotheuknationalaccounts" rel="noopener noreferrer" target="_blank">An introduction to the UK national accounts (Blue Book 2018)</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>访问：2026-10-30 · 许可：Open Government Licence v3.0</p> <p>支持论点：国民账户同时记录流量与存量；资产负债表列示资产、负债与净值，期初到期末的变化来自积累账户中的交易和其他流量，以及重分类和重估价。</p> </div><div class="source"> <a href="https://www.ons.gov.uk/economy/grossdomesticproductgdp/compendium/unitedkingdomnationalaccountsthebluebook/2019/glossary" rel="noopener noreferrer" target="_blank">Glossary (Blue Book 2019): Flows; Balance sheet</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>访问：2026-10-30 · 许可：Open Government Licence v3.0</p> <p>支持论点：流量反映经济价值的创造、转换、交换、转移或消失；资产负债表是某一时点资产与负债价值的报表。</p> </div> </section> </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="知识分站"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>     </svg> <span>首页</span> </a> <a class="mobile-link" href="https://51invest.com/#stations" data-main-home> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>   <rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect>      </svg> <span>知识分站</span> </a> <a class="mobile-link active" href="/" aria-current="page"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>  <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5z"></path><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"></path>       </svg> <span>分站首页</span> </a> <a class="mobile-link" href="/en/learn/stocks-and-flows/" data-language-link="en"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>    </svg> <span>English</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>
