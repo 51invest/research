@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>证据综合、元分析与研究合并 · 巫妖投资</title><meta name="description" content="元分析不是把一堆论文的结论取平均，而是把问题、效应量、样本、偏差和异质性放到同一张表上，判断“平均效应”是否值得相信。"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="canonical" href="https://research.51invest.com/learn/evidence-synthesis-meta-analysis/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/evidence-synthesis-meta-analysis/" />
+    <link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/evidence-synthesis-meta-analysis/" />
+    <link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/evidence-synthesis-meta-analysis/" /><link rel="alternate" type="application/rss+xml" title="巫妖投资 RSS" href="/rss.xml"><meta property="og:site_name" content="51invest"><meta property="og:type" content="article"><meta property="og:title" content="证据综合、元分析与研究合并 · 巫妖投资"><meta property="og:description" content="元分析不是把一堆论文的结论取平均，而是把问题、效应量、样本、偏差和异质性放到同一张表上，判断“平均效应”是否值得相信。"><meta property="og:url" content="https://research.51invest.com/learn/evidence-synthesis-meta-analysis/"><meta property="og:image" content="https://51invest.com/_astro/research.BElOUccP.png"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="证据综合、元分析与研究合并 · 巫妖投资"><meta name="twitter:description" content="元分析不是把一堆论文的结论取平均，而是把问题、效应量、样本、偏差和异质性放到同一张表上，判断“平均效应”是否值得相信。"><meta name="twitter:image" content="https://51invest.com/_astro/research.BElOUccP.png"><meta property="article:published_time" content="2026-11-26"><meta property="article:modified_time" content="2026-11-26"><meta property="article:section" content="方法"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"证据综合、元分析与研究合并","description":"元分析不是把一堆论文的结论取平均，而是把问题、效应量、样本、偏差和异质性放到同一张表上，判断“平均效应”是否值得相信。","inLanguage":"zh-CN","mainEntityOfPage":"https://research.51invest.com/learn/evidence-synthesis-meta-analysis/","datePublished":"2026-11-26","dateModified":"2026-11-26","articleSection":"方法","author":{"@type":"Organization","name":"51invest AI 编辑部","url":"https://51invest.com/"},"publisher":{"@type":"Organization","name":"51invest","url":"https://51invest.com/","logo":{"@type":"ImageObject","url":"https://51invest.com/_astro/neutral.Dr5C2SoA.png"}},"image":["https://51invest.com/_astro/neutral.Dr5C2SoA.png"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://51invest.com/"},{"@type":"ListItem","position":2,"name":"研究方法","item":"https://research.51invest.com/"},{"@type":"ListItem","position":3,"name":"证据综合、元分析与研究合并","item":"https://research.51invest.com/learn/evidence-synthesis-meta-analysis/"}]}]}</script><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><script>
+      (() => {
+        const host = location.hostname;
+        if (host === 'www.51invest.com' || (host === '51invest.com' && location.protocol === 'http:')) {
+          location.replace(`https://51invest.com${location.pathname}${location.search}${location.hash}`);
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.C6WC_-AH.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资 51INVEST"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link nav-external" href="https://nav.51invest.com/" data-external-nav rel="noopener noreferrer" aria-label="打开外链导航"> 导航 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/evidence-synthesis-meta-analysis/" hreflang="en" lang="en" data-language-link="en" aria-label="English — 切换为英文" title="English — 切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>            </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path>         </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>          </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>           </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">证据综合、元分析与研究合并</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">证据综合、元分析与研究合并</h1> <p class="article-summary">元分析不是把一堆论文的结论取平均，而是把问题、效应量、样本、偏差和异质性放到同一张表上，判断“平均效应”是否值得相信。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M14 · 研究阅读与写作</strong></div> <div class="meta-item"><span>层级</span><strong>进阶</strong></div> <div class="meta-item"><span>阅读</span><strong>10 分钟 · 13 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <div class="article-toc-mobile"> <details> <summary>本文目录 · 13 节</summary> <ol> <li><a href="#section-1">问题与范围</a></li><li><a href="#section-2">从 PICO 开始</a></li><li><a href="#section-3">检索、筛选与编码</a></li><li><a href="#section-4">效应量与权重</a></li><li><a href="#section-5">异质性与发表偏差</a></li><li><a href="#section-6">数值算例</a></li><li><a href="#section-7">数据口径</a></li><li><a href="#section-8">边界与反例</a></li><li><a href="#section-9">一页清单</a></li><li><a href="#section-10">常见误读</a></li><li><a href="#section-11">练习</a></li><li><a href="#section-12">关联</a></li><li><a href="#section-13">来源</a></li> </ol> </details> </div> <h2 id="section-1">问题与范围</h2>
+<p>一篇论文的结论往往被媒体放大成“研究证明”。但单一研究样本小、口径不同、选择偏差多，结论可能只是噪声。证据综合（evidence synthesis）要做的，不是找一篇“最权威”的论文，而是系统检索、筛选、编码、加权和检验异质性，最后给出一个带不确定性和适用边界的结论。元分析（meta-analysis）是其中一种定量合并方法，不是证据综合的全部。</p>
+<p>本文按 PICO 问题、检索筛选、效应量、权重模型、异质性、发表偏差和适用边界七步走。重点不是教软件操作，而是让读者看懂一张 forest plot（森林图）为什么把某些研究权重大、为什么“平均效应显著”仍可能不可信。所有数值都是教学假设，不是对任何真实文献的复制。</p>
+<h2 id="section-2">从 PICO 开始</h2>
+<p>一个问题如果不能写成 PICO，就很难做证据综合。<strong>P</strong> 是人群/对象，<strong>I</strong> 是干预/暴露，<strong>C</strong> 是比较对象，<strong>O</strong> 是结果指标。比如“某职业培训对低收入青年就业率的影响”，P 是 18—24 岁低收入青年，I 是 8 周培训，C 是无培训或 placebo，O 是 12 个月后的正式就业率。若问题写成“培训有没有用”，结果指标可以有一百种，检索和合并就失去边界。</p>
+<p>PICO 之后要写<strong>纳入/排除标准</strong>：研究设计（随机实验、准实验、观察研究）、时间窗口、地理范围、语言、出版类型、结果测量方式。标准必须在检索前写下，不能看到结果后再改。否则就是“先射箭再画靶”。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-049-evidence-synthesis-meta-analysis-zh-1-title fig-res-049-evidence-synthesis-meta-analysis-zh-1-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-049-evidence-synthesis-meta-analysis-zh-1-title">PICO、检索、编码与合并的证据综合流程（教学示意）</title>
+    <desc id="fig-res-049-evidence-synthesis-meta-analysis-zh-1-desc">PICO、检索、编码与合并的证据综合流程（教学示意）。图中数字为教学假设，不是真实统计。</desc>
+<text x="230" y="40" font-size="12" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">四个核算节点</text>
+    <rect x="16" y="120" width="96" height="62" rx="9" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="64" y="155" font-size="10.5" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">PICO</text>
+    <line x1="112" y1="151" x2="126" y2="151" stroke="currentColor" stroke-width="1.4"></line>
+    <rect x="126" y="120" width="96" height="62" rx="9" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="174" y="155" font-size="10.5" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">检索筛选</text>
+    <line x1="222" y1="151" x2="236" y2="151" stroke="currentColor" stroke-width="1.4"></line>
+    <rect x="236" y="120" width="96" height="62" rx="9" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="284" y="155" font-size="10.5" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">编码</text>
+    <line x1="332" y1="151" x2="346" y2="151" stroke="currentColor" stroke-width="1.4"></line>
+    <rect x="346" y="120" width="96" height="62" rx="9" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="394" y="155" font-size="10.5" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">合并/评级</text>
+    <text x="230" y="238" font-size="9.5" font-weight="500" fill="var(--muted)" text-anchor="middle" font-family="inherit">箭头表示核算顺序，不代表因果</text>
+  </svg>
+  <figcaption>图 1：PICO、检索、编码与合并的证据综合流程（教学示意）。</figcaption>
+</figure>
+
+<h2 id="section-3">检索、筛选与编码</h2>
+<p>检索要至少覆盖三类来源：数据库（Web of Science、Scopus、PubMed、CNKI 等）、灰色文献（工作论文、政府报告、学位论文）和参考文献追溯。只搜英文期刊会漏掉本地政策评估；只搜已发表论文会高估效应，因为负面结果更难发表。</p>
+<p>筛选通常分两步：先读标题/摘要，再读全文。每一步都要记录排除原因和数量，最后画 PRISMA 流程图。两个人独立筛选并计算一致率，分歧由第三人裁定；单人筛选至少要做一次抽样复核。</p>
+<p>编码表要提前设计：样本规模、对象特征、干预强度、对照类型、结果定义、随访时长、效应量、标准误、调整变量、研究质量。编码不是抄摘要，而是把每篇研究翻译成可比较的数。编码错误比统计模型错误更常见，也更难修。</p>
+<h2 id="section-4">效应量与权重</h2>
+<p>不同研究的结果指标不同：有的报告均值差，有的报告标准化均值差（SMD），有的报告风险比（RR）或优势比（OR）。合并前要统一到同一效应量尺度。连续变量常用 Hedges&#39; g，二分类变量常用 RR 或 OR；转换公式要写清，不能把 OR 直接当 RR。</p>
+<p>权重取决于精度。固定效应模型按 1/方差加权：样本越大、标准误越小，权重越高。随机效应模型在固定权重上再加一个研究间方差 τ²，让大研究和小研究更均衡。固定效应回答“这些研究是否共享一个真效应”；随机效应回答“这些研究来自一个效应分布，平均是多少”。问题不同，模型不同，不能只看哪个结果更显著。</p>
+<h2 id="section-5">异质性与发表偏差</h2>
+<p>异质性（heterogeneity）是元分析的核心，不是附属品。Q 检验判断观察到的差异是否超过抽样误差；I² 表示总变异中由研究间差异解释的比例。I²=0 表示很一致，I²=50% 表示中等，I²=75% 以上表示高异质。高异质时，合并一个“平均效应”可能没有意义，应该做亚组分析或叙事综合。</p>
+<p>发表偏差是另一个陷阱。显著结果更容易发表，导致合并效应偏高。漏斗图（funnel plot）把效应量对精度作图，样本小、效应大的研究应散在底部两侧；若明显不对称，可能存在发表偏差。但漏斗图在异质性高、研究少时不可靠，Egger 检验也只能作为线索，不是判决。</p>
+<h2 id="section-6">数值算例</h2>
+<p>假设三项教学研究，效应量分别为 0.20、0.35、0.50，标准误为 0.10、0.12、0.15。固定效应权重为 1/SE²：100、69.44、44.44，权重和 213.88。加权平均为（100×0.20+69.44×0.35+44.44×0.50）/213.88=（20+24.30+22.22）/213.88=0.311。</p>
+<p>Q 值为各研究对加权平均的偏差平方乘权重：100×(0.20-0.311)²=1.23；69.44×(0.35-0.311)²=0.104；44.44×(0.50-0.311)²=1.59；合计 2.92。自由度 df=3-1=2。Q=2.92 小于临界值约 5.99，不能拒绝“同质”假设；I²=max(0,(2.92-2)/2.92)=31.5%，属于低到中等异质。这个例子说明：效应量从 0.20 到 0.50 看起来差很多，但在这些标准误下，抽样误差可以解释一部分差异。</p>
+<p>若把第三项标准误改为 0.05，权重变为 400，Q 值会大幅上升，I² 也会升高。样本更精确的研究如果结论不同，异质性更值得警惕，而不是被“大样本”自动压平。元分析不是“谁样本大谁说了算”，而是“谁精确谁权重高，同时看研究间差异是否真实”。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-049-evidence-synthesis-meta-analysis-zh-2-title fig-res-049-evidence-synthesis-meta-analysis-zh-2-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-049-evidence-synthesis-meta-analysis-zh-2-title">三项研究的固定效应权重：100、69.4、44.4（教学假设）</title>
+    <desc id="fig-res-049-evidence-synthesis-meta-analysis-zh-2-desc">三项研究的固定效应权重：100、69.4、44.4（教学假设）。图中数字为教学假设，不是真实统计。</desc>
+<text x="230" y="38" font-size="12" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">数值对照（教学假设）</text>
+    <line x1="40" y1="232" x2="430" y2="232" stroke="var(--border)" stroke-width="1.2"></line>
+    <rect x="63" y="172" width="56" height="60" rx="4" fill="currentColor" opacity=".82"></rect>
+    <text x="91" y="165" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">100权重</text>
+    <text x="91" y="252" font-size="9" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究1</text>
+    <rect x="153" y="190.36" width="56" height="41.64" rx="4" fill="currentColor" opacity=".82"></rect>
+    <text x="181" y="183.36" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">69.4权重</text>
+    <text x="181" y="252" font-size="9" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究2</text>
+    <rect x="243" y="205.36" width="56" height="26.64" rx="4" fill="currentColor" opacity=".82"></rect>
+    <text x="271" y="198.36" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">44.4权重</text>
+    <text x="271" y="252" font-size="9" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究3</text>
+    <rect x="333" y="103.66" width="56" height="128.34" rx="4" fill="currentColor" opacity=".55"></rect>
+    <text x="361" y="96.66" font-size="9.5" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">213.9权重</text>
+    <text x="361" y="252" font-size="9" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">合计</text>
+  </svg>
+  <figcaption>图 2：三项研究的固定效应权重：100、69.4、44.4（教学假设）。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-res-049-evidence-synthesis-meta-analysis-zh-3-title fig-res-049-evidence-synthesis-meta-analysis-zh-3-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-049-evidence-synthesis-meta-analysis-zh-3-title">三项研究的效应量与加权平均 0.311（教学假设）</title>
+    <desc id="fig-res-049-evidence-synthesis-meta-analysis-zh-3-desc">三项研究的效应量与加权平均 0.311（教学假设）。图中数字为教学假设，不是真实统计。</desc>
+<text x="230" y="38" font-size="12" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">路径与阈值（教学假设）</text>
+    <line x1="44" y1="230" x2="430" y2="230" stroke="var(--border)" stroke-width="1.2"></line>
+    <line x1="50" y1="180" x2="170" y2="142.5" stroke="currentColor" stroke-width="2"></line>
+    <line x1="170" y1="142.5" x2="290" y2="105" stroke="currentColor" stroke-width="2"></line>
+    <line x1="290" y1="105" x2="410" y2="152.25" stroke="currentColor" stroke-width="2"></line>
+    <circle cx="50" cy="180" r="3.4" fill="currentColor"></circle>
+    <text x="50" y="170" font-size="9" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.2效应量</text>
+    <text x="50" y="252" font-size="8.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究1</text>
+    <circle cx="170" cy="142.5" r="3.4" fill="currentColor"></circle>
+    <text x="170" y="132.5" font-size="9" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.35效应量</text>
+    <text x="170" y="252" font-size="8.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究2</text>
+    <circle cx="290" cy="105" r="3.4" fill="currentColor"></circle>
+    <text x="290" y="95" font-size="9" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.5效应量</text>
+    <text x="290" y="252" font-size="8.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究3</text>
+    <circle cx="410" cy="152.25" r="3.4" fill="currentColor"></circle>
+    <text x="410" y="142.25" font-size="9" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">0.311效应量</text>
+    <text x="410" y="252" font-size="8.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">合并</text>
+  </svg>
+  <figcaption>图 3：三项研究的效应量与加权平均 0.311（教学假设）。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="fig-res-049-evidence-synthesis-meta-analysis-zh-4-title fig-res-049-evidence-synthesis-meta-analysis-zh-4-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-049-evidence-synthesis-meta-analysis-zh-4-title">效应量、标准误与固定效应权重（教学假设）</title>
+    <desc id="fig-res-049-evidence-synthesis-meta-analysis-zh-4-desc">效应量、标准误与固定效应权重（教学假设）。图中数字为教学假设，不是真实统计。</desc>
+<text x="230" y="38" font-size="12" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">关键数字表（教学假设）</text>
+    <rect x="20" y="62" width="140" height="38" rx="4" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="90" y="86" font-size="9.6" font-weight="700" fill="var(--text)" text-anchor="middle" font-family="inherit">研究</text>
+    <rect x="170" y="62" width="140" height="38" rx="4" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="240" y="86" font-size="9.6" font-weight="700" fill="var(--text)" text-anchor="middle" font-family="inherit">效应</text>
+    <rect x="320" y="62" width="140" height="38" rx="4" fill="var(--surface-2)" stroke="var(--border)"></rect>
+    <text x="390" y="86" font-size="9.6" font-weight="700" fill="var(--text)" text-anchor="middle" font-family="inherit">标准误</text>
+    <rect x="20" y="108" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="90" y="132" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究1</text>
+    <rect x="170" y="108" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="240" y="132" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.20</text>
+    <rect x="320" y="108" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="390" y="132" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.10</text>
+    <rect x="20" y="154" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="90" y="178" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究2</text>
+    <rect x="170" y="154" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="240" y="178" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.35</text>
+    <rect x="320" y="154" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="390" y="178" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.12</text>
+    <rect x="20" y="200" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="90" y="224" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">研究3</text>
+    <rect x="170" y="200" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="240" y="224" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.50</text>
+    <rect x="320" y="200" width="140" height="38" rx="4" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="390" y="224" font-size="9.6" font-weight="500" fill="var(--text)" text-anchor="middle" font-family="inherit">0.15</text>
+  </svg>
+  <figcaption>图 4：效应量、标准误与固定效应权重（教学假设）。</figcaption>
+</figure>
+
+<h2 id="section-7">数据口径</h2>
+<p>口径一：效应量要统一方向和尺度。SMD、RR、OR 不能混用；OR 不能直接当 RR，事件率高于 20% 时差异更明显。每项研究的编码要写清对照组、时间窗和结果定义。</p>
+<p>口径二：权重、模型和异质性要一起报。固定效应按 1/SE² 加权，三项 SE=0.10/0.12/0.15 的权重是 100/69.4/44.4；Q=2.92、df=2 时 I² 约 31.5%，换随机效应模型结果会变。</p>
+<p>口径三：发表偏差要写检索范围、灰色文献和检验力。研究少于 10 项时，漏斗图和 Egger 检验不足以确诊；阴性结果未发表、结局未预注册，仍会让汇总效应偏高。</p>
+<p>口径四：报告要留复现包。检索式、筛选表、编码表、效应量转换、权重、模型和敏感性分析都要可复算；只给一张森林图，读者无法判断 0.311 是数据结果还是分析者选择的结果。</p>
+<h2 id="section-8">边界与反例</h2>
+<p>第一，<strong>不能把不同问题合并</strong>。把“职业培训对就业”和“职业培训对工资”的研究放在一个池子里，平均效应没有意义。PICO 必须先统一。</p>
+<p>第二，<strong>不能只看显著性</strong>。一个效应 0.05 但在大样本下显著，政策价值可能很小；一个效应 0.30 但标准误大，可能证据不足。报告要同时给效应量、置信区间和临床/政策意义。</p>
+<p>第三，<strong>不能忽略研究质量</strong>。随机实验和观察研究、预注册和事后分析、同行评审和工作论文，证据等级不同。质量评级（如 GRADE）要进入结论，不是附录。</p>
+<p>第四，<strong>不能把 I² 当成绝对阈值</strong>。I² 受样本量和研究数影响；研究少时 I² 不稳定。异质性要看方向、来源和亚组，而不是只看一个百分比。</p>
+<p>第五，<strong>不能只用漏斗图判断发表偏差</strong>。研究少于 10 项时，漏斗图检验功效很低；Egger 检验也容易受异质性影响。更稳妥的是预注册、检索灰色文献、做 trim-and-fill 敏感性分析，并披露不能排除的偏差。</p>
+<p>第六，<strong>元分析不是永久结论</strong>。新研究、新数据和新方法会改变结果；证据综合要注明检索日期和更新计划。把一次元分析当成“最终答案”，和把一篇论文当成真理一样危险。</p>
+<figure>
+  <svg role="img" aria-labelledby="fig-res-049-evidence-synthesis-meta-analysis-zh-5-title fig-res-049-evidence-synthesis-meta-analysis-zh-5-desc" viewBox="0 0 460 300" width="100%">
+    <title id="fig-res-049-evidence-synthesis-meta-analysis-zh-5-title">异质性与研究数量组合下的合并策略（教学示意）</title>
+    <desc id="fig-res-049-evidence-synthesis-meta-analysis-zh-5-desc">异质性与研究数量组合下的合并策略（教学示意）。图中数字为教学假设，不是真实统计。</desc>
+<text x="230" y="36" font-size="12" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">二维判断矩阵（教学示意）</text>
+    <rect x="88" y="76" width="170" height="88" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="173" y="124" font-size="10" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">可合并</text>
+    <rect x="88" y="174" width="170" height="88" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="173" y="222" font-size="10" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">亚组</text>
+    <rect x="268" y="76" width="170" height="88" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="353" y="124" font-size="10" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">叙事综合</text>
+    <rect x="268" y="174" width="170" height="88" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="353" y="222" font-size="10" font-weight="650" fill="var(--text)" text-anchor="middle" font-family="inherit">不合并</text>
+    <text x="44" y="118" font-size="9" font-weight="600" fill="var(--text)" text-anchor="start" font-family="inherit">异质性低</text>
+    <text x="44" y="216" font-size="9" font-weight="600" fill="var(--text)" text-anchor="start" font-family="inherit">异质性高</text>
+    <text x="173" y="62" font-size="9" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">研究多</text>
+    <text x="353" y="62" font-size="9" font-weight="600" fill="var(--text)" text-anchor="middle" font-family="inherit">研究少</text>
+  </svg>
+  <figcaption>图 5：异质性与研究数量组合下的合并策略（教学示意）。</figcaption>
+</figure>
+
+<p>补充边界一：元分析不是把结论取平均。它先定义问题、检索、筛选、编码，再按标准误加权；三项研究 SE=0.10/0.12/0.15 的固定权重是 100/69.4/44.4，效应 0.20/0.35/0.50 的加权平均约 0.311，换一种模型就会变。</p>
+<p>补充边界二：异质性不是噪音。Q=2.92、df=2 时 I² 约 31.5%，属于低到中等；若 Q=12、df=2，I² 约 83%，此时合并一个平均值会掩盖研究对象、剂量和结局的差异。</p>
+<p>补充边界三：发表偏差不能靠漏斗图确诊。研究少于 10 项时，漏斗图和 Egger 检验的检验力不足；阴性结果未发表、结局未预注册、分析路径未披露，都会让效应量偏高。</p>
+<p>补充边界四：GRADE 评的是证据信心，不是效应大小。偏倚风险、不一致、间接性、不精确和发表偏差五个维度可以降级；观察性研究起始等级更低。元分析可以算出 0.311，但不能替读者决定这个效应是否值得行动。</p>
+<h2 id="section-9">一页清单</h2>
+<ul>
+<li><p>先写 PICO、纳入/排除标准和结果指标，再开始检索。</p>
+</li>
+<li><p>检索数据库、灰色文献和参考文献追溯；记录排除原因与数量。</p>
+</li>
+<li><p>用 PRISMA 流程图报告筛选过程；双人筛选或抽样复核。</p>
+</li>
+<li><p>统一效应量，写清转换公式；固定/随机效应模型按问题选择。</p>
+</li>
+<li><p>报告 Q、I²、τ² 和亚组分析，不只报一个平均效应。</p>
+</li>
+<li><p>检查发表偏差：漏斗图、Egger、trim-and-fill 和灰色文献。</p>
+</li>
+<li><p>用 GRADE 或类似框架评证据等级；结论写清适用人群和边界。</p>
+</li>
+<li><p>所有教学数字标注“假设”，不冒充真实文献结果。</p>
+</li>
+<li><p>把检索式、筛选表、编码表和敏感性分析放进复现包，确保第三方能重算 0.311。</p>
+</li>
+<li><p>结论写成“在什么人群、什么剂量、什么结局下”成立，不写“研究证明有效”。</p>
+</li>
+<li><p>对少于 10 项研究的合成，明确写“检验力不足”，不把漏斗图对称当作无偏证据。</p>
+</li>
+<li><p>报告纳入研究的样本重叠和多重发表，避免同一批参与者被重复加权。</p>
+</li>
+<li><p>若多篇研究使用同一 cohort，必须在敏感性分析中剔除或降权，不能当作独立证据重复计数；这一条要写进报告脚注，并在复核时重算三遍。</p>
+</li>
+</ul>
+<h2 id="section-10">常见误读</h2>
+<p>误读一：元分析样本越多越好。把不同问题、剂量和结局的研究硬合并，样本越大，偏倚越精确；先看 PICO 和纳入标准，再看数量。</p>
+<p>误读二：I² 高就不能合并。高异质说明平均值的解释力弱，不是禁止合成；可以用 subgroup、meta-regression 或只做叙事综合，但必须说明为什么。</p>
+<p>误读三：漏斗图对称就没有发表偏差。漏斗图和 Egger 检验在少于 10 项研究时检验力不足；阴性结果未发表、结局未预注册，仍会让效应量偏高。</p>
+<p>误读四：元分析的平均效应可以直接变成政策。0.311 是加权平均，不是任何人群的因果效应；外推要看研究对象、实施质量和剂量，GRADE 评的是证据信心。</p>
+<p>误读五：研究数量越多，证据越强。十项设计糟糕、样本重叠的研究，不如三项预注册、口径一致的研究；信息量取决于偏倚风险、独立性和结局一致性，不是 PDF 数量。,误读六：GRADE 低就说明效应小。GRADE 评的是对效应估计的信心，不是效应值本身；一个效应很大但偏倚风险高的研究，仍可能被评为低信心。</p>
+<h2 id="section-11">练习</h2>
+<ol>
+<li>把“职业培训是否提高就业”写成 PICO，并指定一个结果指标。</li>
+<li>写出至少四条纳入/排除标准，说明为什么必须在检索前定下。</li>
+<li>列出数据库、灰色文献和参考文献追溯三类来源，各举一个例子。</li>
+<li>说明 SMD、RR 和 OR 的适用场景，为什么不能把 OR 直接当 RR。</li>
+<li>三项研究 SE=0.10/0.12/0.15，计算固定效应权重 1/SE²。</li>
+<li>用效应 0.20/0.35/0.50 与上面的权重，计算加权平均。</li>
+<li>计算 Q=2.92、df=2 时的 I²，并解释它属于低、中还是高异质。</li>
+<li>高异质时，为什么“合并一个平均值”可能没有意义？给出两种替代做法。</li>
+<li>漏斗图和 Egger 检验各有什么局限？研究少于 10 项时尤其要注意什么？</li>
+<li>列出 GRADE 五个降级维度，并说明它评的是证据信心还是效应大小。</li>
+<li>软件默认随机效应或固定效应会改变结论，设计一个三模型敏感性表。</li>
+<li>用一段话说明：元分析不是把论文结论取平均，而是可复现的证据审计。</li>
+</ol>
+<p>数据说明：证据综合方法参考 Cochrane、PRISMA、GRADE、Campbell、Borenstein 等、Ioannidis、metafor 与 NIH[1][2][3][4][5][6][7][8]；正文数字为教学假设。</p>
+<h2 id="section-12">关联</h2>
+<ul>
+<li>先修：RES-035 多源测量的三角验证：卫星、文本与行政数据</li>
+<li>延伸：RES-044 一篇论文的复现：从摘要到代码</li>
+</ul>
+<h2 id="section-13">来源</h2>
+<ol>
+<li>Cochrane. <em>Cochrane Handbook for Systematic Reviews of Interventions</em>. <a href="https://training.cochrane.org/handbook" rel="noopener noreferrer">https://training.cochrane.org/handbook</a>（访问日期：2026-11-25）</li>
+<li>PRISMA. <em>Preferred Reporting Items for Systematic Reviews and Meta-Analyses</em>. <a href="https://www.prisma-statement.org/" rel="noopener noreferrer">https://www.prisma-statement.org/</a>（访问日期：2026-11-25）</li>
+<li>GRADE Working Group. <em>Grading of Recommendations Assessment, Development and Evaluation</em>. <a href="https://www.gradeworkinggroup.org/" rel="noopener noreferrer">https://www.gradeworkinggroup.org/</a>（访问日期：2026-11-25）</li>
+<li>Campbell Collaboration. <em>Systematic reviews and evidence synthesis</em>. <a href="https://www.campbellcollaboration.org/" rel="noopener noreferrer">https://www.campbellcollaboration.org/</a>（访问日期：2026-11-25）</li>
+<li>Borenstein, M. et al. <em>Introduction to Meta-Analysis</em>. <a href="https://www.wiley.com/" rel="noopener noreferrer">https://www.wiley.com/</a>（访问日期：2026-11-25）</li>
+<li>Ioannidis, J. P. A. <em>Why most published research findings are false</em>. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1182327/" rel="noopener noreferrer">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1182327/</a>（访问日期：2026-11-25）</li>
+<li>R Foundation. <em>metafor package for meta-analysis</em>. <a href="https://cran.r-project.org/package=metafor" rel="noopener noreferrer">https://cran.r-project.org/package=metafor</a>（访问日期：2026-11-25）</li>
+<li>National Institutes of Health. <em>Evidence-based research resources</em>. <a href="https://www.nih.gov/" rel="noopener noreferrer">https://www.nih.gov/</a>（访问日期：2026-11-25）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>能把一个研究问题写成 PICO，并设计检索、筛选和编码流程。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>能复算固定效应加权平均、Q 与 I²，并说明异质性和发表偏差如何改变结论。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <section class="article-cite" aria-labelledby="cite-heading"> <h2 id="cite-heading">引用这篇</h2> <p>非商业引用请注明作者、标题、本站和链接；第三方来源按原许可。</p> <code data-cite-text>证据综合、元分析与研究合并。巫妖投资，2026-11-26。https://research.51invest.com/learn/evidence-synthesis-meta-analysis/</code> <div class="cite-actions"> <button type="button" data-copy-cite>复制引用</button> <span data-cite-status role="status" aria-live="polite"></span> </div> </section> <nav class="article-pager" aria-label="同站上一篇与下一篇"> <a href="/learn/fred-vintage-revision-conclusions/"> <small>上一篇</small> <strong>FRED vintage 复现：修订如何改变结论</strong> </a> <span></span> </nav> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>                </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card article-toc-aside"> <h2>本文目录</h2> <ol> <li><a href="#section-1">问题与范围</a></li><li><a href="#section-2">从 PICO 开始</a></li><li><a href="#section-3">检索、筛选与编码</a></li><li><a href="#section-4">效应量与权重</a></li><li><a href="#section-5">异质性与发表偏差</a></li><li><a href="#section-6">数值算例</a></li><li><a href="#section-7">数据口径</a></li><li><a href="#section-8">边界与反例</a></li><li><a href="#section-9">一页清单</a></li><li><a href="#section-10">常见误读</a></li><li><a href="#section-11">练习</a></li><li><a href="#section-12">关联</a></li><li><a href="#section-13">来源</a></li> </ol> </section> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>能把一个研究问题写成 PICO，并设计检索、筛选和编码流程。</li><li>能复算固定效应加权平均、Q 与 I²，并说明异质性和发表偏差如何改变结论。</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/triangulation-satellite-text-administrative-data/">RES-035 · 多源测量的三角验证：卫星、文本与行政数据</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/paper-replication-abstract-to-code/">RES-044 · 一篇论文的复现：从摘要到代码</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> <p class="muted"> 复核日期：2026-11-26 </p> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://training.cochrane.org/handbook" rel="noopener noreferrer" target="_blank">Cochrane Handbook for Systematic Reviews of Interventions</a> <p>Cochrane · Cochrane</p> <p>访问：2026-11-25 · 许可：Cochrane terms; cite-only</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.prisma-statement.org/" rel="noopener noreferrer" target="_blank">Preferred Reporting Items for Systematic Reviews and Meta-Analyses</a> <p>PRISMA · PRISMA</p> <p>访问：2026-11-25 · 许可：CC BY 4.0</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.gradeworkinggroup.org/" rel="noopener noreferrer" target="_blank">Grading of Recommendations Assessment, Development and Evaluation</a> <p>GRADE Working Group · GRADE</p> <p>访问：2026-11-25 · 许可：GRADE terms; cite-only</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.campbellcollaboration.org/" rel="noopener noreferrer" target="_blank">Systematic reviews and evidence synthesis</a> <p>Campbell Collaboration · Campbell Collaboration</p> <p>访问：2026-11-25 · 许可：Campbell terms; cite-only</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.wiley.com/" rel="noopener noreferrer" target="_blank">Introduction to Meta-Analysis</a> <p>Michael Borenstein et al. · Wiley</p> <p>访问：2026-11-25 · 许可：Publisher terms; cite-only</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1182327/" rel="noopener noreferrer" target="_blank">Why most published research findings are false</a> <p>John P. A. Ioannidis · PLOS Medicine</p> <p>访问：2026-11-25 · 许可：CC BY 4.0</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://cran.r-project.org/package=metafor" rel="noopener noreferrer" target="_blank">metafor package for meta-analysis</a> <p>R Foundation · CRAN</p> <p>访问：2026-11-25 · 许可：GPL-2.0</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div><div class="source"> <a href="https://www.nih.gov/" rel="noopener noreferrer" target="_blank">Evidence-based research resources</a> <p>National Institutes of Health · NIH</p> <p>访问：2026-11-25 · 许可：Public domain (U.S. government)</p> <p>支持论点：用于核对本文的制度、数据或方法入口；正文中的教学推演与来源事实分开标注。</p> </div> </section>  </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}var n=document.querySelector(`[data-copy-cite]`),r=document.querySelector(`[data-cite-text]`),i=document.querySelector(`[data-cite-status]`);n?.addEventListener(`click`,async()=>{if(!r)return;let e=r.textContent?.trim()??``;try{await navigator.clipboard.writeText(e),i&&(i.textContent=document.documentElement.lang===`en`?`Copied`:`已复制`)}catch{i&&(i.textContent=document.documentElement.lang===`en`?`Copy failed; select the text manually.`:`复制失败，请手动选择文字。`)}window.setTimeout(()=>{i&&(i.textContent=``)},2500)});</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="https://51invest.com/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="https://51invest.com/about/" data-main-link>关于</a> <a href="https://51invest.com/method/" data-main-link>方法</a> <a href="https://51invest.com/corrections/" data-main-link>更正</a> <a href="https://51invest.com/privacy/" data-main-link>隐私</a> <a href="https://nav.51invest.com/" rel="noopener noreferrer">导航</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="快捷导航"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>             </svg> <span>首页</span> </a> <a class="mobile-link" href="https://economics.51invest.com/" aria-label="经济学" title="经济学"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>           <path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 3-4 3 2 4-6"></path>      </svg> <span>经济学</span> </a><a class="mobile-link" href="https://finance.51invest.com/" aria-label="金融基础" title="金融基础"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>            <path d="m3 9 9-6 9 6"></path><path d="M4 10h16"></path><path d="M6 10v8M10 10v8M14 10v8M18 10v8"></path><path d="M3 19h18"></path>     </svg> <span>金融</span> </a><a class="mobile-link" href="https://markets.51invest.com/" aria-label="市场与产品" title="市场与产品"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>             <path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5"></path><path d="m3 16 9 5 9-5"></path>    </svg> <span>市场</span> </a><a class="mobile-link" href="https://invest.51invest.com/" aria-label="投资方法" title="投资方法"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>              <circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>   </svg> <span>投资</span> </a><a class="mobile-link" href="https://history.51invest.com/" aria-label="经济与金融史" title="经济与金融史"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>               <circle cx="12" cy="12" r="8.5"></circle><path d="M12 7v5l3 2"></path>  </svg> <span>经济史</span> </a><a class="mobile-link active" href="/" aria-current="page" aria-label="研究方法" title="研究方法"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>                <path d="M9 3h6"></path><path d="M10 3v5L5 17a3 3 0 0 0 2.6 4h8.8a3 3 0 0 0 2.6-4L14 8V3"></path><path d="M7 15h10"></path> </svg> <span>研究</span> </a> <a class="mobile-link" href="https://nav.51invest.com/" rel="noopener noreferrer" data-external-nav aria-label="打开外链导航"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>          <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.2-1.2"></path>       </svg> <span>导航</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>
