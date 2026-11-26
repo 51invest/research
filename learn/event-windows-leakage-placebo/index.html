@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-theme-mode="auto"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>事件窗口与泄漏：公告日、漂移与安慰剂 · 巫妖投资</title><meta name="description" content="本文把“事件窗口”“泄漏”“安慰剂”放在同一条判断链上，先统一口径，再谈机制和边界。"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="canonical" href="https://research.51invest.com/learn/event-windows-leakage-placebo/"><link rel="alternate" hreflang="zh-CN" href="https://research.51invest.com/learn/event-windows-leakage-placebo/" />
+    <link rel="alternate" hreflang="en" href="https://research.51invest.com/en/learn/event-windows-leakage-placebo/" />
+    <link rel="alternate" hreflang="x-default" href="https://research.51invest.com/learn/event-windows-leakage-placebo/" /><link rel="alternate" type="application/rss+xml" title="巫妖投资 RSS" href="/rss.xml"><meta property="og:site_name" content="51invest"><meta property="og:type" content="article"><meta property="og:title" content="事件窗口与泄漏：公告日、漂移与安慰剂 · 巫妖投资"><meta property="og:description" content="本文把“事件窗口”“泄漏”“安慰剂”放在同一条判断链上，先统一口径，再谈机制和边界。"><meta property="og:url" content="https://research.51invest.com/learn/event-windows-leakage-placebo/"><meta property="og:image" content="https://51invest.com/_astro/research.BElOUccP.png"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="事件窗口与泄漏：公告日、漂移与安慰剂 · 巫妖投资"><meta name="twitter:description" content="本文把“事件窗口”“泄漏”“安慰剂”放在同一条判断链上，先统一口径，再谈机制和边界。"><meta name="twitter:image" content="https://51invest.com/_astro/research.BElOUccP.png"><meta property="article:published_time" content="2026-11-25"><meta property="article:modified_time" content="2026-11-25"><meta property="article:section" content="方法"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"事件窗口与泄漏：公告日、漂移与安慰剂","description":"本文把“事件窗口”“泄漏”“安慰剂”放在同一条判断链上，先统一口径，再谈机制和边界。","inLanguage":"zh-CN","mainEntityOfPage":"https://research.51invest.com/learn/event-windows-leakage-placebo/","datePublished":"2026-11-25","dateModified":"2026-11-25","articleSection":"方法","author":{"@type":"Organization","name":"51invest AI 编辑部","url":"https://51invest.com/"},"publisher":{"@type":"Organization","name":"51invest","url":"https://51invest.com/","logo":{"@type":"ImageObject","url":"https://51invest.com/_astro/neutral.Dr5C2SoA.png"}},"image":["https://51invest.com/_astro/neutral.Dr5C2SoA.png"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://51invest.com/"},{"@type":"ListItem","position":2,"name":"研究方法","item":"https://research.51invest.com/"},{"@type":"ListItem","position":3,"name":"事件窗口与泄漏：公告日、漂移与安慰剂","item":"https://research.51invest.com/learn/event-windows-leakage-placebo/"}]}]}</script><link rel="icon" type="image/png" href="/_astro/neutral.Dr5C2SoA.png"><script>
+  (() => {
+    const root = document.documentElement;
+    const readCookie = key => {
+      try {
+        return document.cookie.split('; ').find(value => value.startsWith(`51invest-${key}=`))?.split('=').slice(1).join('=') ?? null;
+      } catch {
+        return null;
+      }
+    };
+    const readLocal = key => {
+      try {
+        return localStorage.getItem(`51invest-${key}`);
+      } catch {
+        return null;
+      }
+    };
+    const storedTheme = readCookie('theme') || readLocal('theme');
+    const mode = ['light', 'dark', 'auto'].includes(storedTheme) ? storedTheme : 'auto';
+    const media = matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => {
+      root.dataset.theme = mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      root.dataset.themeMode = mode;
+    };
+    apply();
+    media.addEventListener('change', () => {
+      if (root.dataset.themeMode === 'auto') apply();
+    });
+  })();
+</script><script>
+      (() => {
+        const host = location.hostname;
+        if (host === 'www.51invest.com' || (host === '51invest.com' && location.protocol === 'http:')) {
+          location.replace(`https://51invest.com${location.pathname}${location.search}${location.hash}`);
+        }
+      })();
+    </script><link rel="stylesheet" href="/_astro/Base.C6WC_-AH.css"></head> <body>  <a class="skip-link" href="#main">跳到正文</a> <header class="site-header"> <div class="container header-inner"> <a class="brand" href="https://51invest.com/" data-main-home aria-label="巫妖投资 51INVEST"> <span class="brand-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="36" height="36" alt class="mascot" loading="lazy" decoding="async"></span> <span class="brand-copy"> <span class="brand-name">巫妖投资</span> <span class="brand-caption">51INVEST</span> </span> </a> <nav class="desktop-nav" aria-label="知识分站"> <a class="nav-link" href="https://51invest.com/" data-main-home> 首页 </a> <a class="nav-link" href="https://economics.51invest.com/"> 经济学 </a><a class="nav-link" href="https://finance.51invest.com/"> 金融基础 </a><a class="nav-link" href="https://markets.51invest.com/"> 市场与产品 </a><a class="nav-link" href="https://invest.51invest.com/"> 投资方法 </a><a class="nav-link" href="https://history.51invest.com/"> 经济与金融史 </a><a class="nav-link active" href="/" aria-current="page"> 研究方法 </a> <a class="nav-link nav-external" href="https://nav.51invest.com/" data-external-nav rel="noopener noreferrer" aria-label="打开外链导航"> 导航 </a> </nav> <div class="header-tools"> <a class="icon-button language-button" href="/en/learn/event-windows-leakage-placebo/" hreflang="en" lang="en" data-language-link="en" aria-label="English — 切换为英文" title="English — 切换为英文"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>     <path d="M4 5h10"></path><path d="M9 3v2"></path><path d="M6 5c0 5 3 8 8 9"></path><path d="M12 11c-1 4-4 7-8 8"></path><path d="m14 20 4-10 4 10"></path><path d="M15.5 17h5"></path>            </svg> <span>English</span> </a> <button class="icon-button theme-button" type="button" data-theme-toggle aria-label="主题: 跟随系统" title="主题: 跟随系统" data-label-auto="主题: 跟随系统" data-label-light="主题: 浅色" data-label-dark="主题: 深色"> <span class="theme-icon" data-theme-icon="auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>        <circle cx="12" cy="12" r="8.5"></circle><path d="M12 3.5v17"></path><path d="M12 7a5 5 0 0 1 0 10" fill="currentColor" stroke="none"></path>         </svg></span> <span class="theme-icon" data-theme-icon="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>       <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>          </svg></span> <span class="theme-icon" data-theme-icon="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>           </svg></span> <span class="theme-text" data-theme-text="auto">跟随系统</span> <span class="theme-text" data-theme-text="light">浅色</span> <span class="theme-text" data-theme-text="dark">深色</span> </button> </div> </div> </header> <main id="main" class="site-main" data-pagefind-body>  <div class="reading-progress" data-reading-progress aria-hidden="true"><span></span></div> <div class="container"> <nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="https://51invest.com/" data-main-home>首页</a> <span class="sep">/</span> <a href="/">研究方法</a> <span class="sep">/</span> <span aria-current="page">事件窗口与泄漏：公告日、漂移与安慰剂</span> </nav> </div> <article> <header class="article-header"> <div class="container"> <span class="article-type">方法</span> <h1 class="article-title">事件窗口与泄漏：公告日、漂移与安慰剂</h1> <p class="article-summary">本文把“事件窗口”“泄漏”“安慰剂”放在同一条判断链上，先统一口径，再谈机制和边界。</p>  <div class="meta-grid"> <div class="meta-item"><span>模块</span><strong>RES-M10 · 金融数据方法</strong></div> <div class="meta-item"><span>层级</span><strong>进阶</strong></div> <div class="meta-item"><span>阅读</span><strong>9 分钟 · 17 节</strong></div> </div> <p class="demo-jump"> <a href="#demo-check"> 这篇有一个可以动手操作的演示 <span aria-hidden="true">↓</span> </a> </p> </div> </header> <div class="container article-layout"> <div class="article-body"> <div class="article-toc-mobile"> <details> <summary>本文目录 · 17 节</summary> <ol> <li><a href="#section-1">问题与结论</a></li><li><a href="#section-2">定义与边界</a></li><li><a href="#section-3">机制链</a></li><li><a href="#section-4">数据与口径</a></li><li><a href="#section-5">证据等级</a></li><li><a href="#section-6">时间线与制度时点</a></li><li><a href="#section-7">数量级与敏感性</a></li><li><a href="#section-8">反事实与边界</a></li><li><a href="#section-9">复盘与下一次判断</a></li><li><a href="#section-10">一页工作纸</a></li><li><a href="#section-11">三个误判</a></li><li><a href="#section-12">应用清单</a></li><li><a href="#section-13">与其他文章的接口</a></li><li><a href="#section-14">关联</a></li><li><a href="#section-15">图表</a></li><li><a href="#section-16">练习</a></li><li><a href="#section-17">来源</a></li> </ol> </details> </div> <h2 id="section-1">问题与结论</h2>
+<p>“事件窗口与泄漏：公告日、漂移与安慰剂”看似一个技术细节，实际决定了一个更大的判断：我们究竟在比较同一件事，还是把不同口径的数字放在一起。本文把“事件窗口”作为入口，穿过“泄漏”和“安慰剂”，最后落到一个可复核的结论。结论不是“越大越好”或“越稳越好”，而是：只有在单位、时间和制度边界一致时，这个指标才能用于比较。</p>
+<p>先把结论写成三行：第一行是方向，第二行是条件，第三行是反证。三行写不出来，说明概念还没有被定义清楚，后面的数据只会放大混乱。</p>
+<h2 id="section-2">定义与边界</h2>
+<p>“事件窗口”至少有三种常见定义：存量、流量和比率。存量看某一时点的余额，流量看一段时间的变动，比率把两者相除。分母不同，结论就不同；把存量增长率当流量增长，是最常见的错误之一。[1]</p>
+<p>“泄漏”把定义带进制度。谁被纳入统计、谁被排除，取决于法律、监管和会计规则。跨国比较前，先确认样本受同一规则约束；否则看到的差异可能只是制度差异。[2]</p>
+<p>“安慰剂”则决定边界。指标在正常区间内有效，在极端区间可能失效；把极端样本删掉，会高估稳定性，把极端样本当成常态，会低估风险。[3]</p>
+<h2 id="section-3">机制链</h2>
+<p>第一条链是“事件窗口 → 泄漏”。前者改变后者的可观察值，但中间可能隔着估值、时点和统计修订，不能一步跳到结论。</p>
+<p>第二条链是“泄漏 → 安慰剂”。制度把指标变成激励：同样的数字，在不同规则下对应不同的行为。</p>
+<p>第三条链是反馈。行为改变后，指标本身会被重新定义或重新采集，形成“指标—行为—指标”的回路。忽略回路，会把内生变化当成外生冲击。</p>
+<p>第四条链是边界。任一环节超出适用范围，整条链都要降级为情景分析。</p>
+<h2 id="section-4">数据与口径</h2>
+<p>先统一单位：水平值是名义还是实际，比率的分母是什么，指数以哪一年为基期。再把时间对齐：年度、季度和月度不能直接拼接，季调与非季调需要说明转换方法。[4]</p>
+<p>再做修订检查。初值、修正值和终值可能给出不同方向；用终值回测当时决策，会引入未来信息。最后做独立复算：换一个来源，确认数量级和方向是否仍一致。</p>
+<p>四项检查不需要复杂模型，只需要把每个数字的“分母、基期、时点、来源”写在表里。写不出来，就不要把它放进结论。</p>
+<h2 id="section-5">证据等级</h2>
+<p>关于“事件窗口”的证据至少分四层。第一层是法律、监管规则和统计定义，它回答“什么被计入、什么被排除”。第二层是同口径的数据，回答“数量和方向是多少”。第三层是学术研究或官方评估，回答“机制是否被识别”。第四层是案例叙述，回答“在具体条件下怎样发生”。</p>
+<p>四层不能互相替代。规则清楚不等于数量成立，数量成立不等于因果成立，案例生动也不等于可外推。写作时把每一句判断挂到其中一层，读者才能知道该信到什么程度。</p>
+<p>如果两层证据冲突，先检查口径，再检查时点，最后才讨论解释。多数冲突不是“谁对谁错”，而是两个数字回答了不同问题。</p>
+<h2 id="section-6">时间线与制度时点</h2>
+<p>“泄漏”的变化往往不是均匀发生的。规则生效、统计口径调整、市场结构变化，都会形成断点。把断点前后的数据直接连成一条平滑曲线，会把制度变化伪装成趋势。</p>
+<p>处理时间线至少要做三件事：标出规则生效日，标出数据首次可得的日期，标出修订发生的日期。三个日期不一致时，用“当时能看到什么”而不是“事后知道了什么”来做决策复盘。</p>
+<p>对“安慰剂”尤其如此。极端事件之后，监管和披露规则通常会改变，用事件后的参数去模拟事件前，会系统性低估或高估冲击。时间线不是背景装饰，它是识别策略的一部分。</p>
+<h2 id="section-7">数量级与敏感性</h2>
+<p>先算数量级，再谈精确值。把“事件窗口”变化 10%、25% 和 50% 三种情形各算一遍，看结论是否仍然成立。若 10% 的变化就让结论翻转，说明结论依赖一个很窄的参数区间。</p>
+<p>第二步做分母敏感性。同一分子换成产出、人口、资产或交易量，排序可能完全不同。第三步做样本敏感性：删掉最大和最小的 5% 样本，看均值、弹性和相关性是否稳定。</p>
+<p>敏感性分析的目的不是制造一堆情景，而是找出“结论最怕哪一个假设”。找到之后，把这个假设写成显式条件，而不是藏在脚注里。</p>
+<h2 id="section-8">反事实与边界</h2>
+<p>反事实不是“如果当时没有发生这件事”，而是“在其他条件相同、只改变一个可操作变量时，结果会怎样”。对“泄漏”而言，可操作变量可能是规则、价格、库存或披露频率，不能同时改三个。</p>
+<p>一个合格的反事实要写清：改变了什么，什么保持不变，结果用哪个指标衡量，多长时间内观察。四项缺一项，反事实就会变成故事。</p>
+<p>边界则更简单：把“安慰剂”的正常区间、压力区间和极端区间分开。正常区间的结论可以用于日常判断；压力区间只能用于风险提示；极端区间只能用于情景分析，不能当作基准预测。</p>
+<h2 id="section-9">复盘与下一次判断</h2>
+<p>复盘不是重述结果，而是检查当时的证据链。先看“事件窗口”的口径是否在事后被修订，再看“泄漏”的制度是否发生变化，最后看“安慰剂”的边界是否被穿越。</p>
+<p>把判断写成可证伪的句子：“如果 A 发生，B 应该在 C 时间内出现；否则原判断不成立。”这样下一次遇到相似情形，才能知道是模型错了，还是条件变了。</p>
+<p>复盘记录至少保留三项：当时使用的来源、当时不知道的信息、事后改变判断的理由。三项分开写，能减少事后偏差，也能让同一模块的文章互相校验。</p>
+<h2 id="section-10">一页工作纸</h2>
+<ul>
+<li>主题：事件窗口、泄漏、安慰剂。</li>
+<li>口径：单位、分母、基期、季调方式。</li>
+<li>制度：适用主体、排除主体、生效日期。</li>
+<li>数量：基准值、三种敏感性、最怕的假设。</li>
+<li>证据：规则、数据、研究、案例各一条。</li>
+<li>结论：方向、条件、反证信号各一句。</li>
+<li>复核：独立来源、复算结果、保留意见。</li>
+</ul>
+<p>工作纸写满不等于结论可靠；它只是把隐藏假设摊开，让下一个读者能逐项反驳。工作纸也不是一次性表格，而是一份可被下一位读者逐项复核的记录。</p>
+<h2 id="section-11">三个误判</h2>
+<p>第一，把“事件窗口”当成单一指标。它可能是多个分项的合成，分项变化与总量变化方向相反时，总量会掩盖真实机制。</p>
+<p>第二，把“泄漏”的制度差异当成行为差异。规则不同，激励就不同；不先对齐制度，比较的是两个世界。</p>
+<p>第三，把“安慰剂”的边界外推。正常区间的相关性、弹性和费率，在危机或极端价格下会改变；外推之前先问样本是否覆盖。</p>
+<h2 id="section-12">应用清单</h2>
+<ul>
+<li>这个数字的主体、时期和单位是什么？</li>
+<li>分母是产出、人口、资产还是交易量？</li>
+<li>名义与实际、季调与非季调是否已经统一？</li>
+<li>制度规则覆盖哪些主体，哪些被排除？</li>
+<li>哪一个假设一改，结论就翻转？</li>
+<li>另一个独立来源能否复算数量级？</li>
+</ul>
+<p>清单用于把概念变成可执行判断，不用于替代思考。每一条都要留下证据位置，否则只是口号。</p>
+<h2 id="section-13">与其他文章的接口</h2>
+<ul>
+<li>回到模块母文，确认本文只回答一个相邻侧面。</li>
+<li>与统计口径文章连读，先统一单位与基期。</li>
+<li>与识别方法文章连读，区分描述、相关与因果。</li>
+<li>与案例文章连读，用具体事件检验本文的边界。</li>
+</ul>
+<p>接口写进笔记，比单独记住结论更有用：同一模块的知识点应该能互相校验。</p>
+<h2 id="section-14">关联</h2>
+<ul>
+<li>建议连读：RES-019、RES-030。</li>
+</ul>
+<h2 id="section-15">图表</h2>
+<figure>
+  <svg role="img" aria-labelledby="res-042-zh-1-title res-042-zh-1-desc" viewBox="0 0 460 300" width="100%">
+    <title id="res-042-zh-1-title">概念关系图</title>
+    <desc id="res-042-zh-1-desc">事件窗口、泄漏、安慰剂与结论的关系。</desc>
+    <rect x="24" y="62" width="194" height="82" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="34" y="80" font-size="10" font-weight="700" fill="var(--accent)">环节 1</text>
+    <foreignObject x="32" y="88" width="178" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">事件窗口</div></foreignObject>
+    <rect x="242" y="62" width="194" height="82" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="252" y="80" font-size="10" font-weight="700" fill="var(--accent)">环节 2</text>
+    <foreignObject x="250" y="88" width="178" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">泄漏</div></foreignObject>
+    <rect x="24" y="168" width="194" height="82" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="34" y="186" font-size="10" font-weight="700" fill="var(--accent)">环节 3</text>
+    <foreignObject x="32" y="194" width="178" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">安慰剂</div></foreignObject>
+    <rect x="242" y="168" width="194" height="82" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="252" y="186" font-size="10" font-weight="700" fill="var(--accent)">环节 4</text>
+    <foreignObject x="250" y="194" width="178" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">判断结论</div></foreignObject>
+  </svg>
+  <figcaption><strong>图 1：概念关系图。</strong> 四个环节按教学顺序排列，不是唯一路径。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="res-042-zh-2-title res-042-zh-2-desc" viewBox="0 0 460 300" width="100%">
+    <title id="res-042-zh-2-title">机制链</title>
+    <desc id="res-042-zh-2-desc">事件窗口、泄漏、安慰剂依次传导。</desc>
+    <rect x="18" y="92" width="98" height="70" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="25" y="100" width="84" height="52"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 10.5px/1.3 inherit; color: var(--text);">事件窗口</div></foreignObject>
+    <rect x="128" y="92" width="98" height="70" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="135" y="100" width="84" height="52"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 10.5px/1.3 inherit; color: var(--text);">泄漏</div></foreignObject>
+    <rect x="238" y="92" width="98" height="70" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="245" y="100" width="84" height="52"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 10.5px/1.3 inherit; color: var(--text);">安慰剂</div></foreignObject>
+    <rect x="348" y="92" width="98" height="70" rx="7" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="355" y="100" width="84" height="52"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 10.5px/1.3 inherit; color: var(--text);">边界</div></foreignObject>
+  </svg>
+  <figcaption><strong>图 2：机制链。</strong> 箭头表示教学传导顺序。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="res-042-zh-3-title res-042-zh-3-desc" viewBox="0 0 460 300" width="100%">
+    <title id="res-042-zh-3-title">数据核对表</title>
+    <desc id="res-042-zh-3-desc">单位、基期、时点、来源四项核对。</desc>
+    <rect x="24" y="66" width="412" height="34" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="36" y="87" font-size="10.5" font-weight="700" fill="var(--accent)">单位</text>
+    <text x="150" y="87" font-size="10.5" fill="var(--text)">水平/流量/比率</text>
+    <rect x="24" y="111" width="412" height="34" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="36" y="132" font-size="10.5" font-weight="700" fill="var(--accent)">基期</text>
+    <text x="150" y="132" font-size="10.5" fill="var(--text)">名义/实际</text>
+    <rect x="24" y="156" width="412" height="34" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="36" y="177" font-size="10.5" font-weight="700" fill="var(--accent)">时点</text>
+    <text x="150" y="177" font-size="10.5" fill="var(--text)">季调/非季调</text>
+    <rect x="24" y="201" width="412" height="34" rx="6" fill="var(--surface)" stroke="var(--border)"></rect>
+    <text x="36" y="222" font-size="10.5" font-weight="700" fill="var(--accent)">来源</text>
+    <text x="150" y="222" font-size="10.5" fill="var(--text)">初值/终值</text>
+  </svg>
+  <figcaption><strong>图 3：数据核对表。</strong> 四项缺一项，结论降级。</figcaption>
+</figure>
+
+<figure>
+  <svg role="img" aria-labelledby="res-042-zh-4-title res-042-zh-4-desc" viewBox="0 0 460 300" width="100%">
+    <title id="res-042-zh-4-title">结论可用性矩阵</title>
+    <desc id="res-042-zh-4-desc">口径与制度两组条件。</desc>
+    <rect x="24" y="64" width="194" height="84" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="34" y="76" width="174" height="62"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">口径一致</div></foreignObject>
+    <rect x="242" y="64" width="194" height="84" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="252" y="76" width="174" height="62"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">口径冲突</div></foreignObject>
+    <rect x="24" y="170" width="194" height="84" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="34" y="182" width="174" height="62"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">制度可比</div></foreignObject>
+    <rect x="242" y="170" width="194" height="84" rx="8" fill="var(--surface)" stroke="var(--border)"></rect>
+    <foreignObject x="252" y="182" width="174" height="62"><div xmlns="http://www.w3.org/1999/xhtml" style="font: 11px/1.3 inherit; color: var(--text);">制度不同</div></foreignObject>
+  </svg>
+  <figcaption><strong>图 4：结论可用性矩阵：口径与制度边界的比较。</strong> 矩阵是判断工具，不是概率估计；教学示意，单位与样本见正文。</figcaption>
+</figure>
+
+<h2 id="section-16">练习</h2>
+<ol>
+<li>用三句话解释“事件窗口”，并举一个不适用的小例子。</li>
+<li>把“事件窗口”换算成另一种单位，说明分母变化如何改变结论。</li>
+<li>写出“泄漏”的制度边界，列出两个被排除的主体。</li>
+<li>用“安慰剂”构造一个反例，说明正常区间结论为何失效。</li>
+<li>从文中找一个数字，回到来源核对基期与单位。</li>
+<li>把四项数据核对做成一张表，填上你自己的一个例子。</li>
+<li>如果换一个独立来源，哪一个数量级最可能变化？</li>
+<li>与同模块另一篇主文比较，本文多回答了哪个问题？</li>
+<li>用 200 字向非专业读者解释本文结论，必须包含一个条件。</li>
+<li>列出两个会让本文结论失效的可观察信号。</li>
+</ol>
+<h4>复核记录</h4>
+<p>复核记录写三行：数据来源的最后访问日期、独立复算与原结果的差额、仍需保留的反方意见。三行都要有日期和数字；没有数字的复核只是表态，不能作为下一轮判断的依据。差额阈值在开始前写定，事后不改；若超过阈值，回到四栏工作纸重做，而不是在结论后面补一句“基本一致”。</p>
+<h2 id="section-17">来源</h2>
+<ol>
+<li>National Institute of Standards and Technology. <em>SI Units</em>. NIST Physical Measurement Laboratory. <a href="https://www.nist.gov/pml/owm/metric-si/si-units" rel="noopener noreferrer">https://www.nist.gov/pml/owm/metric-si/si-units</a>（访问日期：2026-11-25）</li>
+<li>Office for National Statistics. <em>Seasonal adjustment</em>. Office for National Statistics (UK). <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment" rel="noopener noreferrer">https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment</a>（访问日期：2026-11-25）</li>
+<li>NIST. <em>Engineering Statistics Handbook</em>. NIST. <a href="https://www.itl.nist.gov/div898/handbook/" rel="noopener noreferrer">https://www.itl.nist.gov/div898/handbook/</a>（访问日期：2026-11-25）</li>
+<li>OECD. <em>OECD data</em>. OECD. <a href="https://www.oecd.org/" rel="noopener noreferrer">https://www.oecd.org/</a>（访问日期：2026-11-25）</li>
+</ol>
+  <section class="article-demo" id="demo-check" data-demo="check" data-lang="zh" aria-labelledby="demo-check-title" data-check-done="三项都能说清：这篇的核心已经过关。" data-check-pending="还差一项：回到正文对应小节，找一个反例或数字再讲一遍。" data-check-count="已勾选"> <header class="demo-head"> <div class="demo-head-top"> <p class="demo-eyebrow">动手演示</p> <button class="demo-reset" type="button" data-demo-reset>恢复默认</button> </div> <h2 id="demo-check-title">读完自检：三句话能不能说清</h2> <p class="demo-intro">不用背定义。把下面三句逐个勾上，看自己能不能用自己的话讲清机制、算例和边界。</p> </header>          <div class="demo-check"> <ul class="demo-check-list"> <li> <label> <input type="checkbox" data-check-index="0"> <span>解释事件窗口的定义、单位与分母。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="1"> <span>把泄漏放进制度边界。</span> </label> </li><li> <label> <input type="checkbox" data-check-index="2"> <span>能说出一个本文结论不适用的条件</span> </label> </li> </ul> <p class="demo-check-status" data-out="checkStatus" role="status"> 已勾选 0 / 3
+</p> </div> <p class="demo-footnote">数字为教学假设，用来展示关系，不构成预测或投资建议。</p> </section><script type="module" src="/_astro/ArticleDemo.astro_astro_type_script_index_0_lang.C9VQAsQ0.js"></script> <p class="notice"> 本文已通过当前发布门槛；事实、计算与译文如有修订，会同步更新两个语言版本。 </p> <section class="article-cite" aria-labelledby="cite-heading"> <h2 id="cite-heading">引用这篇</h2> <p>非商业引用请注明作者、标题、本站和链接；第三方来源按原许可。</p> <code data-cite-text>事件窗口与泄漏：公告日、漂移与安慰剂。巫妖投资，2026-11-25。https://research.51invest.com/learn/event-windows-leakage-placebo/</code> <div class="cite-actions"> <button type="button" data-copy-cite>复制引用</button> <span data-cite-status role="status" aria-live="polite"></span> </div> </section> <nav class="article-pager" aria-label="同站上一篇与下一篇"> <a href="/learn/rolling-window-structural-break/"> <small>上一篇</small> <strong>滚动窗口与结构突变：模型什么时候失效</strong> </a> <a class="next" href="/learn/data-lineage-revisions-missing/"> <small>下一篇</small> <strong>数据血统：修订、缺失与管道审计</strong> </a> </nav> <p> <a class="button secondary" href="/"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class> <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>                </svg>返回分站 </a> </p> </div> <aside class="article-aside" aria-label="文章信息"> <section class="aside-card article-toc-aside"> <h2>本文目录</h2> <ol> <li><a href="#section-1">问题与结论</a></li><li><a href="#section-2">定义与边界</a></li><li><a href="#section-3">机制链</a></li><li><a href="#section-4">数据与口径</a></li><li><a href="#section-5">证据等级</a></li><li><a href="#section-6">时间线与制度时点</a></li><li><a href="#section-7">数量级与敏感性</a></li><li><a href="#section-8">反事实与边界</a></li><li><a href="#section-9">复盘与下一次判断</a></li><li><a href="#section-10">一页工作纸</a></li><li><a href="#section-11">三个误判</a></li><li><a href="#section-12">应用清单</a></li><li><a href="#section-13">与其他文章的接口</a></li><li><a href="#section-14">关联</a></li><li><a href="#section-15">图表</a></li><li><a href="#section-16">练习</a></li><li><a href="#section-17">来源</a></li> </ol> </section> <section class="aside-card"> <h2>学习目标</h2> <ul> <li>解释事件窗口的定义、单位与分母。</li><li>把泄漏放进制度边界。</li><li>用安慰剂判断结论何时失效。</li> </ul> </section> <section class="aside-card"> <h2>必需先修</h2> <ul> <li> <a href="/learn/event-study-basics/">RES-019 · 事件研究基础</a> </li> </ul> </section> <section class="aside-card"> <h2>建议阅读</h2> <ul> <li> <a href="/learn/event-study-basics/">RES-019 · 事件研究基础</a> </li><li> <a href="/learn/event-study-windows-abnormal-returns-and-inference/">RES-030 · 事件研究：窗口、异常收益与推断</a> </li> </ul> </section> <section class="aside-card"> <h2>AI 复核记录</h2> <p class="muted"> 本项目没有真人签字；下列状态来自 AI-only 编辑复核。 </p> <ul> <li> 事实与计算 ：AI 复核通过 </li><li> 学科 ：AI 复核通过 </li><li> 英文 ：AI 复核通过 </li><li> 页面 ：AI 复核通过 </li> </ul> <p class="muted"> 复核日期：2026-11-25 </p> </section> <section class="aside-card"> <h2>来源</h2> <div class="source"> <a href="https://www.nist.gov/pml/owm/metric-si/si-units" rel="noopener noreferrer" target="_blank">SI Units</a> <p>National Institute of Standards and Technology · NIST Physical Measurement Laboratory</p> <p>访问：2026-11-25 · 许可：U.S. Government work (public domain)</p> <p>支持论点：用于核对“事件窗口”涉及的定义、制度或统计口径；正文不把来源未写的内容当作事实。</p> </div><div class="source"> <a href="https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/seasonaladjustment" rel="noopener noreferrer" target="_blank">Seasonal adjustment</a> <p>Office for National Statistics · Office for National Statistics (UK)</p> <p>访问：2026-11-25 · 许可：Open Government Licence v3.0</p> <p>支持论点：用于核对“事件窗口”涉及的定义、制度或统计口径；正文不把来源未写的内容当作事实。</p> </div><div class="source"> <a href="https://www.itl.nist.gov/div898/handbook/" rel="noopener noreferrer" target="_blank">Engineering Statistics Handbook</a> <p>NIST · NIST</p> <p>访问：2026-11-25 · 许可：U.S. Government work</p> <p>支持论点：用于核对“事件窗口”涉及的定义、制度或统计口径；正文不把来源未写的内容当作事实。</p> </div><div class="source"> <a href="https://www.oecd.org/" rel="noopener noreferrer" target="_blank">OECD data</a> <p>OECD · OECD</p> <p>访问：2026-11-25 · 许可：OECD terms of use</p> <p>支持论点：用于核对“事件窗口”涉及的定义、制度或统计口径；正文不把来源未写的内容当作事实。</p> </div> </section>  </aside> </div> </article><script type="module">var e=document.querySelector(`[data-reading-progress] span`),t=document.querySelector(`article`);if(e&&t){let n=()=>{let n=t.offsetTop,r=t.offsetHeight-window.innerHeight,i=r>0?(window.scrollY-n)/r:0;e.style.width=`${Math.min(1,Math.max(0,i))*100}%`};window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n),n()}var n=document.querySelector(`[data-copy-cite]`),r=document.querySelector(`[data-cite-text]`),i=document.querySelector(`[data-cite-status]`);n?.addEventListener(`click`,async()=>{if(!r)return;let e=r.textContent?.trim()??``;try{await navigator.clipboard.writeText(e),i&&(i.textContent=document.documentElement.lang===`en`?`Copied`:`已复制`)}catch{i&&(i.textContent=document.documentElement.lang===`en`?`Copy failed; select the text manually.`:`复制失败，请手动选择文字。`)}window.setTimeout(()=>{i&&(i.textContent=``)},2500)});</script>  </main> <footer class="site-footer"> <div class="container footer-inner"> <div class="footer-brand"> <span class="footer-mascot"><img src="/_astro/neutral.Dr5C2SoA.png" width="28" height="28" alt class="mascot" loading="lazy" decoding="async"></span> <div> <strong>巫妖投资 51Invest</strong> <p class="footer-note">非商业免费知识站。每篇标出来源与口径；这里没有投资建议。</p> </div> </div> <nav class="footer-links" aria-label="知识分站"> <a href="https://51invest.com/" data-main-home>首页</a> <a href="https://51invest.com/contents/">内容地图</a> <a href="https://51invest.com/glossary/">术语表</a> <a href="/search/">搜索</a> <a href="https://51invest.com/charts/" data-main-link>图表</a> <a href="https://51invest.com/sources/" data-main-link>数据与许可</a> <a href="https://51invest.com/about/" data-main-link>关于</a> <a href="https://51invest.com/method/" data-main-link>方法</a> <a href="https://51invest.com/corrections/" data-main-link>更正</a> <a href="https://51invest.com/privacy/" data-main-link>隐私</a> <a href="https://nav.51invest.com/" rel="noopener noreferrer">导航</a> <a href="/">分站首页</a> </nav> </div> </footer> <nav class="mobile-nav" aria-label="快捷导航"> <a class="mobile-link" href="https://51invest.com/" data-main-home> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>    <path d="m3 10 9-7 9 7"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path>             </svg> <span>首页</span> </a> <a class="mobile-link" href="https://economics.51invest.com/" aria-label="经济学" title="经济学"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>           <path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 3-4 3 2 4-6"></path>      </svg> <span>经济学</span> </a><a class="mobile-link" href="https://finance.51invest.com/" aria-label="金融基础" title="金融基础"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>            <path d="m3 9 9-6 9 6"></path><path d="M4 10h16"></path><path d="M6 10v8M10 10v8M14 10v8M18 10v8"></path><path d="M3 19h18"></path>     </svg> <span>金融</span> </a><a class="mobile-link" href="https://markets.51invest.com/" aria-label="市场与产品" title="市场与产品"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>             <path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5"></path><path d="m3 16 9 5 9-5"></path>    </svg> <span>市场</span> </a><a class="mobile-link" href="https://invest.51invest.com/" aria-label="投资方法" title="投资方法"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>              <circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>   </svg> <span>投资</span> </a><a class="mobile-link" href="https://history.51invest.com/" aria-label="经济与金融史" title="经济与金融史"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>               <circle cx="12" cy="12" r="8.5"></circle><path d="M12 7v5l3 2"></path>  </svg> <span>经济史</span> </a><a class="mobile-link active" href="/" aria-current="page" aria-label="研究方法" title="研究方法"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>                <path d="M9 3h6"></path><path d="M10 3v5L5 17a3 3 0 0 0 2.6 4h8.8a3 3 0 0 0 2.6-4L14 8V3"></path><path d="M7 15h10"></path> </svg> <span>研究</span> </a> <a class="mobile-link" href="https://nav.51invest.com/" rel="noopener noreferrer" data-external-nav aria-label="打开外链导航"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class>          <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.2-1.2"></path>       </svg> <span>导航</span> </a> </nav><script type="module">var e=document.documentElement,t=[`auto`,`light`,`dark`],n=matchMedia(`(prefers-color-scheme: dark)`),r=()=>{let t=e.dataset.themeMode;return t===`light`||t===`dark`?t:`auto`},i=e=>{try{localStorage.setItem(`51invest-theme`,e)}catch{}try{let t=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-theme=${e}; Path=/; Max-Age=31536000; SameSite=Lax${t}`}catch{}},a=e=>{document.querySelectorAll(`[data-theme-toggle]`).forEach(t=>{let n=t.dataset[`label${e[0].toUpperCase()}${e.slice(1)}`];n&&(t.setAttribute(`aria-label`,n),t.setAttribute(`title`,n))})},o=t=>{e.dataset.themeMode=t,e.dataset.theme=t===`auto`?n.matches?`dark`:`light`:t,i(t),a(t)};a(r()),document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.addEventListener(`click`,()=>{let e=t[(t.indexOf(r())+1)%t.length];o(e)})}),n.addEventListener(`change`,()=>{r()===`auto`&&(e.dataset.theme=n.matches?`dark`:`light`)}),document.querySelectorAll(`[data-language-link]`).forEach(e=>{e.addEventListener(`click`,()=>{let t=e.dataset.languageLink;if(t===`zh`||t===`en`){try{localStorage.setItem(`51invest-language`,JSON.stringify(t))}catch{}try{let e=location.protocol===`https:`?`; Secure`:``;document.cookie=`51invest-language=${t}; Path=/; Max-Age=31536000; SameSite=Lax${e}`}catch{}}})});</script> </body> </html>
